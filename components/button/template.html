@@ -1,0 +1,17 @@
+<template>
+  <button
+    class="btn"
+    :type="nativeType"
+    :disabled="disabled"
+    :class="[
+    size ? 'btn-' + size : '',
+    {
+    'is-disabled': disabled
+  }]"
+    @click="handleClick"
+  >
+    <span v-if="$slots.default">
+      <slot></slot>
+    </span>
+  </button>
+</template>

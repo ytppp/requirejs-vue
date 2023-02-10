@@ -1,0 +1,35 @@
+<div
+  class="select-container"
+  :class="{'disabled':disabled}"
+  v-clickoutside="close"
+>
+  <label for="">{{label}}</label>
+  <div class="select" @click="open()">
+    <input
+      class="select-text"
+      :value="selected.text"
+      readonly
+      :title="selected.text"
+    />
+    <div class="icon-container">
+      <span class="icon" :class="{ 'open': opened, 'close': !opened }"></span>
+    </div>
+    <transition name="select">
+      <ul class="select-popup" v-show="opened">
+        <template v-if="options.length">
+          <li
+            class="select-popup__item"
+            :class="{ 'selected': selected === option }"
+            :key="option.value"
+            @click.stop="select(option)"
+            v-for="option in options"
+            :title="option.text"
+          >
+            {{ option.text }}
+          </li>
+        </template>
+        <li class="select-popup__item--empty" v-else>{{$t('trans0278')}}</li>
+      </ul>
+    </transition>
+  </div>
+</div>

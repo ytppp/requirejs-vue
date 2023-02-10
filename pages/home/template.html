@@ -1,0 +1,49 @@
+<div class="page">
+  <div class="page-header">{{$t('trans0418')}}</div>
+  <div class="page-content">
+    <fh-form ref="form" class="form" :model="ddns" :rules="rules">
+      <div class="form-item">
+        <label style="font-weight: bold">{{$t('trans0435')}}</label>
+        <fh-radio-group v-model="ddns.service" :options="services" />
+      </div>
+      <fh-form-item class="item" prop="ddns.service">
+        <fh-select
+          :label="$t('trans0435')"
+          v-model="ddns.service"
+          :options="services"
+        />
+      </fh-form-item>
+      <fh-form-item class="item" prop="domain">
+        <fh-input
+          :label="$t('trans0436')"
+          :placeholder="$t('trans0321')"
+          v-model="ddns.domain"
+        />
+      </fh-form-item>
+      <fh-form-item class="item" prop="username">
+        <fh-input
+          :label="$t('trans0410')"
+          :placeholder="$t('trans0321')"
+          v-model="ddns.username"
+        />
+      </fh-form-item>
+      <fh-form-item class="item" prop="password">
+        <fh-input
+          :label="$t('trans0003')"
+          type="password"
+          :placeholder="$t('trans0321')"
+          v-model="ddns.password"
+        />
+      </fh-form-item>
+      <div class="form-item">
+        <fh-checkbox v-model="ddns.enabled" :text="$t('trans0462')" />
+      </div>
+      <div class="form-item">
+        <fh-switch v-model="ddns.enabled" @change="updateddns" />
+      </div>
+    </fh-form>
+    <div class="form-button">
+      <fh-button @click="submit()" disabled type="submit">{{$t('trans0081')}}</fh-button>
+    </div>
+  </div>
+</div>

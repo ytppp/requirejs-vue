@@ -1,0 +1,8 @@
+<transition name="checkbox">
+  <div class="checkbox-container">
+    <label @click="check">
+      <div class="box" :class="classObject"></div>
+      <div class="text" v-if="text">{{text}}</div>
+    </label>
+  </div>
+</transition>

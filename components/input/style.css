@@ -1,0 +1,84 @@
+.input-container {
+  position: relative;
+}
+.input-container.small .input {
+  height: 36px;
+}
+.input-container.disabled .icon-container {
+  cursor: default;
+}
+.input-container .inputarea {
+  position: relative;
+}
+.input-container label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+.input-container .input-wrapper {
+  height: 48px;
+  width: 100%;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e1e1e1;
+}
+.input-container .input-wrapper .extra {
+  padding: 10px 10px;
+  padding-right: 0;
+}
+.input-container .input-wrapper.has-prefix input {
+  width: auto;
+}
+.input-container .input-wrapper input {
+  font-size: 14px;
+  padding: 10px;
+  height: 46px;
+  line-height: 1;
+  width: 100%;
+  outline: 0;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+.input-container .input-wrapper input.margin {
+  padding-left: 0px;
+}
+.input-container .input-wrapper input:disabled {
+  background: #e1e1e1;
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+.input-container .input-wrapper input.has-icon {
+  padding-right: 50px;
+}
+.input-container .icon-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+  height: 48px;
+  width: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input-container .icon-container .icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+.input-container .icon-container .icon.hide {
+  background: url(/assets/images/icon/ic_visible.png) no-repeat center;
+  background-size: 100%;
+}
+.input-container .icon-container .icon.show {
+  background: url(/assets/images/icon/ic_invisible.png) no-repeat center;
+  background-size: 100%;
+}

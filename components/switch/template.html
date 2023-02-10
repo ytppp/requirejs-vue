@@ -1,0 +1,8 @@
+<div class="switch">
+  <label class="switch__label" v-if="label">{{ label }}</label>
+  <div
+    class="switch__inner"
+    :class="{ checked: checked, disabled: disabled }"
+    @click="switchValue"
+  ></div>
+</div>

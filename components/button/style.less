@@ -1,0 +1,75 @@
+@primaryColor: #d6001c;
+
+@button-text-color: #fff;
+@button-background-color: @primaryColor;
+@button-border-color: transparent;
+@button-active-color: @primaryColor;
+@button-hover-color: #de3349;
+@button-disabled-background-color: #b3b3b3;
+@button-disabled-border-color: #b3b3b3;
+@button-disabled-text-color: #fff;
+
+@button-default-background-color: #fff;
+@button-default-text-color: @primaryColor;
+@button-default-border-color: @primaryColor;
+@button-default-active-text-color: #e6586a;
+@button-default-active-border-color: #e6586a;
+@button-default-hover-text-color: #e6586a;
+@button-default-hover-border-color: #e6586a;
+@button-default-disabled-text-color: #b3b3b3;
+@button-default-disabled-border-color: #b3b3b3;
+
+@button-text-text-color: #333;
+@button-text-hover-color: #999;
+@button-text-primary-text-color: @primaryColor;
+@button-text-primary-hover-color: #e6586a;
+@button-text-primary-disabled-hover-color: #999;
+@button-text-stange-background-color: @primaryColor;
+@button-text-stange-text-color: #fff;
+
+.btn {
+  outline: none;
+  border: 1px solid @button-border-color;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 340px;
+  height: 48px;
+  user-select: none;
+  position: relative;
+  color: @button-text-color;
+  background: @button-background-color;
+  &:active {
+    background: @button-active-color;
+  }
+  &:hover {
+    background: @button-hover-color;
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+    background: @button-disabled-background-color;
+    border-color: @button-disabled-border-color;
+    color: @button-disabled-text-color;
+  }
+  &.btn-middle {
+    width: auto;
+    min-width: 120px;
+    height: 38px;
+    line-height: 1;
+    padding: 12px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  &.btn-small {
+    width: auto;
+    min-width: 80px;
+    height: 28px;
+    line-height: 1;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+}

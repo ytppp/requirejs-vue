@@ -1,0 +1,38 @@
+<div class="input-container" :class="{'disabled':disabled}">
+  <label for v-if="label">
+    <span>{{label}}</span>
+  </label>
+  <div class="inputarea">
+    <div class="input-wrapper" :class="{'has-prefix':addonBefore}">
+      <input
+        :style="{width:computedWidth}"
+        v-if="addonBefore"
+        class="extra"
+        type="text"
+        readonly
+        :value="addonBefore"
+      />
+      <!-- <div class="extra"
+                v-if="addonBefore">{{addonBefore}}</div> -->
+      <input
+        autocomplete="new-password"
+        @focus="focus"
+        @blur="blur"
+        @input="onInput"
+        ref="input"
+        :disabled="disabled"
+        v-model="inputValue"
+        :placeholder="placeholder"
+        :type="inputType"
+        :class="{'has-icon':isPwdInput,margin:addonBefore}"
+      />
+    </div>
+    <div
+      class="icon-container"
+      v-if="isPwdInput&&!hidePwdIcon"
+      @click="changePwdStatus()"
+    >
+      <span class="icon" :class="{'show':!showPwd,'hide':showPwd}"></span>
+    </div>
+  </div>
+</div>

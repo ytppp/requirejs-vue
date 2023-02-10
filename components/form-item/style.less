@@ -1,0 +1,23 @@
+
+@form-item-error-color: #ff0000;
+
+.form-item {
+  margin-bottom: 30px;
+  position: relative;
+  .error-message {
+    color: @form-item-error-color;
+    font-size: 12px;
+    display: block;
+    padding-top: 4px;
+    line-height: 1;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+  &.form-item-error {
+    .input-wrapper {
+      border-color: @form-item-error-color !important;
+      transition: border 0.3 linear;
+    }
+  }
+}

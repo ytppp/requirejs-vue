@@ -1,0 +1,17 @@
+{
+  "trans0001": "Login",
+  "trans0003": "Password",
+  "trans0081": "Save",
+  "trans0125": "Password may only contain %d-%d digits, letters or special characters, or any combination of these.",
+  "trans0228": "Domain name is too long",
+  "trans0232": "Required",
+  "trans0261": "The name is too long",
+  "trans0321": "Please enter",
+  "trans0410": "Username",
+  "trans0418": "DDNS",
+  "trans0435": "Service provider",
+  "trans0436": "Domain name",
+  "trans0437": "DynDNS",
+  "trans0438": "Oray",
+  "trans0462": "Enable"
+}

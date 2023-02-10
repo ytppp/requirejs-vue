@@ -1,0 +1,10 @@
+.customized.login .login-header {
+  background-color: black;
+}
+.customized.login .logo {
+  width: 148px;
+  height: 50px;
+}
+.customized.login .product-name {
+  color: #fff;
+}
