@@ -3,9 +3,21 @@ define(function (require) {
   var Vue = require('vue');
   Vue.component('fh-form-item', {
     template: require('text!./components/form-item/template.html'),
+    provide() {
+      return {
+        formItem: this
+      };
+    },
+    inject: ['form'],
     props: {
+      label: String,
       prop: {
         type: String
+      },
+      for: String,
+      showMessage: {
+        type: Boolean,
+        default: true
       },
       rules: {
         type: Array,
@@ -14,12 +26,16 @@ define(function (require) {
     },
     data() {
       return {
+        validateMessage: '',
+
         validators: [],
         result: null, // null表示没有进行校验，true通过，false未通过
-        message: ''
       };
     },
     computed: {
+      labelFor() {
+        return this.for || this.prop;
+      },
       error() {
         return this.result !== null && this.result === false;
       },
@@ -65,7 +81,7 @@ define(function (require) {
               const validator = this.validators[j];
               if (!validator.rule(value)) {
                 result = false;
-                this.message = validator.message;
+                this.validateMessage = validator.message;
                 break;
               }
             }
@@ -85,14 +101,18 @@ define(function (require) {
         return result;
       }
     },
-    mounted() {
+    mounted () {
+      console.log(this.$on)
       this.$on('blur', () => {
+        console.log('123');
         this.validate();
       });
       this.$on('focus', () => {
+        console.log('456');
         this.result = null;
       });
       this.$on('change', () => {
+        console.log('789');
         this.result = null;
       });
     }

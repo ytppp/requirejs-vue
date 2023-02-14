@@ -21,6 +21,7 @@ define(function (require) {
           service: 'dyndns',
           enabled: true
         },
+        addonBefore: 'xxxx',
         services: [
           {
             text: this.$t('trans0437'),

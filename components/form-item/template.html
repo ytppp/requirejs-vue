@@ -1,7 +1,25 @@
 <div
   class="form-item"
-  :class="{'form-item-success':success,'form-item-error':error}"
+  :class="{
+    'is-success': success,
+    'is-error': error
+  }"
 >
+  <label
+    :for="labelFor"
+    class="form-item__label"
+    v-if="label || $slots.label"
+  >
+    <slot name="label">{{label + form.labelSuffix}}</slot>
+  </label>
   <slot></slot>
-  <span class="error-message" v-show="error">{{message}}</span>
+  <transition name="el-zoom-in-top">
+    <slot
+      v-if="error && showMessage && form.showMessage"
+      name="error"
+      :error="validateMessage"
+    >
+      <div class="form-item__error">{{validateMessage}}</div>
+    </slot>
+  </transition>
 </div>

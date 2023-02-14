@@ -1,38 +1,77 @@
-<div class="input-container" :class="{'disabled':disabled}">
-  <label for v-if="label">
-    <span>{{label}}</span>
-  </label>
-  <div class="inputarea">
-    <div class="input-wrapper" :class="{'has-prefix':addonBefore}">
-      <input
-        :style="{width:computedWidth}"
-        v-if="addonBefore"
-        class="extra"
-        type="text"
-        readonly
-        :value="addonBefore"
-      />
-      <!-- <div class="extra"
-                v-if="addonBefore">{{addonBefore}}</div> -->
-      <input
-        autocomplete="new-password"
-        @focus="focus"
-        @blur="blur"
-        @input="onInput"
-        ref="input"
-        :disabled="disabled"
-        v-model="inputValue"
-        :placeholder="placeholder"
-        :type="inputType"
-        :class="{'has-icon':isPwdInput,margin:addonBefore}"
-      />
+<div
+  :class="[
+    type === 'textarea' ? 'textarea' : 'input',
+    {
+      'is-disabled': inputDisabled,
+      'is-exceed': inputExceed,
+      'input-group': $slots.prepend || $slots.append,
+      'input-group--append': $slots.append,
+      'input-group--prepend': $slots.prepend,
+      'input--prefix': $slots.prefix || prefixIcon,
+      'input--suffix': $slots.suffix || suffixIcon || clearable || showPassword
+    }
+  ]"
+  @mouseenter="hovering = true"
+  @mouseleave="hovering = false"
+>
+  <template v-if="type !== 'textarea'">
+    <!-- 前置元素 -->
+    <div class="input-group__prepend" v-if="$slots.prepend">
+      <slot name="prepend"></slot>
     </div>
-    <div
-      class="icon-container"
-      v-if="isPwdInput&&!hidePwdIcon"
-      @click="changePwdStatus()"
-    >
-      <span class="icon" :class="{'show':!showPwd,'hide':showPwd}"></span>
+    <input
+      :tabindex="tabindex"
+      class="input__inner"
+      v-bind="$attrs"
+      :type="showPassword ? (passwordVisible ? 'text': 'password') : type"
+      :disabled="disabled"
+      :readonly="readonly"
+      :autocomplete="autocomplete"
+      :placeholder="placeholder"
+      :name="name"
+      :aria-label="label"
+      ref="input"
+      @compositionstart="handleCompositionStart"
+      @compositionupdate="handleCompositionUpdate"
+      @compositionend="handleCompositionEnd"
+      @input="handleInput"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @change="handleChange"
+    />
+    <!-- 前置内容 -->
+    <span class="input__prefix" v-if="$slots.prefix || prefixIcon">
+      <slot name="prefix"></slot>
+      <i class="input__icon" v-if="prefixIcon" :class="prefixIcon"> </i>
+    </span>
+    <!-- 后置内容 -->
+    <span class="input__suffix" v-if="getSuffixVisible()">
+      <span class="input__suffix-inner">
+        <template v-if="!showClear || !showPwdVisible || !isWordLimitVisible">
+          <slot name="suffix"></slot>
+          <i class="input__icon" v-if="suffixIcon" :class="suffixIcon"> </i>
+        </template>
+        <i
+          v-if="showClear"
+          class="input__icon icon-circle-close input__clear"
+          @mousedown.prevent
+          @click="clear"
+        ></i>
+        <i
+          v-if="showPwdVisible"
+          class="input__icon icon-view input__clear"
+          @click="handlePasswordVisible"
+        ></i>
+        <span v-if="isWordLimitVisible" class="input__count">
+          <span class="input__count-inner">
+            {{ textLength }}/{{ upperLimit }}
+          </span>
+        </span>
+      </span>
+    </span>
+    <!-- 后置元素 -->
+    <div class="input-group__append" v-if="$slots.append">
+      <slot name="append"></slot>
     </div>
-  </div>
+  </template>
 </div>

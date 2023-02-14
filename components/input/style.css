@@ -1,84 +1,201 @@
-.input-container {
-  position: relative;
-}
-.input-container.small .input {
-  height: 36px;
-}
-.input-container.disabled .icon-container {
-  cursor: default;
-}
-.input-container .inputarea {
-  position: relative;
-}
-.input-container label {
-  display: block;
-  text-align: left;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-  font-size: 14px;
-}
-.input-container .input-wrapper {
-  height: 48px;
+.input {
+  display: inline-block;
   width: 100%;
-  border-radius: 4px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  border: 1px solid #e1e1e1;
+  position: relative;
 }
-.input-container .input-wrapper .extra {
-  padding: 10px 10px;
-  padding-right: 0;
-}
-.input-container .input-wrapper.has-prefix input {
-  width: auto;
-}
-.input-container .input-wrapper input {
+.input .input__inner {
   font-size: 14px;
-  padding: 10px;
+  padding: 0 10px;
   height: 46px;
   line-height: 1;
   width: 100%;
   outline: 0;
   border-radius: 4px;
-  border: none;
+  border: 1px solid #DCDFE6;
   box-sizing: border-box;
   -webkit-appearance: none;
+  background-color: #FFFFFF;
+  display: inline-block;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-.input-container .input-wrapper input.margin {
-  padding-left: 0px;
+.input .input__inner::-ms-reveal {
+  display: none;
 }
-.input-container .input-wrapper input:disabled {
-  background: #e1e1e1;
-  opacity: 0.8;
-  cursor: not-allowed;
+.input .input__inner::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
 }
-.input-container .input-wrapper input.has-icon {
-  padding-right: 50px;
+.input .input__inner::placeholder {
+  color: #C0C4CC;
 }
-.input-container .icon-container {
+.input .input__inner:hover {
+  border-color: #C0C4CC;
+}
+.input .input__inner:focus {
+  outline: none;
+  border-color: #d6001c;
+}
+.input .input__clear {
+  color: #C0C4CC;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.input .input__clear:hover {
+  color: #909399;
+}
+.input .input__count {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  color: #909399;
+  font-size: 12px;
+}
+.input .input__count .input__count-inner {
+  background: #FFFFFF;
+  line-height: initial;
+  display: inline-block;
+  padding: 0 5px;
+}
+.input .input__suffix {
   position: absolute;
-  right: 0;
+  height: 100%;
+  right: 5px;
   top: 0;
   text-align: center;
-  height: 48px;
-  width: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #C0C4CC;
+  transition: all 0.3s;
+  pointer-events: none;
 }
-.input-container .icon-container .icon {
-  width: 20px;
-  height: 20px;
+.input .input__suffix-inner {
+  pointer-events: all;
+}
+.input .input__prefix {
+  position: absolute;
+  height: 100%;
+  left: 5px;
+  top: 0;
+  text-align: center;
+  color: #C0C4CC;
+  transition: all 0.3s;
+}
+.input .input__icon {
+  height: 100%;
+  width: 25px;
+  text-align: center;
+  transition: all 0.3s;
+  line-height: 46px;
+}
+.input .input__icon:after {
+  content: '';
+  height: 100%;
+  width: 0;
   display: inline-block;
+  vertical-align: middle;
 }
-.input-container .icon-container .icon.hide {
-  background: url(/assets/images/icon/ic_visible.png) no-repeat center;
-  background-size: 100%;
+.input.is-active .input__inner {
+  outline: none;
+  border-color: #d6001c;
 }
-.input-container .icon-container .icon.show {
-  background: url(/assets/images/icon/ic_invisible.png) no-repeat center;
-  background-size: 100%;
+.input.is-disabled .input__inner {
+  background-color: #F5F7FA;
+  border-color: #E4E7ED;
+  color: #C0C4CC;
+  cursor: not-allowed;
+}
+.input.is-disabled .input__inner::placeholder {
+  color: #C0C4CC;
+}
+.input.is-disabled .input__icon {
+  cursor: not-allowed;
+}
+.input.is-exceed .input__inner {
+  border-color: #F56C6C;
+}
+.input.is-exceed .input__suffix .input__count {
+  color: #F56C6C;
+}
+.input.input--prefix .input__inner {
+  padding-left: 30px;
+}
+.input.input--suffix .input__inner {
+  padding-right: 30px;
+}
+.input-group {
+  line-height: normal;
+  display: inline-table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.input-group > .input__inner {
+  vertical-align: middle;
+  display: table-cell;
+}
+.input-group .input-group__append,
+.input-group .input-group__prepend {
+  background-color: #F5F7FA;
+  color: #909399;
+  vertical-align: middle;
+  display: table-cell;
+  position: relative;
+  border: 1px solid #DCDFE6;
+  border-radius: 4px;
+  padding: 0 20px;
+  width: 1px;
+  white-space: nowrap;
+}
+.input-group .input-group__append:focus,
+.input-group .input-group__prepend:focus {
+  outline: none;
+}
+.input-group .input-group__append .select,
+.input-group .input-group__prepend .select,
+.input-group .input-group__append .button,
+.input-group .input-group__prepend .button {
+  display: inline-block;
+  margin: -10px -20px;
+}
+.input-group .input-group__append button.button,
+.input-group .input-group__prepend button.button,
+.input-group .input-group__append div.select .input__inner,
+.input-group .input-group__prepend div.select .input__inner,
+.input-group .input-group__append div.select:hover .input__inner,
+.input-group .input-group__prepend div.select:hover .input__inner {
+  border-color: transparent;
+  background-color: transparent;
+  color: inherit;
+  border-top: 0;
+  border-bottom: 0;
+}
+.input-group .input-group__append .button,
+.input-group .input-group__prepend .button,
+.input-group .input-group__append .input,
+.input-group .input-group__prepend .input {
+  font-size: inherit;
+}
+.input-group .input-group__prepend {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group .input-group__append {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.input-group.input-group--prepend .input__inner {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.input-group.input-group--prepend .select .input.is-focus .input__inner {
+  border-color: transparent;
+}
+.input-group.input-group--append .input__inner {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group.input-group--append .select .input.is-focus .input__inner {
+  border-color: transparent;
 }

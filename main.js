@@ -35,7 +35,7 @@ require.config({
   }
 });
 
-require(['css!style/normalize.css', 'less!style/global.less']);
+require(['css!style/normalize.css', 'less!style/global.less', 'less!style/icon.less']);
 
 define(function (require) {
   var Vue = require('vue');

@@ -6,33 +6,34 @@
         <label style="font-weight: bold">{{$t('trans0435')}}</label>
         <fh-radio-group v-model="ddns.service" :options="services" />
       </div>
-      <fh-form-item class="item" prop="ddns.service">
+      <fh-form-item class="item" prop="ddns.service" :label="$t('trans0435')">
         <fh-select
-          :label="$t('trans0435')"
           v-model="ddns.service"
           :options="services"
         />
       </fh-form-item>
-      <fh-form-item class="item" prop="domain">
+      <fh-form-item class="item" prop="domain" :label="$t('trans0436')">
         <fh-input
-          :label="$t('trans0436')"
           :placeholder="$t('trans0321')"
           v-model="ddns.domain"
+          maxlength="10"
+          showWordLimit
         />
       </fh-form-item>
-      <fh-form-item class="item" prop="username">
+      <fh-form-item class="item" prop="username" :label="$t('trans0410')">
         <fh-input
-          :label="$t('trans0410')"
           :placeholder="$t('trans0321')"
           v-model="ddns.username"
-        />
+        >
+        <template slot="prepend">Http://</template>
+        <template slot="append">.com</template>
       </fh-form-item>
-      <fh-form-item class="item" prop="password">
+      <fh-form-item class="item" prop="password" :label="$t('trans0003')">
         <fh-input
-          :label="$t('trans0003')"
           type="password"
           :placeholder="$t('trans0321')"
           v-model="ddns.password"
+          showPassword
         />
       </fh-form-item>
       <div class="form-item">

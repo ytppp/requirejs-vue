@@ -1,6 +1,3 @@
-/**
- * input框组件
- */
 define(function (require) {
   require('less!./components/input/style.less');
   var Vue = require('vue');
@@ -8,93 +5,178 @@ define(function (require) {
   Vue.component('fh-input', {
     template: require('text!./components/input/template.html'),
     props: {
+      value: [String, Number],
+      prefixIcon: String,
+      suffixIcon: String,
+      tabindex: String,
+      label: String,
+      name: String,
+      placeholder: String,
+      disabled: Boolean,
+      readonly: Boolean,
       type: {
         type: String,
         default: 'text'
       },
-      hidePwdIcon: {
-        type: Boolean,
-        default: false
-      },
-      value: {},
-      placeholder: { type: String },
-      disabled: {
-        type: Boolean,
-        default: false
-      },
-      label: {
+      autocomplete: {
         type: String,
+        default: 'new-password'
+      },
+      clearable: {
+        type: Boolean,
+        default: false
+      },
+      showPassword: {
+        type: Boolean,
+        default: false
+      },
+      showWordLimit: {
+        type: Boolean,
+        default: false
+      },
+    },
+    inject: {
+      form: {
         default: ''
       },
-      onBlur: { type: Function },
-      addonBefore: {
-        type: String,
+      formItem: {
         default: ''
       }
     },
     data() {
       return {
-        showPwd: false,
-        inputValue: this.value || ''
+        hovering: false,
+        focused: false,
+        isComposing: false,
+        passwordVisible: false,
       };
     },
+    computed: {
+      inputLabel() {
+        return this.label || this.$parent.label || '';
+      },
+      inputDisabled() {
+        return this.disabled || (this.form || {}).disabled;
+      },
+      isWordLimitVisible() {
+        return this.showWordLimit &&
+          this.$attrs.maxlength &&
+          (this.type === 'text' || this.type === 'textarea') &&
+          !this.inputDisabled &&
+          !this.readonly &&
+          !this.showPassword;
+      },
+      inputExceed() {
+        return this.isWordLimitVisible &&
+          (this.textLength > this.upperLimit);
+      },
+      nativeInputValue() {
+        return this.value === null || this.value === undefined ? '' : String(this.value);
+      },
+      showClear() {
+        return this.clearable &&
+          !this.inputDisabled &&
+          !this.readonly &&
+          this.nativeInputValue &&
+          (this.focused || this.hovering);
+      },
+      showPwdVisible() {
+        return this.showPassword &&
+          !this.inputDisabled &&
+          !this.readonly &&
+          (!!this.nativeInputValue || this.focused);
+      },
+      upperLimit() {
+        return this.$attrs.maxlength;
+      },
+      textLength() {
+        if (typeof this.value === 'number') {
+          return String(this.value).length;
+        }
+        return (this.value || '').length;
+      },
+    },
     watch: {
-      value() {
-        this.inputValue = this.value;
-        this.$parent.$emit('change');
+      // value(val) {
+      //   this.$nextTick(this.resizeTextarea);
+      // },
+      nativeInputValue() {
+        this.setNativeInputValue();
+      },
+      type() {
+        this.$nextTick(() => {
+          this.setNativeInputValue();
+          // this.resizeTextarea();
+          // this.updateIconOffset();
+        });
       }
     },
     methods: {
-      getCursorPosition() {
-        return this.$refs.input.selectionEnd;
-      },
-      setCursorPosition(position) {
-        this.$refs.input.setSelectionRange(position, position);
-      },
-      changePwdStatus() {
-        if (!this.disabled) {
-          this.showPwd = !this.showPwd;
-        }
-      },
-      onInput() {
-        this.$emit('input', this.inputValue);
-      },
-      blur() {
-        this.onBlur && this.onBlur();
-        this.$parent.$emit('blur');
+      getInput() {
+        return this.$refs.input || this.$refs.textarea;
       },
       focus() {
-        this.$parent.$emit('focus');
-      }
-    },
-    computed: {
-      computedWidth() {
-        if (!this.addonBefore) {
-          return 0;
-        }
-
-        const div = document.createElement('div');
-        div.innerText = this.addonBefore;
-        div.style.fontSize = '14px';
-        div.style.paddingLeft = '10px'; // same padding with input
-        div.style.display = 'inline-block';
-        document.body.appendChild(div);
-        const width = `${div.clientWidth}px`;
-        document.body.removeChild(div);
-        return width;
+        this.getInput().focus();
       },
-      inputType() {
-        if (this.type === 'password') {
-          if (this.showPwd) {
-            return 'text';
-          }
-          return 'password';
-        }
-        return 'text';
+      blur() {
+        this.getInput().blur();
       },
-      isPwdInput() {
-        return this.type === 'password';
-      }
+      getSuffixVisible() {
+        return this.$slots.suffix ||
+          this.suffixIcon ||
+          this.showClear ||
+          this.showPassword ||
+          this.isWordLimitVisible;
+      },
+      clear() {
+        this.$emit('input', '');
+        this.$emit('change', '');
+        this.$emit('clear');
+      },
+      handlePasswordVisible() {
+        this.passwordVisible = !this.passwordVisible;
+        this.$nextTick(() => {
+          this.focus();
+        });
+      },
+      setNativeInputValue() {
+        const input = this.getInput();
+        if (!input) return;
+        if (input.value === this.nativeInputValue) return;
+        input.value = this.nativeInputValue;
+      },
+      handleCompositionStart(event) {
+        this.$emit('compositionstart', event);
+        this.isComposing = true;
+      },
+      handleCompositionUpdate(event) {
+        this.$emit('compositionupdate', event);
+        this.isComposing = true;
+      },
+      handleCompositionEnd(event) {
+        this.$emit('compositionend', event);
+        if (this.isComposing) {
+          this.isComposing = false;
+          this.handleInput(event);
+        }
+      },
+      handleInput(event) {
+        if (this.isComposing) return;
+        if (event.target.value === this.nativeInputValue) return;
+        this.$emit('input', event.target.value);
+        this.$nextTick(this.setNativeInputValue);
+      },
+      handleFocus(event) {
+        this.focused = true;
+        this.$parent.$emit('focus', event);
+      },
+      handleBlur(event) {
+        this.focused = false;
+        this.$parent.$emit('blur', event);
+      },
+      handleChange(event) {
+        this.$parent.$emit('change', event.target.value);
+      },
     }
   });
 });
