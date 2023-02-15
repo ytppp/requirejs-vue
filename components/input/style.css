@@ -34,7 +34,6 @@
 }
 .input .input__inner:focus {
   outline: none;
-  border-color: #d6001c;
 }
 .input .input__clear {
   color: #C0C4CC;

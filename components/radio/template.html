@@ -1,0 +1,28 @@
+<label
+  class="radio"
+  :class="{
+    'is-selected': model === label,
+    'is-disabled': isDisabled
+  }"
+>
+  <span class="radio__input">
+    <span class="radio__inner"></span>
+    <input
+      ref="radio"
+      class="radio__original"
+      :value="label"
+      type="radio"
+      aria-hidden="true"
+      v-model="model"
+      @change="handleChange"
+      :name="name"
+      :disabled="isDisabled"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </span>
+  <span class="radio__label">
+    <slot></slot>
+    <template v-if="!$slots.default">{{label}}</template>
+  </span>
+</label>

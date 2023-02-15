@@ -1,6 +1,3 @@
-/**
- * input框组件
- */
 define(['vue'], function (Vue) {
   Vue.directive('clickoutside', {
     bind(el, binding) {

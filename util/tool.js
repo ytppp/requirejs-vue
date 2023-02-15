@@ -51,6 +51,30 @@ define(function (require) {
       /^[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~`]+$/;
     return passwordRuleReg.test(value);
   }
+  function getStringByte(str) {
+    let total = 0;
+    /**
+     * js默认使用utf-16进行编码，同时codePointAt也会返回的utf-16的码点值
+     * 但是存储是路由器，使用的是utf-8的编码方式，所以需要计算为utf-8的字节数
+     * 转换的具体方式，通过取每个字符的codePointAt(0)得到该字符的unicode码点(code point)
+     * 然后按照utf-8的转换方式去计算utf-8的字节数
+     * */
+    /*  eslint-disable  */
+    for (const ch of str) {
+      const charCode = ch.codePointAt(0);
+      if (charCode <= 0x007f) {
+        total += 1;
+      } else if (charCode <= 0x07ff) {
+        total += 2;
+      } else if (charCode <= 0xffff) {
+        total += 3;
+      } else {
+        total += 4;
+      }
+    }
+
+    return total;
+  }
   String.prototype.format = function (...args) {
     let _this = this;
     args.forEach(val => {
@@ -63,7 +87,8 @@ define(function (require) {
     setFavicon,
     setDocTitle,
     scrollTo,
-    isValidPassword
+    isValidPassword,
+    getStringByte
   };
 });
 

@@ -1,7 +1,7 @@
 define(function (require) {
   require('less!./components/button/style.less');
   var Vue = require('vue');
-  Vue.component('fh-button', {
+  Vue.component('FhButton', {
     template: require('text!./components/button/template.html'),
     props: {
       disabled: {

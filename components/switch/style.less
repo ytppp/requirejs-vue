@@ -2,11 +2,14 @@
 @switch-circle-color: #fff;
 @switch-chencked-color: #00d061;
 .switch {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  .switch__label {
-    margin-right: 20px;
-    font-weight: bold;
+  .switch__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin: 0;
   }
   .switch__inner {
     cursor: pointer;
@@ -31,7 +34,7 @@
       background-color: @switch-circle-color;
       transition: left 0.3s;
     }
-    &.checked {
+    &.is-checked {
       border-color: @switch-chencked-color;
       background-color: @switch-chencked-color;
       transition: border ease 0.4s, box-shadow ease 0.4s,
@@ -40,7 +43,7 @@
         left: 26px;
       }
     }
-    &.disabled {
+    &.is-disabled {
       cursor: not-allowed;
       opacity: 0.7;
     }

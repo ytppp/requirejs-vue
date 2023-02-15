@@ -1,10 +1,13 @@
 .switch {
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
-.switch .switch__label {
-  margin-right: 20px;
-  font-weight: bold;
+.switch .switch__input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  margin: 0;
 }
 .switch .switch__inner {
   cursor: pointer;
@@ -30,15 +33,15 @@
   background-color: #fff;
   transition: left 0.3s;
 }
-.switch .switch__inner.checked {
+.switch .switch__inner.is-checked {
   border-color: #00d061;
   background-color: #00d061;
   transition: border ease 0.4s, box-shadow ease 0.4s, background-color ease 1.2s;
 }
-.switch .switch__inner.checked::before {
+.switch .switch__inner.is-checked::before {
   left: 26px;
 }
-.switch .switch__inner.disabled {
+.switch .switch__inner.is-disabled {
   cursor: not-allowed;
   opacity: 0.7;
 }

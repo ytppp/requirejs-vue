@@ -2,22 +2,30 @@
   <div class="page-header">{{$t('trans0418')}}</div>
   <div class="page-content">
     <fh-form ref="form" class="form" :model="ddns" :rules="rules">
-      <div class="form-item">
-        <label style="font-weight: bold">{{$t('trans0435')}}</label>
-        <fh-radio-group v-model="ddns.service" :options="services" />
-      </div>
+      <fh-form-item class="item" :label="$t('trans0435')">
+        <fh-radio v-model="ddns.service" label="dyndns">{{$t('trans0437')}}</fh-radio>
+        <fh-radio v-model="ddns.service" label="oray">{{$t('trans0438')}}</fh-radio>
+      </fh-form-item>
+      <fh-form-item class="item" :label="$t('trans0435')">
+        <fh-radio-group v-model="ddns.service">
+          <fh-radio label="dyndns">{{$t('trans0437')}}</fh-radio>
+          <fh-radio label="oray">{{$t('trans0438')}}</fh-radio>
+        </fh-radio-group>
+      </fh-form-item>
       <fh-form-item class="item" prop="ddns.service" :label="$t('trans0435')">
         <fh-select
           v-model="ddns.service"
           :options="services"
+          name="services"
         />
       </fh-form-item>
       <fh-form-item class="item" prop="domain" :label="$t('trans0436')">
         <fh-input
           :placeholder="$t('trans0321')"
-          v-model="ddns.domain"
+          v-model="addonBefore"
           maxlength="10"
           showWordLimit
+          name="addonBefore"
         />
       </fh-form-item>
       <fh-form-item class="item" prop="username" :label="$t('trans0410')">
@@ -25,8 +33,9 @@
           :placeholder="$t('trans0321')"
           v-model="ddns.username"
         >
-        <template slot="prepend">Http://</template>
-        <template slot="append">.com</template>
+          <template slot="prepend">Http://</template>
+          <template slot="append">.com</template>
+        </fh-input>
       </fh-form-item>
       <fh-form-item class="item" prop="password" :label="$t('trans0003')">
         <fh-input
@@ -36,15 +45,15 @@
           showPassword
         />
       </fh-form-item>
-      <div class="form-item">
-        <fh-checkbox v-model="ddns.enabled" :text="$t('trans0462')" />
-      </div>
-      <div class="form-item">
+      <fh-form-item class="item" prop="password">
+        <fh-checkbox v-model="ddns.serviceList" :options="services" />
+      </fh-form-item>
+      <fh-form-item class="item" prop="password">
         <fh-switch v-model="ddns.enabled" @change="updateddns" />
-      </div>
+      </fh-form-item>
+      <fh-form-item>
+        <fh-button @click="submit()" disabled type="submit">{{$t('trans0081')}}</fh-button>
+      </fh-form-item>
     </fh-form>
-    <div class="form-button">
-      <fh-button @click="submit()" disabled type="submit">{{$t('trans0081')}}</fh-button>
-    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 define(function (require) {
   var Vue = require('vue');
-  Vue.component('fh-form', {
+  Vue.component('FhForm', {
     template: require('text!./components/form/template.html'),
     props: {
       model: {
@@ -8,14 +8,6 @@ define(function (require) {
       },
       rules: {
         type: Object
-      },
-      labelSuffix: {
-        type: String,
-        default: ''
-      },
-      showMessage: {
-        type: Boolean,
-        default: true
       },
       action: String,
       method: String

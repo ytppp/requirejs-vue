@@ -1,8 +1,13 @@
-.radio-group {
+@checkbox-border-color: #999;
+@checkbox-background-color: #fff;
+@checkbox-checked-background-color: #333;
+@checkbox-checked-color: #fff;
+
+.checkbox-group {
   display: flex;
   &.is-vertical {
     flex-direction: column;
-    .radio {
+    .checkbox {
       margin-top: 20px;
       &:first-child {
         margin-top: 0;
@@ -10,7 +15,7 @@
     }
   }
   &.is-horizontal {
-    .radio {
+    .checkbox {
       margin-left: 30px;
       &:first-child {
         margin: 0;

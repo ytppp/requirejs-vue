@@ -3,22 +3,30 @@
  */
 define(function (require) {
   require('less!./components/select/style.less');
+  require('fh-input');
   require('clickoutside');
 
   var Vue = require('vue');
   var { scrollTo } = require('tool');
 
-  Vue.component('fh-select', {
+  Vue.component('FhSelect', {
     template: require('text!./components/select/template.html'),
+    inject: {
+      form: {
+        default: ''
+      },
+      formItem: {
+        default: ''
+      }
+    },
     props: {
       options: {
         type: Array,
         default: () => []
       },
-      value: {},
-      label: {
-        type: String,
-        default: ''
+      // value: {},
+      value: {
+        required: true
       },
       height: {
         type: Number
@@ -26,30 +34,47 @@ define(function (require) {
       disabled: {
         type: Boolean,
         default: false
-      }
+      },
+      name: String,
+      placeholder: String,
+      label: String,
     },
     data() {
       return {
-        selected: this.getOptionByValue(this.value),
+        selected: {},
         opened: false
       };
     },
+    computed: {
+      iconClass() {
+        return this.opened ? 'arrow-up is-reverse' : 'arrow-up';
+      },
+      currentLabel() {
+        return this.label || this.$parent.label || '';
+      },
+      selectPlaceholder() {
+        return typeof this.placeholder !== 'undefined' ? this.placeholder : this.$t('trans0002');
+      },
+      selectDisabled() {
+        return this.disabled || (this.form || {}).disabled;
+      },
+    },
     watch: {
-      value(val) {
-        this.selected = this.getOptionByValue(val);
-      }
+      value() {
+        this.setSelected();
+      },
     },
     methods: {
-      getOptionByValue(val) {
-        const option = this.options.filter(o => o.value === val)[0] || {
-          text: val
+      setSelected() {
+        const option = this.options.filter(o => o.value === this.value)[0] || {
+          text: this.value
         };
-        return option;
+        this.selected = option;
       },
       scrollToSelect() {
         this.$nextTick(() => {
-          const popupEl = this.$el.querySelector('.select-popup');
-          const selectEl = popupEl.querySelector('li.selected');
+          const popupEl = this.$el.querySelector('.select__popup');
+          const selectEl = popupEl.querySelector('li.is-selected');
           if (selectEl) {
             const popupHeight = popupEl.clientHeight;
             const elHeight = selectEl.clientHeight;
@@ -84,6 +109,9 @@ define(function (require) {
       close() {
         this.opened = false;
       }
+    },
+    created () {
+      this.setSelected();
     }
   });
 });

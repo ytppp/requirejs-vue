@@ -1,7 +1,7 @@
 define(function (require) {
   require('less!./components/form-item/style.less');
   var Vue = require('vue');
-  Vue.component('fh-form-item', {
+  Vue.component('FhFormItem', {
     template: require('text!./components/form-item/template.html'),
     provide() {
       return {
@@ -15,10 +15,6 @@ define(function (require) {
         type: String
       },
       for: String,
-      showMessage: {
-        type: Boolean,
-        default: true
-      },
       rules: {
         type: Array,
         default: () => []
@@ -102,17 +98,13 @@ define(function (require) {
       }
     },
     mounted () {
-      console.log(this.$on)
       this.$on('blur', () => {
-        console.log('123');
         this.validate();
       });
       this.$on('focus', () => {
-        console.log('456');
         this.result = null;
       });
       this.$on('change', () => {
-        console.log('789');
         this.result = null;
       });
     }

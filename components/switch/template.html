@@ -1,8 +1,18 @@
-<div class="switch">
-  <label class="switch__label" v-if="label">{{ label }}</label>
-  <div
+<div class="switch" @click.prevent="switchValue">
+  <input
+    class="switch__input"
+    type="checkbox"
+    @change="handleChange"
+    ref="input"
+    :id="id"
+    :name="name"
+    :true-value="activeValue"
+    :false-value="inactiveValue"
+    :disabled="switchDisabled"
+    @keydown.enter="switchValue"
+  />
+  <span
     class="switch__inner"
-    :class="{ checked: checked, disabled: disabled }"
-    @click="switchValue"
-  ></div>
+    :class="{ 'is-checked': checked, 'is-disabled': disabled }"
+  ></span>
 </div>

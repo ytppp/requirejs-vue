@@ -1,14 +1,22 @@
 define(function (require) {
   require('less!./components/checkbox/style.less');
   var Vue = require('vue');
-  Vue.component('fh-checkbox', {
+  Vue.component('FhCheckbox', {
     template: require('text!./components/checkbox/template.html'),
-    props: {
-      value: {
-        type: Boolean,
-        default: false
+    inject: {
+      form: {
+        default: ''
       },
-      text: { type: String },
+      formItem: {
+        default: ''
+      }
+    },
+    props: {
+      value: Array,
+      direction: {
+        type: String,
+        default: 'horizontal'
+      },
       rect: {
         type: Boolean,
         default: true
@@ -24,37 +32,51 @@ define(function (require) {
       disabled: {
         type: Boolean,
         default: false
-      }
-    },
-    data() {
-      return { checked: this.value };
+      },
+      options: Array,
+      name: String
     },
     computed: {
-      classObject() {
-        return {
-          checked: this.checked,
-          'circle-shape': !this.rect,
-          disabled: this.disabled
-        };
+      isDisabled() {
+        return this.disabled || (this.form || {}).disabled;
+      },
+      model: {
+        get() {
+          return this.value;
+        },
+        set(val) {
+          // console.log(val)
+          // this.$emit('input', val);
+          // this.$refs.radio && (this.$refs.radio.checked = this.model === this.label);
+        }
       }
     },
     methods: {
       check(e) {
-        if (this.readonly || this.disabled) {
+        if (this.readonly || this.isDisabled) {
           return;
         }
-        this.checked = !this.checked;
         this.$emit('input', this.checked);
         this.$emit('change', this.checked);
-        if (this.stopPropagation) {
-          e.stopPropagation();
-        }
+      },
+      handleChange(ev) {
+        console.log('111111', ev.target.checked);
       }
-    },
-    watch: {
-      value(v) {
-        this.checked = v;
-      }
+      // handleChange(option, ev) {
+      //   console.log('111111', option, this.model);
+      //   if (ev.target.checked) {
+      //     if (this.model.includes(option.value)) {
+      //       this.model.splice(this.model.indexOf(option.value), 1);
+      //     } else {
+      //       this.model.push(option.value);
+      //     }
+      //   }
+      //   if (!ev.target.checked && this.model.includes(option.value)) {
+      //     this.model.push(option.value);
+      //   }
+      //   console.log('22222', this.model);
+      //   this.$emit('change', this.model);
+      // }
     }
   });
 });

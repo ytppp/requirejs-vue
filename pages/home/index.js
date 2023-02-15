@@ -1,6 +1,6 @@
 define(function (require) {
   require('less!./style.less');
-  var { isValidPassword } = require('tool');
+  var { isValidPassword, getStringByte } = require('tool');
   require('fh-form');
   require('fh-form-item');
   require('fh-input');
@@ -8,6 +8,7 @@ define(function (require) {
   require('fh-checkbox');
   require('fh-switch');
   require('fh-button');
+  require('fh-radio');
   require('fh-radio-group');
 
   return {
@@ -15,11 +16,12 @@ define(function (require) {
     data() {
       return {
         ddns: {
-          domain: '',
-          username: '',
-          password: '',
+          domain: 'asdaq',
+          username: 'baidu',
+          password: '123456',
           service: 'dyndns',
-          enabled: true
+          enabled: false,
+          serviceList: ['dyndns', 'oray']
         },
         addonBefore: 'xxxx',
         services: [

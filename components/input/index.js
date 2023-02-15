@@ -2,8 +2,16 @@ define(function (require) {
   require('less!./components/input/style.less');
   var Vue = require('vue');
 
-  Vue.component('fh-input', {
+  Vue.component('FhInput', {
     template: require('text!./components/input/template.html'),
+    inject: {
+      form: {
+        default: ''
+      },
+      formItem: {
+        default: ''
+      }
+    },
     props: {
       value: [String, Number],
       prefixIcon: String,
@@ -33,14 +41,6 @@ define(function (require) {
       showWordLimit: {
         type: Boolean,
         default: false
-      },
-    },
-    inject: {
-      form: {
-        default: ''
-      },
-      formItem: {
-        default: ''
       }
     },
     data() {
@@ -177,6 +177,9 @@ define(function (require) {
       handleChange(event) {
         this.$parent.$emit('change', event.target.value);
       },
+    },
+    mounted () {
+      this.setNativeInputValue();
     }
   });
 });

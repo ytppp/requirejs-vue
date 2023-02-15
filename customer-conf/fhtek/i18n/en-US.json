@@ -1,5 +1,6 @@
 {
   "trans0001": "Login",
+  "trans0002": "Select",
   "trans0003": "Password",
   "trans0081": "Save",
   "trans0125": "Password may only contain %d-%d digits, letters or special characters, or any combination of these.",

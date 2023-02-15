@@ -1,49 +1,18 @@
-.radio-group-container {
+.radio-group {
   display: flex;
 }
-.radio-group-container.vertical {
+.radio-group.is-vertical {
   flex-direction: column;
 }
-.radio-group-container.vertical .option {
+.radio-group.is-vertical .radio {
   margin-top: 20px;
 }
-.radio-group-container.vertical .option:first-child {
+.radio-group.is-vertical .radio:first-child {
   margin-top: 0;
 }
-.radio-group-container.horizontal .option {
+.radio-group.is-horizontal .radio {
   margin-left: 30px;
 }
-.radio-group-container.horizontal .option:first-child {
+.radio-group.is-horizontal .radio:first-child {
   margin: 0;
-}
-.radio-group-container .option {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.radio-group-container .option.selected .radio {
-  border-color: #333;
-  position: relative;
-}
-.radio-group-container .option.selected .radio::after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 6px;
-  height: 6px;
-  background: #333;
-  border-radius: 50%;
-}
-.radio-group-container .option .radio {
-  width: 14px;
-  height: 14px;
-  border-radius: 9px;
-  border: 1px solid #b6b6b6;
-}
-.radio-group-container .option .text {
-  margin-left: 12px;
-  font-size: 14px;
 }

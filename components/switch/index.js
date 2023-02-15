@@ -1,8 +1,16 @@
 define(function (require) {
   require('less!./components/switch/style.less');
   var Vue = require('vue');
-  Vue.component('fh-switch', {
+  Vue.component('FhSwitch', {
     template: require('text!./components/switch/template.html'),
+    inject: {
+      form: {
+        default: ''
+      },
+      formItem: {
+        default: ''
+      }
+    },
     props: {
       disabled: {
         type: Boolean,
@@ -20,11 +28,16 @@ define(function (require) {
       inactiveValue: {
         type: [Boolean, String, Number],
         default: false
-      }
+      },
+      name: String,
+      id: String
     },
     computed: {
       checked() {
         return this.value === this.activeValue;
+      },
+      switchDisabled() {
+        return this.disabled || (this.form || {}).disabled;
       }
     },
     methods: {
@@ -32,6 +45,11 @@ define(function (require) {
         const val = this.checked ? this.inactiveValue : this.activeValue;
         this.$emit('input', val);
         this.$emit('change', val);
+        this.$nextTick(() => {
+          if (this.$refs.input) {
+            this.$refs.input.checked = this.checked;
+          }
+        });
       },
       switchValue() {
         !this.disabled && this.handleChange();

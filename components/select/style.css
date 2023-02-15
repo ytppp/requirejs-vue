@@ -1,50 +1,13 @@
-.select-container {
-  width: 340px;
-  cursor: pointer;
-}
-.select-container.disabled .select {
-  background: #e1e1e1;
-  opacity: 0.8;
-  cursor: not-allowed;
-}
-.select-container.disabled .select input {
-  background: #e1e1e1;
-  opacity: 0.8;
-  cursor: not-allowed;
-}
-.select-container .select {
-  height: 48px;
-  width: 100%;
-  border-radius: 4px;
-  outline: 0;
-  border: 1px solid #e1e1e1;
-  font-size: 14px;
-  padding: 0 10px;
+.select {
   position: relative;
-  padding-right: 50px;
 }
-.select-container .select .select-text {
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 100%;
-  width: 100%;
-  line-height: 34px;
-  word-wrap: break-word;
-  word-break: break-all;
-  outline: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.select .select__caret {
+  transition: transform 0.2s linear;
 }
-.select-container label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
+.select .select__caret.is-reverse {
+  transform: rotate(180deg);
 }
-.select-container .select-popup {
+.select .select__popup {
   position: absolute;
   z-index: 888;
   left: -1px;
@@ -56,7 +19,7 @@
   border: 1px solid #e1e1e1;
   overflow: auto;
 }
-.select-container .select-popup .select-popup__item {
+.select .select__popup-item {
   list-style: none;
   padding: 17px 10px;
   line-height: 1;
@@ -65,18 +28,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.select-container .select-popup .select-popup__item:active {
+.select .select__popup-item:active {
   background: #f1f1f1;
   color: #333;
 }
-.select-container .select-popup .select-popup__item:hover {
+.select .select__popup-item:hover {
   background: #f1f1f1;
   color: #333;
 }
-.select-container .select-popup .select-popup__item.selected {
+.select .select__popup-item.is-selected {
   color: #d6001c;
 }
-.select-container .select-popup .select-popup__item--empty {
+.select .select__popup-item--empty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,30 +48,4 @@
   font-size: 14px;
   background-color: #fff;
   color: #999;
-}
-.select-container .icon-container {
-  position: absolute;
-  right: 0;
-  top: 0;
-  text-align: center;
-  height: 46px;
-  width: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.select-container .icon-container .icon {
-  width: 12px;
-  height: 6px;
-  display: inline-block;
-  background: url(/assets/images/icon/ic_input_box_pull_down.png) no-repeat center;
-  background-size: 100%;
-  transition: transform 0.2s linear;
-}
-.select-container .icon-container .icon.open {
-  transform: rotate(180deg);
-}
-.select-container .icon-container .icon.close {
-  transform: rotate(0);
 }

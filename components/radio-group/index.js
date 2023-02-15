@@ -1,29 +1,29 @@
 define(function (require) {
   require('less!./components/radio-group/style.less');
   var Vue = require('vue');
-  Vue.component('fh-radio-group', {
+  Vue.component('FhRadioGroup', {
     template: require('text!./components/radio-group/template.html'),
+    componentName: 'FhRadioGroup',
+    inject: {
+      form: {
+        default: ''
+      },
+      formItem: {
+        default: ''
+      }
+    },
     props: {
-      value: {},
       direction: {
         type: String,
         default: 'horizontal'
       },
-      options: Array
+      value: {},
+      disabled: Boolean
     },
-    data() {
-      return { selected: this.value };
-    },
-    watch: {
-      value(val) {
-        this.selected = val;
-      }
-    },
-    methods: {
-      check(option) {
-        this.selected = option.value;
-        this.$emit('input', this.selected);
-      }
+    created() {
+      this.$on('handleChange', value => {
+        this.$emit('change', value);
+      });
     }
   });
 });

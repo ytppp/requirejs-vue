@@ -19,11 +19,12 @@ require.config({
     'fh-form': 'components/form/index',
     'fh-form-item': 'components/form-item/index',
     'fh-checkbox': 'components/checkbox/index',
+    'fh-checkbox-group': 'components/checkbox-group/index',
     'fh-switch': 'components/switch/index',
     'fh-button': 'components/button/index',
+    'fh-radio': 'components/radio/index',
     'fh-radio-group': 'components/radio-group/index',
-
-    clickoutside: 'directives/clickoutside',
+    clickoutside: 'components/directives/clickoutside',
 
     constant: 'util/constant',
     'customer-info': 'util/customer-info',
