@@ -1,9 +1,43 @@
-<div class="login customized">
-  <div class="login-header">
-    <div class="header-content">
-      <img :src="logoImgSrc" alt="稀土掘金" class="logo" />
-      <div class="product-name">{{$t("trans0001")}}</div>
-      {{name}}
+<div class="signin">
+  <header class="signin__header">
+    <div class="header">
+      <img class="header__logo" :src="logoSrc" alt="" />
+      <div class="header__product">
+        123456
+      </div>
+    </div>
+  </header>
+  <div class="signin__main">
+    <div class="signin-form">
+      <div style="text-align: center;">
+        <img class="signin-form__img" :src="logoSrc" alt="" />
+      </div>
+      <fh-form ref="form" :model="userinfo" :rules="rules">
+        <fh-form-item prop="username">
+          <fh-input
+            :placeholder="$t('trans0321')"
+            v-model="userinfo.username"
+          >
+            <i slot="prefix" class="input__icon icon-user"></i>
+          </fh-input>
+        </fh-form-item>
+        <fh-form-item prop="password">
+          <fh-input
+            type="password"
+            :placeholder="$t('trans0321')"
+            v-model="userinfo.password"
+            showPassword
+          >
+            <i slot="prefix" class="input__icon icon-lock"></i>
+          </fh-input>
+        </fh-form-item>
+        <fh-form-item>
+          <fh-button>{{$t('trans0081')}}</fh-button>
+        </fh-form-item>
+      </fh-form>
     </div>
   </div>
+  <footer class="signin__footer">
+    © FILT Info Technologies Co.,Ltd.. All rights reserved.
+  </footer>
 </div>

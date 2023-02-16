@@ -9,17 +9,23 @@ define(function (require) {
       fr: 'fr-FR',
       es: 'es-MX',
       de: 'de-DE'
-    }; // 浏览器返回语言可能只含前半部分，加上后半部分
+    }; // 浏览器返回语言可能只含“-”的前半部分，加上后半部分
     return langFormated[lang] ? langFormated[lang] : lang;
   }
   function getLangUsed() {
     var lang = customerInfo[customerInfo.name].defaultLanguage;
     if (localStorage && localStorage.getItem('lang')) {
       lang = localStorage.getItem('lang');
-    } else if (navigator && navigator.language) {
-      lang = navigator.language;
+    } else if (
+      navigator &&
+      navigator.language &&
+      customerInfo[customerInfo.name].languages.includes(
+        formatLang(navigator.language)
+      )
+    ) {
+      lang = formatLang(navigator.language);
     }
-    return formatLang(lang);
+    return lang;
   }
   function setFavicon(favicon) {
     var link =

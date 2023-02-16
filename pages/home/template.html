@@ -4,12 +4,11 @@
     <fh-form ref="form" class="form" :model="ddns" :rules="rules">
       <fh-form-item class="item" :label="$t('trans0435')">
         <fh-radio v-model="ddns.service" label="dyndns">{{$t('trans0437')}}</fh-radio>
-        <fh-radio v-model="ddns.service" label="oray">{{$t('trans0438')}}</fh-radio>
+        <fh-radio v-model="ddns.service" label="oray" disabled>{{$t('trans0438')}}</fh-radio>
       </fh-form-item>
       <fh-form-item class="item" :label="$t('trans0435')">
         <fh-radio-group v-model="ddns.service">
-          <fh-radio label="dyndns">{{$t('trans0437')}}</fh-radio>
-          <fh-radio label="oray">{{$t('trans0438')}}</fh-radio>
+          <fh-radio v-for="service in services" :key="service.value" :label="service.value">{{service.text}}</fh-radio>
         </fh-radio-group>
       </fh-form-item>
       <fh-form-item class="item" prop="ddns.service" :label="$t('trans0435')">
@@ -46,7 +45,17 @@
         />
       </fh-form-item>
       <fh-form-item class="item" prop="password">
-        <fh-checkbox v-model="ddns.serviceList" :options="services" />
+        <fh-checkbox v-model="checked">备选项</fh-checkbox>
+      </fh-form-item>
+
+      <fh-form-item>
+        <fh-checkbox-group v-model="checkList">
+          <fh-checkbox label="复选框 A"></fh-checkbox>
+          <fh-checkbox label="复选框 B"></fh-checkbox>
+          <fh-checkbox label="复选框 C"></fh-checkbox>
+          <fh-checkbox label="禁用" disabled></fh-checkbox>
+          <fh-checkbox label="选中且禁用" disabled></fh-checkbox>
+        </fh-checkbox-group>
       </fh-form-item>
       <fh-form-item class="item" prop="password">
         <fh-switch v-model="ddns.enabled" @change="updateddns" />

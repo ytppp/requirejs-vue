@@ -1,19 +1,46 @@
 define(function (require) {
   require('less!./style.less');
-  var { mapState } = require('vuex');
+  require('fh-form');
+  require('fh-form-item');
+  require('fh-input');
+  require('fh-button');
+  var { isValidPassword, getStringByte } = require('tool');
+  var customerInfo = require('customer-info');
 
   return {
     template: require('text!./template.html'),
     data() {
       return {
-        title: '登录'
+        logoSrc: customerInfo[customerInfo.name].logo,
+        userinfo: {
+          username: '',
+          password: ''
+        },
+        rules: {
+          username: [
+            {
+              rule: value => value,
+              message: this.$t('trans0232')
+            },
+            {
+              rule: value => getStringByte(value) <= 64,
+              message: this.$t('trans0261')
+            }
+          ],
+          password: [
+            {
+              rule: value => value,
+              message: this.$t('trans0232')
+            },
+            {
+              rule: value => isValidPassword(value, 1, 64),
+              message: this.$t('trans0125').format(1, 64)
+            }
+          ]
+        }
       };
     },
     computed: {
-      ...mapState(['name']),
-      logoImgSrc() {
-        return `/customer-conf/${this.name}/images/logo.png`;
-      }
     }
   };
 });

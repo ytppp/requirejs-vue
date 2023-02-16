@@ -6,6 +6,7 @@ define(function (require) {
   require('fh-input');
   require('fh-select');
   require('fh-checkbox');
+  require('fh-checkbox-group');
   require('fh-switch');
   require('fh-button');
   require('fh-radio');
@@ -15,11 +16,13 @@ define(function (require) {
     template: require('text!./template.html'),
     data() {
       return {
+        checked: false,
+        checkList: ['选中且禁用','复选框 A'],
         ddns: {
           domain: 'asdaq',
           username: 'baidu',
           password: '123456',
-          service: 'dyndns',
+          service: 'oray',
           enabled: false,
           serviceList: ['dyndns', 'oray']
         },
@@ -32,6 +35,10 @@ define(function (require) {
           {
             text: this.$t('trans0438'),
             value: 'oray'
+          },
+          {
+            text: '测试 11',
+            value: 'test11'
           }
         ],
         rules: {

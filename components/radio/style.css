@@ -1,5 +1,6 @@
 .radio {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
   cursor: pointer;
   white-space: nowrap;
@@ -22,6 +23,24 @@
   height: 6px;
   background: #333;
   border-radius: 50%;
+}
+.radio.is-disabled .radio__inner {
+  border-color: #e4e7ed;
+  cursor: not-allowed;
+}
+.radio.is-disabled .radio__inner::after {
+  cursor: not-allowed;
+  background-color: #f5f7fa;
+}
+.radio.is-disabled .radio__input.is-selected .radio__inner {
+  border-color: #e4e7ed;
+}
+.radio.is-disabled .radio__input.is-selected .radio__inner::after {
+  background-color: #c0c4cc;
+}
+.radio.is-disabled .radio__label {
+  color: #c0c4cc;
+  cursor: not-allowed;
 }
 .radio .radio__input {
   white-space: nowrap;

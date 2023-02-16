@@ -1,6 +1,3 @@
-* {
-  box-sizing: border-box;
-}
 html,
 body {
   background: #fff;
@@ -8,10 +5,9 @@ body {
   padding: 0;
   height: 100%;
   font-family: Helvetica, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif;
-  -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;
-  font-size: 14px;
-  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   overflow: hidden;
@@ -42,8 +38,6 @@ input::-webkit-input-placeholder {
 ::-ms-reveal {
   display: none;
 }
-
-
 /* 表单页面相关 */
 .page {
   position: relative;

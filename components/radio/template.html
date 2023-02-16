@@ -5,7 +5,13 @@
     'is-disabled': isDisabled
   }"
 >
-  <span class="radio__input">
+  <span
+    class="radio__input"
+    :class="{
+      'is-selected': model === label,
+      'is-disabled': isDisabled
+    }"
+  >
     <span class="radio__inner"></span>
     <input
       ref="radio"
@@ -21,7 +27,7 @@
       autocomplete="off"
     />
   </span>
-  <span class="radio__label">
+  <span class="radio__label" v-if="$slots.default || label">
     <slot></slot>
     <template v-if="!$slots.default">{{label}}</template>
   </span>
