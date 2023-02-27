@@ -1,0 +1,17 @@
+<template>
+  <transition name="dialog">
+    <div class="dialog-container mask-layer"
+         v-show="visible">
+      <div class="dialog-content">
+        <div v-if="title"
+             class="dialog-title">{{title}}</div>
+        <div class="dialog-message">{{message}}</div>
+        <div class="dialog-buttons">
+          <fh-button v-if="Types.info!==type"
+                  @click="cancel()">{{cancelText}}</fh-button>
+          <fh-button @click="ok()">{{okText}}</fh-button>
+        </div>
+      </div>
+    </div>
+  </transition>
+</template>

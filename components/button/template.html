@@ -1,12 +1,13 @@
 <template>
   <button
+    :id="id"
     class="btn"
     :type="nativeType"
-    :disabled="disabled"
+    :disabled="btnDisabled"
     :class="[
     size ? 'btn-' + size : '',
     {
-    'is-disabled': disabled
+    'is-disabled': btnDisabled
   }]"
     @click="handleClick"
   >

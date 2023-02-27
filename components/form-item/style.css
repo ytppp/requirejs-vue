@@ -11,17 +11,16 @@
   transform: scaleY(0);
 }
 .form-item {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: relative;
 }
 .form-item .form-item__label {
+  display: inline-block;
   padding-bottom: 12px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 16px;
   color: #606266;
-  height: 40px;
-  line-height: 40px;
-  font-weight: bold;
+  font-weight: 500;
 }
 .form-item .form-item__error {
   color: #ff0000;

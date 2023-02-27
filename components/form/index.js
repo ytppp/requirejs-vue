@@ -4,13 +4,15 @@ define(function (require) {
     template: require('text!./components/form/template.html'),
     props: {
       model: {
-        type: Object,
+        type: Object
       },
       rules: {
         type: Object
       },
+      id: String,
       action: String,
-      method: String
+      method: String,
+      disabled: Boolean
     },
     provide() {
       return {
@@ -18,19 +20,17 @@ define(function (require) {
       };
     },
     methods: {
-      methods: {
-        validate() {
-          let result = true;
-          this.$children.forEach(child => {
-            if (child.validate) {
-              if (!child.validate()) {
-                result = false;
-              }
+      validate() {
+        let result = true;
+        this.$children.forEach(child => {
+          if (child.validate) {
+            if (!child.validate()) {
+              result = false;
             }
-            return true;
-          });
-          return result;
-        }
+          }
+          return true;
+        });
+        return result;
       }
     }
   });

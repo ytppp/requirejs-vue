@@ -1,0 +1,56 @@
+<template>
+  <div class="layout" ref="layout">
+    <fh-header
+      :isShow="isShow"
+      :list="list"
+    />
+    <main class="layout__main">
+      <template v-if="hasChildPage">
+        <ul class="layout__aside layout__nav">
+          <li
+            class="nav-item"
+            v-for="menu in childList"
+            :key="menu.key"
+            :class="{'selected':menu.selected}"
+            @click="showMobileMenu(menu)"
+          >
+            <div class="nav-item-content" :class="{'has-children': menu.children}">
+              <div class="nav-item__text">{{$t(menu.text)}}</div>
+            </div>
+            <transition
+              name="nav-item-child__animation"
+              v-on:before-enter="beforeEnter"
+              v-on:enter="enter"
+              v-on:leave="leave"
+            >
+              <ul
+                v-if="menu.children"
+                class="nav-item-child"
+                v-show="menu.selected"
+              >
+                <li
+                  class="nav-child__text"
+                  :key="child.key"
+                  @click.stop="jumpMobile(child,menu)"
+                  v-for="child in menu.children"
+                  :class="{'selected':url === child.url,'disabled':child.disabled}"
+                >
+                  {{$t(child.text)}}
+                  <i
+                    v-if="url === child.url"
+                    class="is-checked"
+                  ></i>
+                </li>
+              </ul>
+            </transition>
+          </li>
+        </ul>
+        <slot></slot>
+      </template>
+      <template v-else>
+        <slot></slot>
+      </template>
+    </main>
+    <fh-footer />
+  </div>
+</template>

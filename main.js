@@ -6,6 +6,8 @@ require.config({
     'vue-router': 'libs/vue-router/vue-router.min',
     'vue-i18n': 'libs/vue-i18n/vue-i18n',
     vuex: 'libs/vuex/vuex',
+    jquery: 'libs/jquery',
+    'velocity-animate': 'libs/velocity-animate.min',
 
     text: 'libs/require-plugins/text',
     json: 'libs/require-plugins/json',
@@ -24,11 +26,17 @@ require.config({
     'fh-button': 'components/button/index',
     'fh-radio': 'components/radio/index',
     'fh-radio-group': 'components/radio-group/index',
+    'fh-alert': 'components/alert/index',
+    'fh-header': 'components/header/index',
+    'fh-footer': 'components/footer/index',
+    'fh-layout': 'components/layout/index',
+    'fh-dialog': 'components/dialog/index',
     clickoutside: 'components/directives/clickoutside',
 
     constant: 'util/constant',
     'customer-info': 'util/customer-info',
-    tool: 'util/tool'
+    tool: 'util/tool',
+    menu: 'util/menu'
   },
   shim: {
     'vue-i18n': ['vue'],
@@ -36,7 +44,7 @@ require.config({
   }
 });
 
-require(['css!style/normalize.css', 'less!style/global.less', 'less!style/icon.less']);
+require(['css!style/normalize.css', 'less!style/common.less', 'less!style/icon.less']);
 
 define(function (require) {
   var Vue = require('vue');

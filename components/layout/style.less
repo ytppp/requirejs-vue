@@ -1,0 +1,110 @@
+.layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .layout__main {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    flex: 1;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+  }
+  .layout__aside {
+    width: 240px;
+    margin-right: 20px;
+  }
+}
+.layout__nav {
+  list-style: none;
+  flex-direction: column;
+  height: auto;
+  .nav-item {
+    cursor: pointer;
+    width: 100%;
+    margin: 0;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    &:hover {
+      .nav-item-content {
+        .nav-item__text {
+          color: #999;
+        }
+      }
+    }
+    .nav-item-content {
+      align-items: center;
+      position: relative;
+      width: 100%;
+      &.has-children {
+        &::after {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 5px;
+          height: 5px;
+          border-right: 1px solid #333;
+          border-bottom: 1px solid #333;
+          border-left: 0;
+          border-top: 0;
+          transform: translateY(-50%) rotate(45deg);
+          top: 50%;
+          right: 0;
+          transition: all 0.3s linear;
+        }
+      }
+      .nav-item__text {
+        color: #333;
+        line-height: 1;
+        padding: 16px 0;
+        font-size: 16px;
+      }
+    }
+    &.selected {
+      &::after {
+        display: none;
+      }
+      .nav-item-content {
+        &::after {
+          transform: translateY(-50%) rotate(225deg);
+        }
+        .nav-item__text {
+          color: red;
+        }
+      }
+    }
+    .nav-item-child {
+      position: static;
+      display: block;
+      background: #fff;
+      box-shadow: none;
+      width: 100%;
+      padding: 0;
+      &.nav-item-child__animation-leave-active {
+        overflow: hidden;
+      }
+      &.nav-item-child__animation-enter-active {
+        overflow: hidden;
+      }
+      .nav-child__text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+        padding-left: 10px;
+        color: #333;
+        &.disabled {
+          background: #ccc;
+        }
+        &:active {
+          color: red;
+        }
+        &:hover {
+          color: #999;
+          background: #ccc;
+        }
+      }
+    }
+  }
+}

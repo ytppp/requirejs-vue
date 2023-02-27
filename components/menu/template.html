@@ -1,0 +1,40 @@
+<template>
+<ul class="menu" :class="[`menu--${mode}`]">
+  <li
+    class=menu-item"
+    v-for="menu in menuList"
+    :key="menu.key"
+    :class="{'is-selected':menu.selected,'is-disabled':menu.disabled}"
+    @click="showMenu(menu)"
+  >
+    <div class="menu-item__content" :class="{'is-has-children': menu.children}">
+      <div class="menu-item__text">{{$t(menu.text)}}</div>
+    </div>
+    <transition
+      name="nav-item__child-animation"
+      v-on:before-enter="beforeEnter"
+      v-on:enter="enter"
+      v-on:leave="leave"
+    >
+      <ul
+        v-if="menu.children"
+        class="child-menu"
+        v-show="menu.selected"
+      >
+        <li
+          class="child-menu__text"
+          :key="child.key"
+          v-for="child in menu.children"
+          :class="{'is-selected':child.selected,'is-disabled':child.disabled}"
+        >
+          {{$t(child.text)}}
+          <i
+            v-if="child.selected"
+            class="is-selected"
+          ></i>
+        </li>
+      </ul>
+    </transition>
+  </li>
+</ul>
+</template>

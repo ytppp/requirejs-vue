@@ -1,0 +1,37 @@
+<template>
+  <transition name="alert-fade">
+    <div
+      class="alert"
+      :class="[typeClass, center ? 'is-center' : '', 'is-' + effect]"
+      v-show="visible"
+    >
+      <i
+        class="alert__icon"
+        :class="[ iconClass, isBigIcon ]"
+        v-if="showIcon"
+      ></i>
+      <div class="alert__content">
+        <span
+          class="alert__title"
+          :class="[ isBoldTitle ]"
+          v-if="title || $slots.title"
+        >
+          <slot name="title">{{ title }}</slot>
+        </span>
+        <p class="alert__description" v-if="$slots.default && !description">
+          <slot></slot>
+        </p>
+        <p class="alert__description" v-if="description && !$slots.default">
+          {{ description }}
+        </p>
+        <i
+          class="alert__closebtn"
+          :class="{ 'is-customed': closeText !== '', 'icon-close': closeText === '' }"
+          v-show="closable"
+          @click="close()"
+          >{{closeText}}</i
+        >
+      </div>
+    </div>
+  </transition>
+</template>

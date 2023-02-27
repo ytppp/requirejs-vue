@@ -1,22 +1,15 @@
-<div class="signin">
-  <header class="signin__header">
-    <div class="header">
-      <img class="header__logo" :src="logoSrc" alt="" />
-      <div class="header__product">
-        123456
-      </div>
-    </div>
-  </header>
-  <div class="signin__main">
+<fh-layout url="/login" title="123asd">
+  <div class="signin">
     <div class="signin-form">
       <div style="text-align: center;">
         <img class="signin-form__img" :src="logoSrc" alt="" />
       </div>
-      <fh-form ref="form" :model="userinfo" :rules="rules">
+      <fh-form ref="form" id="loginForm" method="post" :disabled="formDisabled" :model="userinfo" :rules="rules">
         <fh-form-item prop="username">
           <fh-input
-            :placeholder="$t('trans0321')"
+            :placeholder="$t('trans0007')"
             v-model="userinfo.username"
+            name="username"
           >
             <i slot="prefix" class="input__icon icon-user"></i>
           </fh-input>
@@ -24,20 +17,24 @@
         <fh-form-item prop="password">
           <fh-input
             type="password"
-            :placeholder="$t('trans0321')"
+            :placeholder="$t('trans0007')"
             v-model="userinfo.password"
-            showPassword
+            name="password"
+            show-password
           >
             <i slot="prefix" class="input__icon icon-lock"></i>
           </fh-input>
         </fh-form-item>
         <fh-form-item>
-          <fh-button>{{$t('trans0081')}}</fh-button>
+          <fh-button size="block" @click="login">{{$t('trans0002')}}</fh-button>
         </fh-form-item>
       </fh-form>
+      <fh-alert
+        v-show="alert"
+        :title="alert"
+        type="error"
+        :closable="false"
+        effect="dark" />
     </div>
   </div>
-  <footer class="signin__footer">
-    © FILT Info Technologies Co.,Ltd.. All rights reserved.
-  </footer>
-</div>
+</fh-layout>

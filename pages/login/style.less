@@ -1,62 +1,16 @@
 .signin {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  .signin__header {
-    height: 80px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-  }
-  .signin__main {
-    position: relative;
-    flex: 1;
-    background-color: #fff;
-  }
-  .signin__footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60px;
-    text-align: center;
-    font-size: 18px;
-    background-color: #f8f9fa;
-  }
-}
-
-.header {
-  display: flex;
   align-items: center;
-  width: 60%;
-  height: 100%;
-  margin: 0 auto;
-  .header__logo {
-    height: 65px;
-    filter: grayscale(100%);
-  }
-  .header__product {
-    padding-left: 10px;
-    border-left: 2px solid #000;
-    color: #000;
-    font-weight: bold;
-  }
-  @media screen and (max-width: 768px) {
-    .header {
-      width: 100%;
+  justify-content: center;
+  .signin-form {
+    padding: 25px;
+    width: 400px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.075);
+    .signin-form__img {
+      display: inline-block;
+      width: 200px;
     }
-  }
-}
-.signin-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 25px;
-  width: 400px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,.075);
-  .signin-form__img {
-    display: inline-block;
-    width: 200px;
   }
 }
