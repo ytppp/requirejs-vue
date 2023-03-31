@@ -1,17 +1,14 @@
 <template>
-  <transition name="dialog">
-    <div class="dialog-container mask-layer"
-         v-show="visible">
-      <div class="dialog-content">
-        <div v-if="title"
-             class="dialog-title">{{title}}</div>
-        <div class="dialog-message">{{message}}</div>
-        <div class="dialog-buttons">
-          <fh-button v-if="Types.info!==type"
-                  @click="cancel()">{{cancelText}}</fh-button>
-          <fh-button @click="ok()">{{okText}}</fh-button>
-        </div>
+  <fh-wrap class="dialog-layer" :visible.sync="visible">
+    <div class="dialog">
+      <div v-if="title"
+           class="dialog__title">{{title}}</div>
+      <div class="dialog__message">{{message}}</div>
+      <div class="dialog__buttons">
+        <fh-button v-if="type !== DialogType.info"
+                @click="cancel()">{{cancelText}}</fh-button>
+        <fh-button @click="ok()">{{okText}}</fh-button>
       </div>
     </div>
-  </transition>
+  </fh-wrap>
 </template>

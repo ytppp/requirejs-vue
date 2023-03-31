@@ -1,40 +1,70 @@
 <template>
-<ul class="menu" :class="[`menu--${mode}`]">
-  <li
-    class=menu-item"
-    v-for="menu in menuList"
-    :key="menu.key"
-    :class="{'is-selected':menu.selected,'is-disabled':menu.disabled}"
-    @click="showMenu(menu)"
-  >
-    <div class="menu-item__content" :class="{'is-has-children': menu.children}">
-      <div class="menu-item__text">{{$t(menu.text)}}</div>
-    </div>
-    <transition
-      name="nav-item__child-animation"
-      v-on:before-enter="beforeEnter"
-      v-on:enter="enter"
-      v-on:leave="leave"
+  <ul class="menu" :class="[`menu--${mode}`]">
+    <li
+      class="menu-item"
+      v-for="menu in menuList"
+      :key="menu.key"
     >
-      <ul
-        v-if="menu.children"
-        class="child-menu"
-        v-show="menu.selected"
+      <div
+        class="menu-item__main"
+        :class="{'is-disabled': menu.disabled}"
+        :style="{
+          backgroundColor: backgroundColor,
+          borderBottomColor: menu.selected && mode === 'horizontal' && activeTextColor,
+        }"
+        @click="handleClick(menu)"
+        @mouseenter="e => onMenuMouseEnter(e, menu)"
+        @mouseleave="e => onMenuMouseLeave(e, menu)"
+        @focus="e => onMenuMouseEnter(e, menu)"
+        @blur="e => onMenuMouseLeave(e, menu)"
       >
-        <li
-          class="child-menu__text"
-          :key="child.key"
-          v-for="child in menu.children"
-          :class="{'is-selected':child.selected,'is-disabled':child.disabled}"
+        <span :style="{color: menu.selected ? activeTextColor : textColor}">
+          {{$t(menu.text)}}
+        </span>
+        <i
+          class="icon-arrow-down menu-item__arrow"
+          :class="{'menu-item__arrow--up': menu.showChild}"
+          v-if="isShowChildMenu && menu.children"
+        ></i>
+      </div>
+      <transition
+        name="child-menu-animation"
+        v-on:before-enter="beforeEnter"
+        v-on:enter="enter"
+        v-on:leave="leave"
+      >
+        <ul
+          class="child-menu"
+          v-if="isShowChildMenu && menu.children"
+          v-show="menu.showChild"
         >
-          {{$t(child.text)}}
-          <i
-            v-if="child.selected"
-            class="is-selected"
-          ></i>
-        </li>
-      </ul>
-    </transition>
-  </li>
-</ul>
+          <li
+            class="child-menu-item"
+            :key="child.key"
+            v-for="child in menu.children"
+          >
+            <div
+              class="child-menu-item__main"
+              :class="{'is-disabled':child.disabled}"
+              :style="{
+                backgroundColor: backgroundColor,
+                color: child.selected ? activeTextColor : textColor
+              }"
+              @click.stop="handleClick(child)"
+              @mouseenter="onMouseEnter"
+              @mouseleave="onMouseLeave"
+              @focus="onMouseEnter"
+              @blur="onMouseLeave"
+            >
+              <span
+                :style="{color: child.selected ? activeTextColor : textColor}"
+              >
+                {{$t(child.text)}}
+              </span>
+            </div>
+          </li>
+        </ul>
+      </transition>
+    </li>
+  </ul>
 </template>

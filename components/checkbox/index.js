@@ -12,9 +12,9 @@ define(function (require) {
       }
     },
     props: {
-      rect: {
+      circle: {
         type: Boolean,
-        default: true
+        default: false
       },
       value: {},
       label: {},
@@ -23,9 +23,6 @@ define(function (require) {
       name: String,
       trueLabel: [String, Number],
       falseLabel: [String, Number],
-      id: String /* 当indeterminate为真时，为controls提供相关连的checkbox的id，表明元素间的控制关系*/,
-      controls:
-        String /* 当indeterminate为真时，为controls提供相关连的checkbox的id，表明元素间的控制关系*/
     },
     data() {
       return {
@@ -54,8 +51,8 @@ define(function (require) {
           return this.model === this.trueLabel;
         }
       },
-      isRect() {
-        return this.isGroup ? this._checkboxGroup.rect || this.rect : this.rect;
+      isCircle() {
+        return this.isGroup ? this._checkboxGroup.circle || this.circle : this.circle;
       },
       isDisabled() {
         return this.isGroup

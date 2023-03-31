@@ -168,13 +168,16 @@ define(function (require) {
       },
       handleFocus(event) {
         this.focused = true;
+        this.$emit('focus', event);
         this.$parent.$emit('focus', event);
       },
       handleBlur(event) {
         this.focused = false;
+        this.$emit('blur', event);
         this.$parent.$emit('blur', event);
       },
       handleChange(event) {
+        this.$emit('change', event.target.value);
         this.$parent.$emit('change', event.target.value);
       },
     },

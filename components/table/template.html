@@ -1,0 +1,123 @@
+<div class="table">
+  <div class="table__header" v-if="showHeader">
+    <div class="table__title" v-if="title || $slots.title">
+      <template v-if="title"> {{title}} </template>
+      <slot name="title" v-else></slot>
+    </div>
+    <div class="table__operation-group" v-if="$slots.operationgroup">
+      <slot name="operationgroup"></slot>
+    </div>
+  </div>
+  <div class="table__main" ref="tableWrap" @scroll="handleScroll">
+    <div class="table-main" ref="scrollTable" :class="{'is-border': border}">
+      <div class="table-main__row table-main-header" v-if="showTableHeader">
+        <div
+          class="table-main__cell table-main__checkbox"
+          :class="{
+            'is-border-right': border,
+            'table-main__cell--fixed table-main__cell--fixed-left table-main__cell--fixed-left-last': isFixedLeft
+          }"
+          ref="checkboxCol"
+          v-if="isShowRowCheckbox"
+        >
+          <div class="com-cell"></div>
+        </div>
+        <div
+          class="table-main__cell table-main__index"
+          :class="{'is-border-right': border}"
+          v-if="isShowIndex"
+        >
+          <div class="com-cell">
+            {{$t('trans0454')}}
+          </div>
+        </div>
+        <div
+          class="table-main__cell table-main-header__col"
+          :class="{'is-border-right': border}"
+          v-for="col in columns"
+          :key="col.key"
+          :title="col.title"
+          :style="getItemStyle(col)"
+        >
+          <div class="cell">{{col.title}}</div>
+        </div>
+        <div
+          class="table-main__cell table-main__operation"
+          :class="{
+            'is-border-right': border,
+            'table-main__cell--fixed table-main__cell--fixed-right table-main__cell--fixed-right-last': isFixedRight
+          }"
+          ref="operationCol"
+          v-if="isShowOperation"
+        >
+          <div class="com-cell">{{$t('trans0141')}}</div>
+        </div>
+      </div>
+      <div class="table-main__content table-main-content">
+        <template v-if="data.length">
+          <div
+            v-for="(item, index) in data"
+            :key="index"
+            class="table-main__row table-main-content__row"
+            :class="{
+              'is-stripe': stripe && ((index + 1) % 2 === 0),
+              'is-hover': hover,
+              'is-no-border-bottom': border && (index + 1 === data.length)
+            }">
+            <div
+              class="table-main__cell table-main__checkbox"
+              :class="{
+                'is-border-right': border,
+                'table-main__cell--fixed table-main__cell--fixed-left table-main__cell--fixed-left-last': isFixedLeft
+              }"
+              v-if="isShowRowCheckbox"
+            >
+              <div class="com-cell"><fh-checkbox @change="(val) => select(val, item)" /></div>
+            </div>
+            <div
+              class="table-main__cell table-main__index"
+              :class="{'is-border-right': border}"
+              v-if="isShowIndex"
+            >
+              <div class="com-cell">{{index + 1}}</div>
+            </div>
+            <div
+              class="table-main__cell table-main-content__col"
+              :class="{'is-border-right': border}"
+              v-for="col in columns"
+              :key="col.key"
+              :title="item[col.key]"
+              :style="getItemStyle(col)"
+            >
+              <div class="cell">{{item[col.key]}}</div>
+            </div>
+            <div
+              class="table-main__cell table-main__operation"
+              :class="{
+                'is-border-right': border,
+                'table-main__cell--fixed table-main__cell--fixed-right table-main__cell--fixed-right-last': isFixedRight
+              }"
+              v-if="isShowOperation"
+            >
+              <div class="com-cell"><slot name="operation" :row="item"></slot></div>
+            </div>
+          </div>
+        </template>
+        <div
+          class="table-main__row table-main-content__row empty"
+          :class="{
+            'is-no-border-bottom': border
+          }"
+          v-else>
+          <div class="empty__text">
+            {{$t('trans0142')}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table__footer" v-if="footer || $slots.footer">
+    <template v-if="footer"> {{footer}} </template>
+    <slot name="footer" v-else></slot>
+  </div>
+</div>

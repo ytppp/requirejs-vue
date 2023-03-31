@@ -1,33 +1,46 @@
 define(function (require) {
   require('less!./components/dialog/style.less');
   require('fh-button');
+  require('fh-wrap');
   var Vue = require('vue');
-  const Types = {
+  let { mergeOptions } = require('tool');
+  const DialogType = {
     info: 'info',
     confirm: 'confirm'
   };
-  const mergeOptions = (opt1, opt2) => ({
-    ...opt1,
-    ...opt2
-  });
+  const DefaultOpt = {
+    [DialogType.info]: {
+      title: '',
+      message: 'info',
+      callback: {},
+      okText: 'ok'
+    },
+    [DialogType.confirm]: {
+      title: '',
+      message: 'confirm',
+      callback: {},
+      okText: 'ok',
+      cancelText: 'cancel'
+    }
+  };
   const hasDialog = () => {
-    const mask = document.querySelector('.mask-layer');
+    const mask = document.querySelector('.dialog-layer');
     if (!mask) {
       return false;
     }
     const cls = Array.from(mask.classList);
     // 如果弹出框整在处于离开动画的状态，也认为没有弹窗
-    if (cls.includes('dialog-leave-active')) {
+    if (cls.includes('wrap-leave-active')) {
       return false;
     }
     return true;
-    // dialog-leave-active
   };
   const DialogCom = Vue.extend({
     template: require('text!./components/dialog/template.html'),
     data() {
       return {
-        Types,
+        DialogType,
+        type: DialogType.info,
         visible: false,
         message: '',
         title: '',
@@ -37,7 +50,7 @@ define(function (require) {
       };
     },
     methods: {
-      close() {
+      afterClose() {
         const { parentNode } = this.$el;
         let transitionendTriggered = false;
         this.$el.addEventListener('transitionend', () => {
@@ -53,12 +66,12 @@ define(function (require) {
       },
       ok() {
         this.visible = false;
-        this.close();
+        this.afterClose();
         this.callback.ok && this.callback.ok();
       },
       cancel() {
         this.visible = false;
-        this.close();
+        this.afterClose();
         this.callback.cancel && this.callback.cancel();
       }
     },
@@ -66,41 +79,26 @@ define(function (require) {
       this.timer = null;
     }
   });
+  const dialog = (options, type = DialogType.info) => {
+    const opt = mergeOptions(DefaultOpt[type], options);
+    opt.type = type;
+    if (!DefaultOpt[type]) {
+      console.log('error dialog type');
+      return;
+    }
+    if (!hasDialog()) {
+      const instance = new DialogCom({ data: opt }).$mount();
+      instance.visible = true;
+      document.body.appendChild(instance.$el);
+    }
+  }
+
   return {
     info(options) {
-      if (!hasDialog()) {
-        const opt = mergeOptions(
-          {
-            title: '',
-            message: 'info',
-            callback: {},
-            okText: 'ok'
-          },
-          options
-        );
-        opt.type = 'info';
-        this.instance = new DialogCom({ data: opt }).$mount();
-        this.instance.visible = true;
-        document.body.appendChild(this.instance.$el);
-      }
+      dialog(options);
     },
     confirm(options) {
-      if (!hasDialog()) {
-        const opt = mergeOptions(
-          {
-            title: '',
-            message: 'confirm',
-            callback: {},
-            okText: 'ok',
-            cancelText: 'cancel'
-          },
-          options
-        );
-        opt.type = 'confirm';
-        this.instance = new DialogCom({ data: opt }).$mount();
-        this.instance.visible = true;
-        document.body.appendChild(this.instance.$el);
-      }
+      dialog(options, DialogType.confirm);
     }
   };
 });

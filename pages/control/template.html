@@ -1,0 +1,78 @@
+<fh-layout url="/control">
+  <div class="control">
+    <div class="table">
+      <div class="table__row is-col-title">
+        <div class="table__col">
+          <fh-select v-model="form.deviceType" :options="deviceList">
+          </fh-select>
+        </div>
+        <div class="table__col">{{$t("trans0176")}}</div>
+        <div class="table__col">{{$t("trans0177")}}</div>
+        <div class="table__col">{{$t("trans0178")}}</div>
+      </div>
+      <div class="table__row">
+        <div class="table__col">
+          <div class="device">
+            <div class="device__logo">
+              <div style="width: 80px; height: 80px; border-radius: 50%; background-color: red;"></div>
+            </div>
+            <div class="device__main">
+              <div class="device__name">
+                <span>xxxxx</span>
+                <i class="icon-edit-outline"></i>
+              </div>
+              <div class="device__speed">
+                <div class="speed">
+                  <i class="icon-top"></i>
+                  <span>0 Kbps</span>
+                </div>
+                <div class="speed">
+                  <i class="icon-bottom"></i>
+                  <span>0 Kbps</span>
+                </div>
+              </div>
+              <div class="device__info">
+                <div class="info">
+                  <label>{{$t("trans0179")}}{{$t("trans0182")}}</label>
+                  <span>192.168.3.254</span>
+                </div>
+                <div class="info">
+                  <span>{{$t("trans0097")}}{{$t("trans0182")}}</span>
+                  <span>A0:88:B4:DD:88:74</span>
+                </div>
+                <div class="info">
+                  <span>{{$t("trans0180")}}{{$t("trans0182")}}</span>
+                  <span>4 天 10 小时 3 分钟</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table__col">
+          <fh-switch></fh-switch>
+        </div>
+        <div class="table__col">
+          <fh-switch></fh-switch>
+        </div>
+        <div class="table__col">
+          <div class="limit">
+            <div class="limit__main">
+              <div class="speed-limit">
+                <i class="icon-top"></i>
+                <span>0 Kbps</span>
+              </div>
+              <div class="speed-limit">
+                <i class="icon-bottom"></i>
+                <span>0 Kbps</span>
+              </div>
+            </div>
+            <div class="limit__edit">
+              <i class="icon-edit-outline"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table__empty" v-else>{{$t('trans0142')}}</div>
+    </div>
+  </div>
+</fh-layout>

@@ -91,7 +91,7 @@ define(function (require) {
         let result = true;
         if (!validator(...arg)) {
           result = false;
-          this.message = msg;
+          this.validateMessage = msg;
         }
         this.result = result;
         return result;

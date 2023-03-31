@@ -45,15 +45,10 @@ define(function (require) {
         const val = this.checked ? this.inactiveValue : this.activeValue;
         this.$emit('input', val);
         this.$emit('change', val);
-        this.$nextTick(() => {
-          if (this.$refs.input) {
-            this.$refs.input.checked = this.checked;
-          }
-        });
       },
       switchValue() {
-        !this.disabled && this.handleChange();
+        !this.switchDisabled && this.handleChange();
       }
-    }
+    },
   });
 });

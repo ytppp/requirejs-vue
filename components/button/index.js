@@ -16,11 +16,22 @@ define(function (require) {
         type: Boolean,
         default: false
       },
+      block: {
+        type: Boolean,
+        default: false
+      },
       size: {
         type: String,
-        default: 'small',
+        default: 'middle',
         validator: function (value) {
-          return ['small', 'middle', 'block'].indexOf(value) !== -1;
+          return ['small', 'middle'].indexOf(value) !== -1;
+        }
+      },
+      type: {
+        type: String,
+        default: 'primary',
+        validator: function (value) {
+          return ['primary', 'text'].indexOf(value) !== -1;
         }
       },
       nativeType: {

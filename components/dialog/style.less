@@ -3,86 +3,56 @@
 @dialog-title-color: #333;
 @dialog-content-color: #333;
 
-.dialog-container {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1001;
-  background: @dialog-shadow-background-color;
-  opacity: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .dialog-content {
-    text-align: center;
-    background: #fff;
-    padding: 20px 20px 30px 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 12px 0 @dialog-box-shadow-color;
-    .dialog-buttons {
-      display: flex;
-      justify-content: center;
-      button {
-        width: auto;
-        height: 38px;
-        margin-left: 30px;
-        &:first-child {
-          margin-left: 0;
-        }
+.dialog {
+  text-align: center;
+  background: #fff;
+  padding: 20px 20px 30px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 12px 0 @dialog-box-shadow-color;
+  .dialog__buttons {
+    display: flex;
+    justify-content: center;
+    button {
+      width: auto;
+      height: 38px;
+      margin-left: 30px;
+      &:first-child {
+        margin-left: 0;
       }
     }
-    .dialog-title {
-      font-size: 16px;
-      line-height: 1;
-      color: @dialog-title-color;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .dialog-message {
-      color: @dialog-content-color;
-      margin-bottom: 45px;
-      text-align: center;
-      font-size: 14px;
-    }
   }
-  &.dialog-enter-active {
-    transition: all 0.3s ease-in;
+  .dialog__title {
+    font-size: 16px;
+    line-height: 1;
+    color: @dialog-title-color;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
   }
-  &.dialog-leave-active {
-    transition: all 0.3s ease-out;
-    opacity: 0;
-  }
-  &.dialog-enter {
-    opacity: 0;
-  }
-  &.dialog-leave {
-    opacity: 0;
+  .dialog__message {
+    color: @dialog-content-color;
+    margin-bottom: 45px;
+    text-align: center;
+    font-size: 14px;
   }
 }
 @media screen and (min-width: 769px) {
-  .dialog-container {
-    .dialog-content {
-      width: 430px;
-    }
+  .dialog {
+    width: 430px;
   }
 }
 @media screen and (max-width: 768px) {
-  .dialog-container {
-    .dialog-content {
-      width: 80%;
-      .dialog-buttons {
-        flex-direction: column;
-        button {
-          width: 100%;
-          display: block;
-          margin: 0;
-          margin-top: 20px;
-          &:first-child {
-            margin-top: 0;
-          }
+  .dialog {
+    width: 80%;
+    .dialog__buttons {
+      flex-direction: column;
+      button {
+        width: 100%;
+        display: block;
+        margin: 0;
+        margin-top: 20px;
+        &:first-child {
+          margin-top: 0;
         }
       }
     }

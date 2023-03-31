@@ -38,6 +38,11 @@ define(function (require) {
       path: '/other',
       name: 'other',
       component: loader('pages/other/index')
+    },
+    {
+      path: '/control',
+      name: 'control',
+      component: loader('pages/control/index')
     }
   ];
 

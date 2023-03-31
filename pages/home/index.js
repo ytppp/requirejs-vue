@@ -1,6 +1,6 @@
 define(function (require) {
   require('less!./style.less');
-  let { isValidPassword, getStringByte } = require('tool');
+  let { isValidPassword, getStringByte, getFileExtendName } = require('tool');
   require('fh-layout');
   require('fh-form');
   require('fh-form-item');
@@ -11,7 +11,14 @@ define(function (require) {
   require('fh-radio');
   require('fh-checkbox');
   require('fh-alert');
+  require('fh-table');
+  require('fh-modal');
+  require('fh-upload');
+  require('loading');
   let dialog = require('fh-dialog');
+  let toast = require('fh-toast');
+  let upgrade = require('fh-upgrade');
+  let loading = require('fh-loading');
 
   const Encrypts = {
     none: 'none',
@@ -33,6 +40,61 @@ define(function (require) {
     template: require('text!./template.html'),
     data() {
       return {
+        uploading: false,
+        visible: false,
+        columns: [
+          {
+            key: 'url',
+            title: 'url',
+            width: 200
+          },
+          {
+            key: 'title',
+            title: 'title',
+          },
+          {
+            key: 'title',
+            title: 'title',
+          },
+          {
+            key: 'title',
+            title: 'title',
+          },
+          {
+            key: 'title',
+            title: 'title',
+          },
+          {
+            key: 'title',
+            title: 'title',
+          },
+          {
+            key: 'title',
+            title: 'title',
+          }
+        ],
+        data: [
+          {
+            url: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            title: 'yyyyyyyyyyyyyy',
+            name: 'asdasddasdqw'
+          },
+          {
+            url: 'xxxxxxxxxxxxxxxxxxx',
+            title: 'yyyyyyyyyyyyyy',
+            name: 'asdasddasdqw'
+          },
+          {
+            url: 'xxxxxxxxxxxxxxx',
+            title: 'yyyyyyyyyyyyy',
+            name: 'asdasddasdqw'
+          },
+          {
+            url: 'xxxxxxxxxxxxxx',
+            title: 'yyyyyyyyyyyyyy',
+            name: 'asdasddasdqw'
+          }
+        ],
         Encrypts,
         Powermodes,
         Bands,
@@ -165,6 +227,32 @@ define(function (require) {
       }
     },
     methods: {
+      loading() {
+        loading.open({
+          tip: 'loading'
+        });
+        setTimeout(() => {
+          loading.close();
+        }, 5 * 1000);
+      },
+      del() {},
+      blur(e) {
+        console.log('blur', e);
+      },
+      upgrade() {
+        upgrade.open({
+          timeout: 10,
+          progressVisible: true,
+          title: '提示',
+          tip: '升级过程可能需要花费几分钟的时间，升级过程中请不要关闭电源。完成后，设备会自动重启。',
+        });
+        setTimeout(() => {
+          upgrade.close();
+        }, 10 * 1000);
+      },
+      operation(scope) {
+        console.log(scope)
+      },
       switchB5gFirst(val) {
         if (val) {
           dialog.confirm({
@@ -227,6 +315,12 @@ define(function (require) {
           });
         }
       }
+    },
+    mounted () {
+      this.uploading = true;
+      setTimeout(() => {
+        this.uploading = false;
+      }, 5000);
     }
   };
 });

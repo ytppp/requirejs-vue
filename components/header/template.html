@@ -2,51 +2,27 @@
   <header
     class="header"
     :class="{
-            'is-login-header': isShow,
-            'open': mobileNavVisible,
-            'i18n-open': mobileI18nVisible
+            'is-login-header': isShow
           }"
   >
     <div class="logo">
       <img class="logo__img" :src="logoSrc" alt="" />
       <span class="logo__title" v-if="title">{{title}}</span>
     </div>
-
-    <div class="nav-wrap nav-wrap--laptop">
-      <ul class="nav" v-show="!isShow">
-        <li
-          class="nav-item"
-          :key="menu.key"
-          v-for="menu in list"
-          :class="{'selected':menu.selected}"
-        >
-          <div class="nav-item-content">
-            <div class="nav-item__text">{{$t(menu.text)}}</div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div
-      class="nav-wrap nav-wrap--mobile"
-      v-show="mobileNavVisible"
-    >
-      <ul class="nav">
-        <li
-          class="nav-item"
-          v-for="menu in list"
-          :key="menu.key"
-          :class="{'selected':menu.selected}"
-        >
-          <div class="nav-item-content">
-            <div class="nav-item__text">{{$t(menu.text)}}</div>
-          </div>
-        </li>
-        <li class="nav-item nav-item__exit" @click="exit()">
-          <div class="nav-item-content">
-            <div class="nav-item__text">{{$t('trans0018')}}</div>
-          </div>
-        </li>
-      </ul>
+    <div class="nav-wrap"
+        v-if="!isShow"
+        v-show="navVisible">
+      <fh-menu
+        :menus="menus"
+        :active="url"
+        :mode="menuMode"
+        :isShowChildMenu="false"
+        @click="handleMenuItemClick"
+        activeKeyName="url"
+        backgroundColor="#333"
+        textColor="#fff"
+        activeTextColor="#d6001c"
+      />
     </div>
     <div class="right-wrap">
       <!-- 语言切换 -->

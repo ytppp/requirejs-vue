@@ -1,0 +1,8 @@
+<template>
+  <transition name="wrap">
+    <div class="wrap" v-show="open">
+      <div class="wrap__mask" :style="wrapStyleObj" @click="close" @touchstart="close"></div>
+      <slot></slot>
+    </div>
+  </transition>
+</template>

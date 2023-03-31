@@ -1,0 +1,7 @@
+<template>
+  <transition name="toast">
+    <div class="toast" :class="`toast--${type}`" v-show="visible">
+      <span>{{text}}</span>
+    </div>
+  </transition>
+</template>

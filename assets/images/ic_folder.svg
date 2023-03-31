@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic_file</title>
+    <g id="Upgrade-Firmware" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="离线升级_04" transform="translate(-320.000000, -488.000000)">
+            <g id="ic_file" transform="translate(320.000000, 488.000000)">
+                <circle id="Oval" fill="#FFFFFF" cx="19" cy="19" r="19"></circle>
+                <path d="M28.3386034,27.9444444 L10.6613966,27.9444444 C10.2961379,27.9444444 10,27.6357255 10,27.2549493 L10,16.3333333 L29,16.3333333 L29,27.2549493 C29,27.6357255 28.7038621,27.9444444 28.3386034,27.9444444 Z" id="Path" fill="#EFCE4A" fill-rule="nonzero"></path>
+                <path d="M18.5234655,12.9803922 L18.5234655,10.7521765 C18.5234655,10.3367843 18.2273276,10 17.862069,10 L10.6613966,10 C10.2961379,10 10,10.3367843 10,10.7521765 L10,12.6078431 L10,16.3333333 L29,16.3333333 L29,13.7325686 C29,13.3171765 28.7038621,12.9803922 28.3386034,12.9803922 L18.5234655,12.9803922 Z" id="Path" fill="#EBBA16" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

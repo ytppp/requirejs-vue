@@ -1,0 +1,35 @@
+.modal {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+.modal .modal__header {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+.modal .modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+.modal .modal__body {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.modal .modal__footer {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 50px;
+}
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 80%;
+    padding: 20px;
+  }
+}

@@ -5,10 +5,13 @@
     :type="nativeType"
     :disabled="btnDisabled"
     :class="[
-    size ? 'btn-' + size : '',
-    {
-    'is-disabled': btnDisabled
-  }]"
+      `btn--${type}`,
+      size ? 'btn--' + size : '',
+      {
+        'is-disabled': btnDisabled,
+        'is-block': block
+      }
+    ]"
     @click="handleClick"
   >
     <span v-if="$slots.default">

@@ -1,0 +1,12 @@
+<template>
+  <div class="dragger"
+       @dragleave="handleDragLeave"
+       @dragover="handleDragOver"
+       @drop="handleDrop">
+    <div class="dragger__wrap"
+         v-if="isDragOver">
+      {{$t('trans0207')}}
+    </div>
+    <slot></slot>
+  </div>
+</template>

@@ -2,6 +2,7 @@ define(function (require) {
   require('less!./components/header/style.less');
   var Vue = require('vue');
   var dialog = require('fh-dialog');
+  require('fh-menu');
   var customerInfo = require('customer-info');
   var { changeLanguage } = require('i18n/index');
   const Languages = [
@@ -60,28 +61,22 @@ define(function (require) {
         type: Boolean,
         default: false
       },
-      list: {
+      menus: {
         type: Array,
         default: () => []
       }
     },
     data() {
       return {
+        menuMode: 'horizontal',
+
         mobileI18nVisible: false,
         showPopup: false,
         Languages: Languages.filter(l => l.show),
         current: null,
-        mobileNavVisible: false,
+        navVisible: false,
         logoSrc: customerInfo[customerInfo.name].logo
       };
-    },
-    mounted() {
-      this.$i18n.locale = this.language.value;
-      if (window.addEventListener) {
-        document.body.addEventListener('click', this.close);
-      } else if (window.attachEvent) {
-        document.body.attachEvent('click', this.close);
-      }
     },
     computed: {
       language() {
@@ -95,12 +90,12 @@ define(function (require) {
       }
     },
     methods: {
-      trigerMobileNav() {
-        this.mobileNavVisible = !this.mobileNavVisible;
-        this.mobileI18nVisible = false;
+      handleMenuItemClick(menu) {
+        this.$parent.handleMenuItemClick(menu);
       },
-      close() {
-        this.showPopup = false;
+      trigerMobileNav() {
+        this.navVisible = !this.navVisible;
+        this.mobileI18nVisible = false;
       },
       getDefaultLanguage() {
         const language = this.Languages.filter(
@@ -116,12 +111,7 @@ define(function (require) {
       },
       setMobleLangVisible() {
         this.mobileI18nVisible = !this.mobileI18nVisible;
-        this.mobileNavVisible = false;
-        // if (this.mobileI18nVisible) {
-        //   this.$el.parentNode.style.paddingTop = '65px';
-        // } else {
-        //   this.$el.parentNode.style.paddingTop = '0';
-        // }
+        this.navVisible = false;
       },
       selectLang(lang) {
         changeLanguage(lang.value);
@@ -138,9 +128,9 @@ define(function (require) {
       },
       exit() {
         dialog.confirm({
-          okText: this.$t('trans0024'),
-          cancelText: this.$t('trans0025'),
-          message: this.$t('trans0323'),
+          okText: this.$t('trans0019'),
+          cancelText: this.$t('trans0020'),
+          message: this.$t('trans0021'),
           callback: {
             ok: () => {
               console.log('123');
@@ -148,13 +138,39 @@ define(function (require) {
             }
           }
         });
+      },
+      close() {
+        this.showPopup = false;
+      },
+      changeMenuMode() {
+        const contentMinWidth = 768; // 定义内容区域最小宽度
+        if (document.body.clientWidth > contentMinWidth) {
+          this.menuMode = 'horizontal';
+          this.navVisible = true;
+        } else {
+          this.menuMode = 'vertical';
+          this.navVisible = false;
+        }
+      }
+    },
+    mounted() {
+      this.$i18n.locale = this.language.value;
+      this.changeMenuMode();
+      if (window.addEventListener) {
+        window.addEventListener('click', this.close);
+        window.addEventListener('resize', this.changeMenuMode);
+      } else if (window.attachEvent) {
+        window.attachEvent('click', this.close);
+        window.attachEvent('resize', this.changeMenuMode);
       }
     },
     beforeDestroy() {
       if (window.addEventListener) {
-        document.body.removeEventListener('click', this.close);
+        window.removeEventListener('click', this.close);
+        window.removeEventListener('resize', this.changeMenuMode);
       } else if (window.attachEvent) {
-        document.body.detachEvent('click', this.close);
+        window.detachEvent('click', this.close);
+        window.detachEvent('resize', this.changeMenuMode);
       }
     }
   });

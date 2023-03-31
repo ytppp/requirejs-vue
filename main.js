@@ -31,7 +31,18 @@ require.config({
     'fh-footer': 'components/footer/index',
     'fh-layout': 'components/layout/index',
     'fh-dialog': 'components/dialog/index',
+    'fh-menu': 'components/menu/index',
+    'fh-table': 'components/table/index',
+    'fh-modal': 'components/modal/index',
+    'fh-toast': 'components/toast/index',
+    'fh-upgrade': 'components/upgrade/index',
+    'fh-upload': 'components/upload/index',
+    'fh-loading-com': 'components/loading/loading-com',
+    'fh-loading': 'components/loading/index',
+    'fh-wrap': 'components/wrap/index', // 通用弹窗遮罩
+    'fh-upload-dragger': 'components/upload-dragger/index',
     clickoutside: 'components/directives/clickoutside',
+    loading: 'components/directives/loading',
 
     constant: 'util/constant',
     'customer-info': 'util/customer-info',

@@ -1,5 +1,12 @@
 define(function (require) {
   var customerInfo = require('customer-info');
+
+  function mergeOptions(opt1, opt2) {
+    return {
+      ...opt1,
+      ...opt2
+    }
+  };
   function formatLang(lang) {
     let langFormated = {
       zh: 'zh-CN',
@@ -38,6 +45,15 @@ define(function (require) {
   function setDocTitle(title) {
     document.title = title;
   }
+  function getFileExtendName(file) {
+    if (file) {
+      const r = file.name.split('.');
+      if (r.length) {
+        return r[r.length - 1];
+      }
+    }
+    return '';
+  };
   function scrollTo(el, x = 0, y = 0) {
     if (el.scrollTo) {
       el.scrollTo(x, y);
@@ -92,9 +108,11 @@ define(function (require) {
     getLangUsed,
     setFavicon,
     setDocTitle,
+    getFileExtendName,
     scrollTo,
     isValidPassword,
-    getStringByte
+    getStringByte,
+    mergeOptions
   };
 });
 

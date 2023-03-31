@@ -1,0 +1,30 @@
+.dragger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 513px;
+  height: 188px;
+  border-radius: 8px;
+  border: dashed 1px #999999;
+  position: relative;
+}
+.dragger .dragger__wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 768px) {
+  .dragger {
+    width: 100%;
+  }
+}

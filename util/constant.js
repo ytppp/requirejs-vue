@@ -7,8 +7,15 @@ define([], function () {
     zh: 'zh-CN',
     en: 'en-US'
   };
+  const UploadStatus = {
+    ready: 'ready',
+    success: 'success',
+    fail: 'fail',
+    uploading: 'uploading'
+  };
   return {
     customers,
-    languages
+    languages,
+    UploadStatus
   };
 });

@@ -47,13 +47,15 @@ define(function (require) {
     },
     computed: {
       iconClass() {
-        return this.opened ? 'arrow-up is-reverse' : 'arrow-up';
+        return this.opened ? 'arrow-down is-reverse' : 'arrow-down';
       },
       currentLabel() {
         return this.label || this.$parent.label || '';
       },
       selectPlaceholder() {
-        return typeof this.placeholder !== 'undefined' ? this.placeholder : this.$t('trans0002');
+        return typeof this.placeholder !== 'undefined'
+          ? this.placeholder
+          : this.$t('trans0001');
       },
       selectDisabled() {
         return this.disabled || (this.form || {}).disabled;

@@ -1,0 +1,19 @@
+<template>
+  <fh-wrap :visible.sync="open" :closeOnClickWrap="true">
+    <div class="modal" :style="{width: fullscreen ? '100%' : width, height: fullscreen ? '100%' : 'auto'}">
+      <i class="modal__close icon icon-close" @click="close" v-if="showClose"></i>
+      <div class="modal__header" v-if="$slots.title || title">
+        <template v-if="title">
+          {{title}}
+        </template>
+        <slot name="title" v-else></slot>
+      </div>
+      <div class="modal__body" v-if="$slots.body">
+        <slot name="body"></slot>
+      </div>
+      <div class="modal__footer" v-if="$slots.footer">
+        <slot name="footer"></slot>
+      </div>
+    </div>
+  </fh-wrap>
+</template>

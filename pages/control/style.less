@@ -1,0 +1,149 @@
+.control {
+  margin: o auto;
+}
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
+  border: 1px solid rgb(201, 201, 201);
+  .table__row {
+    display: flex;
+    font-size: 16px;
+    color: #262626;
+    border-bottom: 1px solid #c9c9c9;
+    &:last-child {
+      border-bottom: none;
+    }
+    &.is-col-title {
+      height: 60px;
+      background-color: #f2f2f2;
+      font-weight: 400;
+      .table__col {
+        height: 100%;
+        &:nth-child(1) {
+          .select {
+            width: 400px;
+          }
+        }
+      }
+    }
+    &:nth-child(2n + 1) {
+      background-color: #f2f2f2;
+      opacity: 0.9;
+    }
+    &:hover {
+      background-color: #f2f2f2;
+      cursor: pointer;
+    }
+  }
+  .table__col {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border-right: 1px solid #c9c9c9;
+    &:nth-child(1) {
+      width: 450px;
+      padding-left: 20px;
+    }
+    &:nth-child(2),
+    &:nth-child(3) {
+      width: 120px;
+      justify-content: center;
+    }
+    &:nth-child(4) {
+      width: 200px;
+      justify-content: center;
+    }
+    &:not(:first-child) {
+      justify-content: center;
+    }
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+.device {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+  .device__logo {
+    margin-right: 10px;
+  }
+  .device__main {
+    flex: 1;
+  }
+  .device__name {
+    display: flex;
+    align-items: center;
+    span {
+      color: #28c0c6;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+    i {
+      font-size: 30px;
+    }
+  }
+  .device__speed {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+  }
+  .device__info {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+.speed {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  color: #333;
+  .speed {
+  }
+  span {
+    font-size: 20px;
+  }
+  i {
+    font-size: 20px;
+    margin-right: 6px;
+  }
+}
+.info {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  color: #828282;
+  font-size: 12px;
+  flex: 1;
+}
+
+.limit {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  box-sizing: border-box;
+  color: #333;
+  .limit__main {
+    margin-right: 20px;
+  }
+  .limit__edit {
+    font-size: 28px;
+  }
+}
+
+.speed-limit {
+  display: flex;
+  align-items: center;
+  span {
+    font-size: 20px;
+  }
+  i {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+}

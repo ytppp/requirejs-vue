@@ -9,9 +9,11 @@ define(function (require) {
       rules: {
         type: Object
       },
+      name: String,
       id: String,
       action: String,
       method: String,
+      enctype: String,
       disabled: Boolean
     },
     provide() {

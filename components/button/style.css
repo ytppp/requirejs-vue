@@ -1,27 +1,30 @@
 .btn {
   outline: none;
-  border: 1px solid transparent;
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
   user-select: none;
   position: relative;
+  border: 1px solid transparent;
+}
+.btn.btn--primary {
+  border-color: transparent;
   color: #fff;
   background: #d6001c;
 }
-.btn:active {
+.btn.btn--primary:active {
   background: #d6001c;
 }
-.btn:hover {
+.btn.btn--primary:hover {
   background: #de3349;
 }
-.btn.is-disabled {
+.btn.btn--primary.is-disabled {
   cursor: not-allowed;
   background: #b3b3b3;
   border-color: #b3b3b3;
   color: #fff;
 }
-.btn.btn-small {
+.btn.btn--primary.btn--small {
   width: auto;
   min-width: 80px;
   height: 28px;
@@ -30,7 +33,7 @@
   font-size: 12px;
   border-radius: 4px;
 }
-.btn.btn-middle {
+.btn.btn--primary.btn--middle {
   width: auto;
   min-width: 120px;
   height: 38px;
@@ -39,12 +42,29 @@
   font-size: 14px;
   border-radius: 4px;
 }
-.btn.btn-block {
-  width: 100%;
-  min-width: 340px;
-  height: 48px;
-  line-height: 1;
-  padding: 0 15px;
+.btn.btn--text {
+  border-color: transparent;
+  color: #333;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.btn.btn--text:hover {
+  color: #de3349;
+}
+.btn.btn--text.is-disabled {
+  cursor: not-allowed;
+  color: #c0c4cc;
+}
+.btn.btn--text.btn--small {
+  padding: 5px 0;
+  font-size: 12px;
+}
+.btn.btn--text.btn--middle {
+  padding: 12px 0;
   font-size: 14px;
-  border-radius: 4px;
+}
+.btn.is-block {
+  width: 100% !important;
+  min-width: 340px !important;
 }

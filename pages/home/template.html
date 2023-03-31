@@ -1,5 +1,52 @@
-<fh-layout url="/home" title="123asd">
+<fh-layout url="/home">
   <div class="home">
+    <div class="upload">
+      <fh-upload ref="uploader"
+                  dragable
+                  v-loading="uploading"
+                  loading-tip="加载中" />
+    </div>
+    <fh-button type="text" @click="loading" disabled>loading</fh-button>
+    <fh-button type="text" size="middle" @click="() => visible = true">打开弹框</fh-button>
+    <fh-button type="text" @click="upgrade">升级</fh-button>
+    <fh-switch
+      v-model="wifiform.isB5gFirst"
+      @change="switchB5gFirst"
+    >
+    </fh-switch>
+    <fh-switch
+      v-model="wifiform.b24g.enable"
+      @change="(val) => switchEnable(Bands.b24g, val)"
+    >
+    </fh-switch>
+    <fh-modal :visible.sync="visible" :title="$t('trans0002')">
+      <template class="dialog-content" #body>
+        <div style="padding:20px 0;font-size:16px;">
+          <p>Hello, world</p>
+        </div>
+      </template>
+      <template #footer>
+        <fh-button @click="() => visible = false">{{$t('trans0002')}}</fh-button>
+      </template>
+    </fh-modal>
+    <fh-table :columns="columns" :data="data">
+      <template #title>
+        123456
+      </template>
+      <template #operationgroup>
+        <fh-button size="small">新增</fh-button>
+        <fh-button size="small" @click="del">删除</fh-button>
+      </template>
+      <template #operation="scope">
+        <fh-button type="text" @click="() => operation(scope)">操作</fh-button>
+        <fh-button type="text" @click="() => operation(scope)">操作</fh-button>
+        <fh-button type="text" @click="() => operation(scope)">操作</fh-button>
+        <fh-button type="text" @click="() => operation(scope)">操作</fh-button>
+      </template>
+      <template #footer>
+        footer
+      </template>
+    </fh-table>
     <fh-form class="wifi-form" ref="wifiForm" :model="wifiform" :rules="rules">
       <fh-form-item :label="$t('trans0023').format($t('trans0050'))">
         <fh-switch
@@ -24,6 +71,7 @@
       <fh-form-item :label="$t('trans0029')" prop='b24g.ssid'>
         <fh-input
           v-model="wifiform.b24g.ssid"
+          @blur="blur"
         >
         </fh-input>
       </fh-form-item>
@@ -127,7 +175,7 @@
         </fh-select>
       </fh-form-item>
       <fh-form-item>
-        <fh-button size="block">{{$t('trans0002')}}</fh-button>
+        <fh-button block>{{$t('trans0002')}}</fh-button>
       </fh-form-item>
     </fh-form>
   </div>

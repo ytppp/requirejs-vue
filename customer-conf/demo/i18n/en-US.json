@@ -47,9 +47,17 @@
   "trans0046": "",
   "trans0047": "",
   "trans0048": "",
-  "trans0049": "",
-  "trans0050": "",
+  "trans0049": "2.4G",
+  "trans0050": "5G",
   "trans0051": "",
   "trans0052": "",
-  "trans0053": ""
+  "trans0053": "",
+  "trans0054": "Safety",
+  "trans0055": "Dos",
+  "trans0056": "IP Filter",
+  "trans0057": "Mac Filter",
+  "trans0058": "URL Filter",
+  "trans0059": "Acl",
+  "trans0060": "Firewall",
+  "trans0061": ""
 }
