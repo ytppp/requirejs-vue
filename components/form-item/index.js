@@ -1,8 +1,9 @@
 define(function (require) {
-  require('less!./components/form-item/style.less');
   var Vue = require('vue');
+  require('fh-form-item-label-wrap');
   Vue.component('FhFormItem', {
     template: require('text!./components/form-item/template.html'),
+    componentName: 'FormItem',
     provide() {
       return {
         formItem: this
@@ -18,17 +19,71 @@ define(function (require) {
       rules: {
         type: Array,
         default: () => []
+      },
+      labelPosition: {
+        type: String,
+        validator: function (value) {
+          return ['top', 'left', 'right'].indexOf(value) !== -1; // left 时 labelWidth 要明确指定
+        }
+      },
+      labelWidth: {
+        type: String
       }
     },
     data() {
       return {
         validateMessage: '',
-
+        computedLabelWidth: '',
+        isNested: false,
         validators: [],
         result: null, // null表示没有进行校验，true通过，false未通过
       };
     },
     computed: {
+      formCom() {
+        let parent = this.$parent;
+        let parentName = parent.$options.componentName;
+        while (parentName !== 'Form') {
+          if (parentName === 'FormItem') {
+            this.isNested = true;
+          }
+          parent = parent.$parent;
+          parentName = parent.$options.componentName;
+        }
+        return parent;
+      },
+      labelWidthCom() {
+        return this.labelWidth || this.formCom.labelWidth;
+      },
+      labelPositionCom() {
+        return this.labelPosition || this.formCom.labelPosition;
+      },
+      isLabelPositionHorizontal() {
+        return ['left', 'right'].includes(this.labelPositionCom)
+      },
+      labelStyle() {
+        let ret = {};
+        if (this.labelPositionCom === 'top') return ret;
+        if (this.labelWidthCom) {
+          ret.width = this.labelWidthCom;
+        }
+        return ret;
+      },
+      contentStyle() {
+        let ret = {};
+        if (this.labelPositionCom === 'top') return ret;
+        if (!this.label && !this.labelWidth && this.isNested) return ret;
+        if (this.labelWidthCom === 'auto') {
+          if (this.labelWidth === 'auto') {
+            ret.marginLeft = this.computedLabelWidth;
+          } else if (this.formCom.labelWidth === 'auto') {
+            ret.marginLeft = this.form.autoLabelWidth;
+          }
+        } else {
+          ret.marginLeft = this.labelWidthCom;
+        }
+        return ret;
+      },
       labelFor() {
         return this.for || this.prop;
       },
@@ -40,6 +95,9 @@ define(function (require) {
       }
     },
     methods: {
+      updateComputedLabelWidth(width) {
+        this.computedLabelWidth = width ? `${width}px` : '';
+      },
       getValueByPath(obj, path) {
         let tempObj = obj;
         // remove start dot in path
@@ -62,6 +120,13 @@ define(function (require) {
         }
         return tempObj ? tempObj[keyArr[i]] : null;
       },
+      escape2Html(val) {
+        let temp = document.createElement('span');
+        temp.innerHTML = val;
+        let output = temp.innerText || temp.textContent;
+        temp = null;
+        return output;
+      },
       validate() {
         if (this.prop) {
           const rules = this.$parent.rules || {};
@@ -69,7 +134,7 @@ define(function (require) {
           const validators = rules[prop] || [];
           this.validators = validators.concat(this.rules);
 
-          const value = this.getValueByPath(this.$parent.model, this.prop);
+          const value = this.escape2Html(this.getValueByPath(this.$parent.model, this.prop));
           let result = true;
           // 检验
           if (this.validators && this.validators.length) {
@@ -95,6 +160,9 @@ define(function (require) {
         }
         this.result = result;
         return result;
+      },
+      clearValidate() {
+        this.result = null;
       }
     },
     mounted () {

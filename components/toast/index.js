@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/toast/style.less');
   var Vue = require('vue');
   const ToastCom = Vue.extend({
     template: require('text!./components/toast/template.html'),

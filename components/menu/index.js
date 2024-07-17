@@ -1,6 +1,6 @@
 define(function (require) {
-  require('less!./components/menu/style.less');
   var Vue = require('vue');
+  require('fh-icon');
   const Velocity = require('velocity-animate');
   // 对象数组中是否存在某个值
   const isObjArrHasVal = (
@@ -17,14 +17,18 @@ define(function (require) {
       }
     });
   };
+  const Mode = {
+    horizontal: 'horizontal',
+    vertical: 'vertical'
+  };
   Vue.component('FhMenu', {
     template: require('text!./components/menu/template.html'),
     props: {
       mode: {
         type: String,
-        default: 'horizontal',
+        default: Mode.horizontal,
         validator: function (value) {
-          return ['vertical', 'horizontal'].indexOf(value) !== -1;
+          return [Mode.vertical, Mode.horizontal].indexOf(value) !== -1;
         },
       },
       active: String,
@@ -32,18 +36,6 @@ define(function (require) {
         type: String,
         default: 'name',
       },
-      backgroundColor: {
-        type: String,
-        default: '#fff',
-      }, // 菜单的背景色 （仅支持 hex 格式）
-      textColor: {
-        type: String,
-        default: '#303133',
-      }, // 菜单的文字颜色 （仅支持 hex 格式）
-      activeTextColor: {
-        type: String,
-        default: '#d6001c',
-      }, // 当前激活菜单的文字颜色 （仅支持 hex 格式）
       menus: {
         type: Array,
         default: () => [],
@@ -51,17 +43,65 @@ define(function (require) {
       isShowChildMenu: {
         type: Boolean,
         default: true,
-      },
+      }, // 是否显示子菜单
       timeout: {
         type: Number,
         default: 200,
       }, // 子菜单显示或关闭延迟时间
+      fontSize: {
+        type: String,
+        default: '18px'
+      },
+      childMenuFontSize: String,
+      backgroundColor: {
+        type: String,
+        default: '#fff'
+      }, // 菜单的背景色 （仅支持 hex 格式）
+      textColor: {
+        type: String,
+        default: '#303133',
+      }, // 菜单的文字颜色 （仅支持 hex 格式）
+      hoverTextColor: String, // 鼠标hover菜单的文字颜色 （仅支持 hex 格式）
+      hoverBackgroundColor: String, // 鼠标hover菜单的背景色 （仅支持 hex 格式）
+      hoverChildMenuTextColor: String, // 鼠标hover子菜单的文字颜色 （仅支持 hex 格式）
+      hoverChildMenuBackgroundColor: String, // 鼠标hover子菜单的背景色 （仅支持 hex 格式），不设置此项是使用 hoverBackgroundColor
+      activeTextColor: String, // 激活菜单的文字颜色 （仅支持 hex 格式）
+      activeBackgroundColor: String, // 激活菜单的背景颜色 （仅支持 hex 格式）
+      activeChildMenuTextColor: String, // 激活子菜单的文字颜色 （仅支持 hex 格式），不设置此项是使用 activeTextColor
+      activeChildMenuBackgroundColor: String, // 激活子菜单的背景颜色 （仅支持 hex 格式），不设置此项是使用 activeBackgroundColor
+      isEnlargeFontSize: {
+        type: Boolean,
+        default: false,
+      }, // hover或激活时是否放大文本
+      accordion: {
+        type: Boolean,
+        default: true,
+      } // 是否开启手风琴效果
     },
     data() {
       return {
+        Mode,
         menuList: [],
-        timer: null
+        timer: null,
+        prevMenu: null
       };
+    },
+    computed: {
+      isHorizontal() {
+        return this.mode === Mode.horizontal;
+      },
+      isVertical() {
+        return this.mode === Mode.vertical;
+      },
+      menuObj() {
+        return {
+          fontSize: this.fontSize,
+          backgroundColor: this.backgroundColor
+        }
+      },
+      childMenuFontSizeCom() {
+        return this.childMenuFontSize ? this.childMenuFontSize : this.fontSize;
+      }
     },
     watch: {
       menus() {
@@ -84,10 +124,11 @@ define(function (require) {
               childNodeName,
               keyName
             );
-            return {
+            let menuCleaned = {
               ...item,
               showChild: flag, // 是否展开子菜单
               selected: flag, // 是否选中
+              hovered: false,
               children: this.cleanMenuArr(
                 item[childNodeName],
                 active,
@@ -95,11 +136,16 @@ define(function (require) {
                 keyName
               ),
             };
+            if (flag && this.accordion && this.isVertical) {
+              this.prevMenu = menuCleaned;
+            }
+            return menuCleaned;
           } else {
             return {
               ...item,
               key: index,
               selected: active === item[keyName],
+              hovered: false
             };
           }
         });
@@ -145,37 +191,61 @@ define(function (require) {
         )})`;
       },
       onMenuMouseEnter(e, menu) {
-        this.onMouseEnter(e);
+        this.onMouseEnter(e, menu);
         if (
           menu.hasOwnProperty('showChild') &&
-          this.mode === 'horizontal' &&
+          this.isHorizontal &&
           this.isShowChildMenu
         ) {
           this.toggleChildMenuVisible(menu, !menu.showChild);
         }
       },
       onMenuMouseLeave(e, menu) {
-        this.onMouseLeave(e);
+        this.onMouseLeave(e, menu);
         if (
           menu.hasOwnProperty('showChild') &&
-          this.mode === 'horizontal' &&
+          this.isHorizontal &&
           this.isShowChildMenu
         ) {
           this.toggleChildMenuVisible(menu, !menu.showChild);
         }
       },
-      onMouseEnter(e) {
-        if (this.backgroundColor) {
-          e.target.style.backgroundColor = this.mixColor(
-            this.backgroundColor,
-            0.8
-          );
+      onMouseEnter(e, menu) {
+        if (menu.selected) {
+          return;
+        }
+        menu.hovered = true;
+        if (menu.children) {
+          if (this.hoverBackgroundColor) {
+            e.target.style.backgroundColor = this.hoverBackgroundColor;
+          } else {
+            e.target.style.backgroundColor = this.mixColor(
+              this.backgroundColor,
+              0.8
+            );
+          }
+          this.hoverTextColor && (e.target.style.color = this.hoverTextColor);
+        } else {
+          if (this.hoverChildMenuBackgroundColor || this.hoverBackgroundColor) {
+            e.target.style.backgroundColor = this.hoverChildMenuBackgroundColor || this.hoverBackgroundColor;
+          } else {
+            e.target.style.backgroundColor = this.mixColor(
+              this.backgroundColor,
+              0.8
+            );
+          }
+          if (this.hoverChildMenuTextColor || this.hoverTextColor) {
+            e.target.style.color = this.hoverChildMenuTextColor || this.hoverTextColor;
+          }
         }
       },
-      onMouseLeave(e) {
-        if (this.backgroundColor) {
-          e.target.style.backgroundColor = this.backgroundColor;
+      onMouseLeave(e, menu) {
+        if (menu.selected) {
+          return;
         }
+        menu.hovered = false;
+        e.target.style.color = this.textColor;
+        e.target.style.backgroundColor = this.backgroundColor;
       },
       toggleChildMenuVisible(menu, flag) {
         clearTimeout(this.timer);
@@ -206,14 +276,52 @@ define(function (require) {
       handleClick(menu) {
         if (
           menu.hasOwnProperty('showChild') &&
-          this.mode === 'vertical' &&
+          this.isVertical &&
           this.isShowChildMenu
         ) {
-          this.toggleChildMenuVisible(menu, !menu.showChild);
+          if (this.accordion) {
+            if (!this.prevMenu) {
+              this.toggleChildMenuVisible(menu, !menu.showChild);
+            } else {
+              if (this.prevMenu == menu) {
+                this.toggleChildMenuVisible(menu, !menu.showChild);
+              } else {
+                this.setChildMenuVisible(this.prevMenu, false);
+                this.toggleChildMenuVisible(menu, true);
+              }
+            }
+            this.prevMenu = menu;
+          } else {
+            this.toggleChildMenuVisible(menu, !menu.showChild);
+          }
         } else {
           this.$emit('click', menu);
         }
       },
+      getMenuStyleObj(menu) {
+        return {
+          backgroundColor: menu.selected && this.activeBackgroundColor ? this.activeBackgroundColor : this.backgroundColor,
+          color: menu.selected && this.activeTextColor ? this.activeTextColor : this.textColor
+        }
+      },
+      getChildMenuStyleObj (menu) {
+        let activeBackgroundColor = '';
+        let activeTextColor = '';
+        if (this.activeChildMenuBackgroundColor) {
+          activeBackgroundColor = this.activeChildMenuBackgroundColor;
+        } else if (this.activeBackgroundColor) {
+          activeBackgroundColor = this.activeBackgroundColor;
+        }
+        if (this.activeChildMenuTextColor) {
+          activeTextColor = this.activeChildMenuTextColor;
+        } else if (this.activeTextColor) {
+          activeTextColor = this.activeTextColor;
+        }
+        return obj = {
+          backgroundColor: menu.selected && activeBackgroundColor ? activeBackgroundColor : this.backgroundColor,
+          color: menu.selected && activeTextColor ? activeTextColor : this.textColor
+        };
+      }
     },
     mounted() {
       this.menuList = this.getMenuList(this.menus);

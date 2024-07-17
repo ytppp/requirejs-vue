@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/switch/style.less');
   var Vue = require('vue');
   Vue.component('FhSwitch', {
     template: require('text!./components/switch/template.html'),

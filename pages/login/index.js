@@ -1,11 +1,12 @@
 define(function (require) {
-  require('less!./style.less');
+  require('css!./style.css');
   require('fh-layout');
   require('fh-form');
   require('fh-form');
   require('fh-form-item');
   require('fh-input');
   require('fh-button');
+  require('fh-icon');
   var $ = require('jquery');
   var { isValidPassword, getStringByte } = require('tool');
   var customerInfo = require('customer-info');
@@ -14,7 +15,7 @@ define(function (require) {
     template: require('text!./template.html'),
     data() {
       return {
-        formDisabled: true,
+        formDisabled: false,
         logoSrc: customerInfo[customerInfo.name].logo,
         userinfo: {
           username: '',

@@ -1,8 +1,8 @@
 define(function (require) {
-  require('less!./components/button/style.less');
   var Vue = require('vue');
+  const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
+  const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
   Vue.component('FhButton', {
-    template: require('text!./components/button/template.html'),
     inject: {
       form: {
         default: ''
@@ -19,6 +19,10 @@ define(function (require) {
       block: {
         type: Boolean,
         default: false
+      },
+      plain: {
+        type: Boolean,
+        default: true
       },
       size: {
         type: String,
@@ -38,17 +42,68 @@ define(function (require) {
         type: String,
         default: 'button'
       },
-      id: String
+      id: String,
+      needInserted: {
+        type: Boolean,
+        default: true
+      } // Add a space between two Chinese characters
     },
     computed: {
+      classes() {
+        return [
+          'btn',
+          `btn--${this.type}`,
+          this.size ? 'btn--' + this.size : '',
+          {
+            'is-disabled': this.btnDisabled,
+            'is-block': this.block,
+            'is-plain': this.plain
+          }
+        ]
+      },
       btnDisabled() {
         return this.disabled || (this.form || {}).disabled;
-      }
+      },
     },
     methods: {
       handleClick(evt) {
         this.$emit('click', evt);
-      }
-    }
+      },
+      insertSpace(child, createElement) {
+        const SPACE = this.needInserted ? ' ' : '';
+        if (typeof child.text === 'string') {
+          let text = child.text.trim();
+          if (isTwoCNChar(text)) {
+            text = text.split('').join(SPACE);
+          }
+          return createElement(
+            'span',
+            text
+          );
+        }
+        return child;
+      },
+    },
+    render: function (createElement) {
+      const { id, nativeType, btnDisabled, classes, handleClick, $slots } = this;
+      const buttonProps = {
+        attrs: {
+          id,
+          type: nativeType,
+          disabled: btnDisabled
+        },
+        class: classes,
+        on: {
+          click: handleClick
+        }
+      };
+      const children = $slots.default;
+      const kids = children.map(child => this.insertSpace(child, createElement));
+      return createElement(
+        'button',
+        {...buttonProps},
+        kids
+      );
+    },
   });
 });

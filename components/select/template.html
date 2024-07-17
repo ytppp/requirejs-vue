@@ -11,7 +11,7 @@
       <slot name="prefix"></slot>
     </template>
     <template slot="suffix">
-      <i :class="['select__caret', 'input__icon', 'icon-' + iconClass]"></i>
+      <fh-icon :class="['select__caret', 'input__icon', this.opened ? 'is-reverse' : '']" name="icon-down"></fh-icon>
     </template>
   </fh-input>
   <transition name="select">
@@ -23,12 +23,12 @@
           :key="option.value"
           @click.stop="select(option)"
           v-for="option in options"
-          :title="option.text"
         >
-          {{ option.text }}
+          <div v-if="option.render && typeof option.render === 'function'" v-html="option.render()"></div>
+          <span v-else>{{ option.text }}</span>
         </li>
       </template>
-      <li class="select__popup-item--empty" v-else>{{$t('trans0278')}}</li>
+      <li class="select__popup-item--empty" v-else>{{$t('trans0142')}}</li>
     </ul>
   </transition>
 </div>

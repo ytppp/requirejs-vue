@@ -5,21 +5,33 @@
     'is-error': error
   }"
 >
-  <label
-    :for="labelFor"
-    class="form-item__label"
-    v-if="label || $slots.label"
+  <fh-form-item-label-wrap
+    :is-auto-width="labelStyle && labelStyle.width === 'auto'"
+    :update-all="formCom.labelWidth === 'auto'">
+    <label
+      class="form-item__label"
+      :title="label"
+      :for="labelFor"
+      :class="`form-item__label--${labelPositionCom}`"
+      :style="labelStyle"
+      v-if="label || $slots.label">
+      <slot name="label">{{label}}</slot>
+    </label>
+  </fh-form-item-label-wrap>
+  <div
+    class="form-item__content"
+    :style="contentStyle"
   >
-    <slot name="label">{{label}}</slot>
-  </label>
-  <slot></slot>
+    <slot></slot>
+  </div>
   <transition name="el-zoom-in-top">
-    <slot
-      v-if="error"
-      name="error"
-      :error="validateMessage"
-    >
-      <div class="form-item__error">{{validateMessage}}</div>
-    </slot>
+    <div v-if="error" class="form-item__error">{{validateMessage}}</div>
   </transition>
+  <div
+    class="form-item__extra"
+    :style="contentStyle"
+    v-if="$slots.extra"
+  >
+    <slot name="extra"></slot>
+  </div>
 </div>

@@ -3,21 +3,28 @@ define(function (require) {
   const LoadingCom = require('fh-loading-com');
   const target = "loadingTarget";
   let position = '';
+  let instance = null;
   function appendNode(el) {
     position = el.style.position;
     el.style.position = 'relative';
     el.appendChild(el[target]);
   }
   function removeNode(el) {
+    if (instance) {
+      instance.visible = false;
+      instance = null;
+    }
     el.style.position = position;
     el.removeChild(el[target]);
   }
   Vue.directive('loading', {
     inserted(el, bing) {
       const tip = el.getAttribute("loading-tip");
-      const instance = new LoadingCom({
+      const title = el.getAttribute("loading-title");
+      instance = new LoadingCom({
         data: {
           tip: tip || '',
+          title: title || '',
           isAppendBody: false
         }
       }).$mount();

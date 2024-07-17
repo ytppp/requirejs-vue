@@ -1,143 +1,160 @@
-.control {
-  margin: o auto;
+.devicecontrol {
+  margin: 0 auto;
 }
-.table {
+.devicecontrol .devicecontrol-table {
   border-radius: 8px;
+  border: 1px solid #C9C9C9;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
-  border: 1px solid #c9c9c9;
 }
-.table .table__row {
-  display: flex;
-  font-size: 16px;
-  color: #262626;
-  border-bottom: 1px solid #c9c9c9;
+.devicecontrol .devicecontrol-table .devicecontrol-table__content {
+  display: table;
+  border-collapse: collapse;
 }
-.table .table__row:last-child {
-  border-bottom: none;
+.devicecontrol .devicecontrol-table .devicecontrol-table__header {
+  display: table-header-group;
 }
-.table .table__row.is-col-title {
-  height: 60px;
-  background-color: #f2f2f2;
-  font-weight: 400;
+.devicecontrol .devicecontrol-table .devicecontrol-table__content {
+  display: table-row-group;
 }
-.table .table__row.is-col-title .table__col {
-  height: 100%;
+.devicecontrol .devicecontrol-table .devicecontrol-table__row {
+  display: table-row;
+  background-color: #fff;
 }
-.table .table__row.is-col-title .table__col:nth-child(1) .select {
-  width: 400px;
+.devicecontrol .devicecontrol-table .devicecontrol-table__cell {
+  display: table-cell;
+  border-right: 1px solid #C9C9C9;
+  vertical-align: middle;
 }
-.table .table__row:nth-child(2n + 1) {
-  background-color: #f2f2f2;
-  opacity: 0.9;
+.devicecontrol .devicecontrol-table .devicecontrol-table__cell:nth-child(1) {
+  width: 500px;
 }
-.table .table__row:hover {
-  background-color: #f2f2f2;
-  cursor: pointer;
+.devicecontrol .devicecontrol-table .devicecontrol-table__cell:nth-child(2) {
+  width: 100px;
 }
-.table .table__col {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  border-right: 1px solid #c9c9c9;
-}
-.table .table__col:nth-child(1) {
-  width: 450px;
-  padding-left: 20px;
-}
-.table .table__col:nth-child(2),
-.table .table__col:nth-child(3) {
-  width: 120px;
-  justify-content: center;
-}
-.table .table__col:nth-child(4) {
+.devicecontrol .devicecontrol-table .devicecontrol-table__cell:nth-child(3),
+.devicecontrol .devicecontrol-table .devicecontrol-table__cell:nth-child(4) {
   width: 200px;
-  justify-content: center;
 }
-.table .table__col:not(:first-child) {
-  justify-content: center;
-}
-.table .table__col:last-child {
+.devicecontrol .devicecontrol-table .devicecontrol-table__cell:last-child {
   border-right: none;
 }
-.device {
+.devicecontrol .devicecontrol-table .devicecontrol-table-header-row {
+  height: 48px;
+  line-height: 48px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #262626;
+  border-bottom: 1px solid #C9C9C9;
+  background-color: #e9e9e9;
+}
+.devicecontrol .devicecontrol-table .devicecontrol-table-content-row {
+  border-bottom: 1px solid #C9C9C9;
+}
+.devicecontrol .devicecontrol-table .devicecontrol-table-content-row:last-child {
+  border-bottom: none;
+}
+.devicecontrol .devicecontrol-table .cell {
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.devicecontrol .devicecontrol-table .device {
   display: flex;
-  align-items: center;
   padding: 10px 0;
-  width: 100%;
   box-sizing: border-box;
 }
-.device .device__logo {
+.devicecontrol .devicecontrol-table .device .device__logo {
   margin-right: 10px;
 }
-.device .device__main {
+.devicecontrol .devicecontrol-table .device .device__main {
   flex: 1;
 }
-.device .device__name {
-  display: flex;
-  align-items: center;
-}
-.device .device__name span {
-  color: #28c0c6;
-  font-size: 24px;
-  margin-right: 10px;
-}
-.device .device__name i {
-  font-size: 30px;
-}
-.device .device__speed {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-}
-.device .device__info {
-  margin-top: 8px;
+.devicecontrol .devicecontrol-table .device .device__speed,
+.devicecontrol .devicecontrol-table .device .device__info {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 }
-.speed {
-  display: flex;
-  align-items: center;
-  width: 50%;
-  color: #333;
-}
-.speed span {
-  font-size: 20px;
-}
-.speed i {
+.devicecontrol .devicecontrol-table .device .name span {
+  color: #d6001c;
   font-size: 20px;
   margin-right: 6px;
 }
-.info {
+.devicecontrol .devicecontrol-table .device .name i {
+  font-size: 24px;
+  cursor: pointer;
+}
+.devicecontrol .devicecontrol-table .device .speed,
+.devicecontrol .devicecontrol-table .device .info {
   display: flex;
-  align-items: center;
+  margin-top: 8px;
   width: 50%;
+}
+.devicecontrol .devicecontrol-table .device .speed {
+  color: #333;
+  align-items: center;
+}
+.devicecontrol .devicecontrol-table .device .speed i {
+  font-size: 14px;
+  margin-right: 6px;
+}
+.devicecontrol .devicecontrol-table .device .speed span {
+  font-size: 12px;
+}
+.devicecontrol .devicecontrol-table .device .info {
   color: #828282;
   font-size: 12px;
-  flex: 1;
 }
-.limit {
+.devicecontrol .devicecontrol-table .device .info label {
+  margin-right: 6px;
+}
+.devicecontrol .devicecontrol-table .limit {
   display: flex;
   align-items: center;
-  padding: 10px 0;
-  box-sizing: border-box;
+}
+.devicecontrol .devicecontrol-table .limit .limit__icon {
+  font-size: 14px;
+  margin-right: 6px;
+}
+.devicecontrol .devicecontrol-table .limit .limit__text,
+.devicecontrol .devicecontrol-table .limit .limit__unit {
+  font-size: 12px;
   color: #333;
 }
-.limit .limit__main {
-  margin-right: 20px;
+.devicecontrol .devicecontrol-table .limit .limit__input {
+  width: 100px;
 }
-.limit .limit__edit {
-  font-size: 28px;
+.devicecontrol .devicecontrol-table .limit .limit__input.input .input__inner {
+  height: 30px;
 }
-.speed-limit {
-  display: flex;
-  align-items: center;
+.devicecontrol .devicecontrol-table .limit .limit__edit,
+.devicecontrol .devicecontrol-table .limit .limit__unit {
+  margin-left: 6px;
 }
-.speed-limit span {
-  font-size: 20px;
+.devicecontrol .devicecontrol-table .limit .limit__edit {
+  font-size: 24px;
+  cursor: pointer;
 }
-.speed-limit i {
-  font-size: 18px;
-  margin-right: 10px;
+.devicecontrol .devicecontrol-table .limit-tip {
+  padding: 0;
+  margin: 6px 0 0 0;
+  font-size: 12px;
+  color: #333;
+}
+.devicecontrol .devicecontrol-table .empty {
+  position: relative;
+  height: 200px;
+  background-color: inherit !important;
+}
+.devicecontrol .devicecontrol-table .empty:hover {
+  background-color: inherit;
+}
+.devicecontrol .devicecontrol-table .empty .empty__text {
+  position: absolute;
+  color: #666;
+  font-size: 16px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

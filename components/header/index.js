@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/header/style.less');
   var Vue = require('vue');
   var dialog = require('fh-dialog');
   require('fh-menu');
@@ -74,7 +73,7 @@ define(function (require) {
         showPopup: false,
         Languages: Languages.filter(l => l.show),
         current: null,
-        navVisible: false,
+        navVisible: true,
         logoSrc: customerInfo[customerInfo.name].logo
       };
     },
@@ -133,10 +132,10 @@ define(function (require) {
           message: this.$t('trans0021'),
           callback: {
             ok: () => {
-              console.log('123');
-              // window.location.href = '/content/login.asp';
-            }
-          }
+              localStorage.removeItem("username");
+              window.location.href = '/cgi-bin/logout.cgi';
+            },
+          },
         });
       },
       close() {
@@ -155,22 +154,22 @@ define(function (require) {
     },
     mounted() {
       this.$i18n.locale = this.language.value;
-      this.changeMenuMode();
+      // this.changeMenuMode();
       if (window.addEventListener) {
         window.addEventListener('click', this.close);
-        window.addEventListener('resize', this.changeMenuMode);
+        // window.addEventListener('resize', this.changeMenuMode);
       } else if (window.attachEvent) {
         window.attachEvent('click', this.close);
-        window.attachEvent('resize', this.changeMenuMode);
+        // window.attachEvent('resize', this.changeMenuMode);
       }
     },
     beforeDestroy() {
       if (window.addEventListener) {
         window.removeEventListener('click', this.close);
-        window.removeEventListener('resize', this.changeMenuMode);
+        // window.removeEventListener('resize', this.changeMenuMode);
       } else if (window.attachEvent) {
         window.detachEvent('click', this.close);
-        window.detachEvent('resize', this.changeMenuMode);
+        // window.detachEvent('resize', this.changeMenuMode);
       }
     }
   });

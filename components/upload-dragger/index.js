@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/upload-dragger/style.less');
   var Vue = require('vue');
   Vue.component('FhUploadDragger', {
     template: require('text!./components/upload-dragger/template.html'),

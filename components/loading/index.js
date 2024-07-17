@@ -4,6 +4,7 @@ define(function (require) {
   let { mergeOptions } = require('tool');
   const defaultOptions = {
     tip: '',
+    title: '',
     isAppendBody: true
   };
   return {
@@ -14,6 +15,7 @@ define(function (require) {
         this.instance = new LoadingCom({
           data: {
             tip: opt.tip,
+            title: opt.title,
             isAppendBody: opt.isAppendBody
           }
         }).$mount();

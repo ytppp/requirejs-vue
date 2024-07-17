@@ -1,6 +1,6 @@
 define(function (require) {
-  require('less!./components/input/style.less');
   var Vue = require('vue');
+  require('fh-icon');
 
   Vue.component('FhInput', {
     template: require('text!./components/input/template.html'),
@@ -41,6 +41,10 @@ define(function (require) {
       showWordLimit: {
         type: Boolean,
         default: false
+      },
+      isFormatHtml: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -52,9 +56,6 @@ define(function (require) {
       };
     },
     computed: {
-      inputLabel() {
-        return this.label || this.$parent.label || '';
-      },
       inputDisabled() {
         return this.disabled || (this.form || {}).disabled;
       },
@@ -71,7 +72,14 @@ define(function (require) {
           (this.textLength > this.upperLimit);
       },
       nativeInputValue() {
-        return this.value === null || this.value === undefined ? '' : String(this.value);
+        if (this.value === null || this.value === undefined) {
+          return '';
+        }
+        let val = String(this.value);
+        if (this.isFormatHtml) {
+          val = this.escape2Html(val);
+        }
+        return val;
       },
       showClear() {
         return this.clearable &&
@@ -112,6 +120,13 @@ define(function (require) {
       }
     },
     methods: {
+      escape2Html(val) {
+        let temp = document.createElement('span');
+        temp.innerHTML = val;
+        let output = temp.innerText || temp.textContent;
+        temp = null;
+        return output;
+      },      
       getInput() {
         return this.$refs.input || this.$refs.textarea;
       },
@@ -135,9 +150,6 @@ define(function (require) {
       },
       handlePasswordVisible() {
         this.passwordVisible = !this.passwordVisible;
-        this.$nextTick(() => {
-          this.focus();
-        });
       },
       setNativeInputValue() {
         const input = this.getInput();

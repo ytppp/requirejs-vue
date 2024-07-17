@@ -1,14 +1,16 @@
 <template>
   <fh-wrap :visible.sync="open" :closeOnClickWrap="true">
     <div class="modal" :style="{width: fullscreen ? '100%' : width, height: fullscreen ? '100%' : 'auto'}">
-      <i class="modal__close icon icon-close" @click="close" v-if="showClose"></i>
-      <div class="modal__header" v-if="$slots.title || title">
-        <template v-if="title">
-          {{title}}
+      <div class="modal__header">
+        <template v-if="$slots.title || title"">
+          <template v-if="title">
+            {{title}}
+          </template>
+          <slot name="title" v-else></slot>
         </template>
-        <slot name="title" v-else></slot>
+        <fh-icon class="modal__close" name="icon-close" @click="close" v-if="showClose"></fh-icon>
       </div>
-      <div class="modal__body" v-if="$slots.body">
+      <div class="modal__body" :style="`${fullscreen ? 'height: auto' : 'max-height: 80vh; overflow: auto'}`" v-if="$slots.body">
         <slot name="body"></slot>
       </div>
       <div class="modal__footer" v-if="$slots.footer">

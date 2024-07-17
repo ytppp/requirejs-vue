@@ -1,78 +1,117 @@
 <fh-layout url="/control">
-  <div class="control">
-    <div class="table">
-      <div class="table__row is-col-title">
-        <div class="table__col">
-          <fh-select v-model="form.deviceType" :options="deviceList">
-          </fh-select>
-        </div>
-        <div class="table__col">{{$t("trans0176")}}</div>
-        <div class="table__col">{{$t("trans0177")}}</div>
-        <div class="table__col">{{$t("trans0178")}}</div>
-      </div>
-      <div class="table__row">
-        <div class="table__col">
-          <div class="device">
-            <div class="device__logo">
-              <div style="width: 80px; height: 80px; border-radius: 50%; background-color: red;"></div>
+  <div class="devicecontrol">
+    <div class="devicecontrol-table">
+      <div class="devicecontrol-table__content">
+        <div class="devicecontrol-table__header">
+          <div class="devicecontrol-table__row devicecontrol-table-header-row">
+            <div class="devicecontrol-table__cell">
+              <div class="cell">
+                <fh-select v-model="form.deviceType" :options="deviceList"></fh-select>
+              </div>
             </div>
-            <div class="device__main">
-              <div class="device__name">
-                <span>xxxxx</span>
-                <i class="icon-edit-outline"></i>
-              </div>
-              <div class="device__speed">
-                <div class="speed">
-                  <i class="icon-top"></i>
-                  <span>0 Kbps</span>
-                </div>
-                <div class="speed">
-                  <i class="icon-bottom"></i>
-                  <span>0 Kbps</span>
-                </div>
-              </div>
-              <div class="device__info">
-                <div class="info">
-                  <label>{{$t("trans0179")}}{{$t("trans0182")}}</label>
-                  <span>192.168.3.254</span>
-                </div>
-                <div class="info">
-                  <span>{{$t("trans0097")}}{{$t("trans0182")}}</span>
-                  <span>A0:88:B4:DD:88:74</span>
-                </div>
-                <div class="info">
-                  <span>{{$t("trans0180")}}{{$t("trans0182")}}</span>
-                  <span>4 天 10 小时 3 分钟</span>
-                </div>
-              </div>
+            <div class="devicecontrol-table__cell">
+              <div class="cell">{{$t("trans0176")}}</div>
+            </div>
+            <div class="devicecontrol-table__cell">
+              <div class="cell">{{$t("trans0177")}}</div></div>
+            <div class="devicecontrol-table__cell">
+              <div class="cell">{{$t("trans0178")}}</div>
             </div>
           </div>
         </div>
-        <div class="table__col">
-          <fh-switch></fh-switch>
-        </div>
-        <div class="table__col">
-          <fh-switch></fh-switch>
-        </div>
-        <div class="table__col">
-          <div class="limit">
-            <div class="limit__main">
-              <div class="speed-limit">
-                <i class="icon-top"></i>
-                <span>0 Kbps</span>
+        <div class="devicecontrol-table__content">
+          <template v-if="data.length">
+            <div class="devicecontrol-table__row devicecontrol-table-content-row" v-for="(item, index) in data" :key="index">
+              <div class="devicecontrol-table__cell">
+                <div class="cell">
+                  <div class="device">
+                    <div class="device__logo">
+                      <div style="width: 80px; height: 80px; border-radius: 50%; background-color: red;"></div>
+                    </div>
+                    <div class="device__main">
+                      <div class="device__name">
+                        <div class="name">
+                          <span>{{item.name}}</span>
+                          <!-- <i class="icon-edit-outline"></i> -->
+                        </div>
+                      </div>
+                      <!-- <div class="device__speed">
+                        <div class="speed">
+                          <i class="icon-top"></i>
+                          <span>0 Kbps</span>
+                        </div>
+                        <div class="speed">
+                          <i class="icon-bottom"></i>
+                          <span>0 Kbps</span>
+                        </div>
+                      </div> -->
+                      <div class="device__info">
+                        <div class="info">
+                          <label>{{$t("trans0179")}}{{$t("trans0182")}}</label>
+                          <span>{{item.ip}}</span>
+                        </div>
+                        <div class="info">
+                          <label>{{$t("trans0097")}}{{$t("trans0182")}}</label>
+                          <span>{{item.mac}}</span>
+                        </div>
+                        <!-- <div class="info">
+                          <label>{{$t("trans0180")}}{{$t("trans0182")}}</label>
+                          <span>{{item.time}}</span>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="speed-limit">
-                <i class="icon-bottom"></i>
-                <span>0 Kbps</span>
+              <div class="devicecontrol-table__cell">
+                <div class="cell">
+                  <fh-switch v-model="item.isAllowInternet"></fh-switch>
+                </div>
+              </div>
+              <div class="devicecontrol-table__cell">
+                <div class="cell">
+                  <div class="limit">
+                    <i class="icon-bottom limit__icon"></i>
+                    <span class="limit__text" v-if="!item.isShowTopSpeedLimitInput">{{item.topSpeedText}}</span>
+                    <fh-input class="limit__input" ref="topSpeedLimitInput" :placeholder="$t('trans0172')" v-model="item.topSpeedInput" @blur="toggleSpeedLimit(item, 'topSpeed', false)" v-else></fh-input>
+                    <span class="limit__unit" v-show="item.topSpeed">{{item.topSpeedUnit}}</span>
+                    <span class="limit__edit" @click="toggleSpeedLimit(item, 'topSpeed', true)" v-if="!item.isShowTopSpeedLimitInput">
+                      <i class="icon-edit-outline"></i>
+                    </span>
+                  </div>
+                  <template v-if="item.isShowTopSpeedLimitInput">
+                    <p class="limit-tip">{{speedLimitTipsText}}</p>
+                    <p class="limit-tip">{{$t('trans0612')}}</p>
+                  </template>
+                </div>
+              </div>
+              <div class="devicecontrol-table__cell">
+                <div class="cell">
+                  <div class="limit">
+                    <i class="icon-bottom limit__icon"></i>
+                    <span class="limit__text" v-if="!item.isShowBootomSpeedLimitInput">{{item.bottomSpeedText}}</span>
+                    <fh-input class="limit__input" ref="bootomSpeedLimitInput" :placeholder="$t('trans0172')" v-model="item.bottomSpeed" @blur="toggleSpeedLimit(item, 'bottomSpeed', false)" v-else></fh-input>
+                    <span class="limit__unit" v-show="item.bottomSpeed">{{item.bottomSpeedUnit}}</span>
+                    <span class="limit__edit" @click="toggleSpeedLimit(item, 'bottomSpeed', true)" v-if="!item.isShowBootomSpeedLimitInput">
+                      <i class="icon-edit-outline"></i>
+                    </span>
+                  </div>
+                  <template v-if="item.isShowBootomSpeedLimitInput">
+                    <p class="limit-tip">{{speedLimitTipsText}}</p>
+                    <p class="limit-tip">{{$t('trans0612')}}</p>
+                  </template>
+                </div>
               </div>
             </div>
-            <div class="limit__edit">
-              <i class="icon-edit-outline"></i>
+          </template>
+          <div
+            class="devicecontrol-table__row devicecontrol-table-content-row empty" v-else>
+            <div class="empty__text">
+              {{$t('trans0142')}}
             </div>
           </div>
         </div>
       </div>
-      <div class="table__empty" v-else>{{$t('trans0142')}}</div>
     </div>
   </div>
 </fh-layout>

@@ -1,0 +1,63 @@
+.guide {
+  h2,h3,p,form {
+    padding: 0;
+    margin: 0;
+  }
+  h2,h3 {
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  .guide__steps {
+    display: flex;
+    justify-content: center;
+  }
+  .guide__steps-wrap {
+    width: 350px;
+  }
+  .guide__main {
+    margin: 80px 0;
+  }
+  .guide__btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    .btn {
+      +.btn {
+        margin-left: 8px;
+      }
+    }
+  }
+  .guide__title {
+    text-align: center;
+  }
+  .guide__devicePage--fail {
+    width: 350px;
+    p {
+      padding: 0;
+      margin-bottom: 10px;
+      line-height: 26px;
+    }
+  }
+  .guide__netPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .guide__netPage-header {
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #eee;
+    border-radius: 6px;
+  }
+  .guide__form {
+    width: 350px;
+    &.fh-form {
+      margin-top: 20px;
+    }
+    &.display-form {
+      .display-form__label {
+        width: 150px;
+      }
+    }
+  }
+}

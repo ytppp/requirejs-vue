@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  min-width: 1300px;
   font-family: Helvetica, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif;
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
@@ -74,4 +75,27 @@ input::-webkit-input-placeholder {
 }
 .page .form-button {
   margin-top: 20px;
+}
+.display-form {
+  padding: 20px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+.display-form .display-form__item {
+  display: flex;
+}
+.display-form .display-form__item + .display-form__item {
+  margin-top: 20px;
+}
+.display-form .display-form__label {
+  width: 200px;
+  text-align: right;
+  margin-right: 40px;
+}
+.display-form .display-form__empty {
+  width: 350px;
+  padding: 20px;
+}
+.error-tips {
+  color: red !important;
 }

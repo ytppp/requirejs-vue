@@ -1,5 +1,8 @@
 <template>
-  <ul class="menu" :class="[`menu--${mode}`]">
+  <ul
+    class="menu"
+    :class="[`menu--${mode}`]"
+    :style="menuObj">
     <li
       class="menu-item"
       v-for="menu in menuList"
@@ -8,24 +11,29 @@
       <div
         class="menu-item__main"
         :class="{'is-disabled': menu.disabled}"
-        :style="{
-          backgroundColor: backgroundColor,
-          borderBottomColor: menu.selected && mode === 'horizontal' && activeTextColor,
-        }"
+        :style="getMenuStyleObj(menu)"
         @click="handleClick(menu)"
         @mouseenter="e => onMenuMouseEnter(e, menu)"
         @mouseleave="e => onMenuMouseLeave(e, menu)"
         @focus="e => onMenuMouseEnter(e, menu)"
         @blur="e => onMenuMouseLeave(e, menu)"
       >
-        <span :style="{color: menu.selected ? activeTextColor : textColor}">
+        <span :style="{
+          transform: (menu.selected || menu.hovered) && isEnlargeFontSize ? 'scale(1.15)' : 'scale(1)'
+        }">
           {{$t(menu.text)}}
         </span>
-        <i
-          class="icon-arrow-down menu-item__arrow"
-          :class="{'menu-item__arrow--up': menu.showChild}"
+        <fh-icon
+          class="menu-item__arrow"
+          :class="{
+            'menu-item__arrow--up': menu.showChild
+          }"
+          :style="{
+            color: textColor,
+          }"
+          name="icon-down"
           v-if="isShowChildMenu && menu.children"
-        ></i>
+        ></fh-icon>
       </div>
       <transition
         name="child-menu-animation"
@@ -46,18 +54,18 @@
             <div
               class="child-menu-item__main"
               :class="{'is-disabled':child.disabled}"
-              :style="{
-                backgroundColor: backgroundColor,
-                color: child.selected ? activeTextColor : textColor
-              }"
+              :style="getChildMenuStyleObj(child)"
               @click.stop="handleClick(child)"
-              @mouseenter="onMouseEnter"
-              @mouseleave="onMouseLeave"
-              @focus="onMouseEnter"
-              @blur="onMouseLeave"
+              @mouseenter="(e) => onMouseEnter(e, child)"
+              @mouseleave="(e) => onMouseLeave(e, child)"
+              @focus="(e) => onMouseEnter(e, child)"
+              @blur="(e) => onMouseLeave(e, child)"
             >
               <span
-                :style="{color: child.selected ? activeTextColor : textColor}"
+                :style="{
+                  transform: (child.selected || child.hovered) && isEnlargeFontSize ? 'scale(1.15)' : 'scale(1)',
+                  fontSize: childMenuFontSizeCom
+                }"
               >
                 {{$t(child.text)}}
               </span>

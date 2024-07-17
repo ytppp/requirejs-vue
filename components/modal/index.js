@@ -1,6 +1,6 @@
 define(function (require) {
-  require('less!./components/modal/style.less');
   require('fh-wrap');
+  require('fh-icon');
   var Vue = require('vue');
   Vue.component('FhModal', {
     template: require('text!./components/modal/template.html'),
@@ -21,6 +21,10 @@ define(function (require) {
       showClose: {
         type: Boolean,
         default: true
+      },
+      beforeClose: {
+        type: Function,
+        default: () => ({})
       }
     },
     data () {
@@ -35,6 +39,7 @@ define(function (require) {
     },
     methods: {
       close() {
+        this.beforeClose && this.beforeClose();
         this.open = false;
         this.$emit('update:visible', false);
       }

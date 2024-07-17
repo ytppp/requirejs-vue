@@ -5,11 +5,12 @@
       :class="[typeClass, center ? 'is-center' : '', 'is-' + effect]"
       v-show="visible"
     >
-      <i
+      <fh-icon
         class="alert__icon"
-        :class="[ iconClass, isBigIcon ]"
+        :class="[ isBigIcon ]"
+        :name="iconClass"
         v-if="showIcon"
-      ></i>
+      ></fh-icon>
       <div class="alert__content">
         <span
           class="alert__title"
@@ -24,13 +25,20 @@
         <p class="alert__description" v-if="description && !$slots.default">
           {{ description }}
         </p>
-        <i
-          class="alert__closebtn"
-          :class="{ 'is-customed': closeText !== '', 'icon-close': closeText === '' }"
-          v-show="closable"
-          @click="close()"
-          >{{closeText}}</i
-        >
+        <template v-if="closable">
+          <i
+            class="alert__closebtn is-customed"
+            @click="close()"
+            v-if="closeText">
+            {{closeText}}
+          </i>
+          <fh-icon
+            class="alert__closebtn"
+            @click="close()"
+            name="icon-circle-close"
+            v-else>
+          </fh-icon>
+        </template>
       </div>
     </div>
   </transition>

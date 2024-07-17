@@ -7,7 +7,7 @@
   >
     <div class="logo">
       <img class="logo__img" :src="logoSrc" alt="" />
-      <span class="logo__title" v-if="title">{{title}}</span>
+      <span class="logo__title" v-show="title">{{title}}</span>
     </div>
     <div class="nav-wrap"
         v-if="!isShow"
@@ -16,12 +16,15 @@
         :menus="menus"
         :active="url"
         :mode="menuMode"
-        :isShowChildMenu="false"
+        :is-show-child-menu="false"
+        active-key-name="url"
+        background-color="#474747"
+        hover-background-color="#474747"
+        text-color="#fff"
+        active-text-color="#fff"
+        active-background-color="#D6001C"
+        is-enlarge-font-size="true"
         @click="handleMenuItemClick"
-        activeKeyName="url"
-        backgroundColor="#333"
-        textColor="#fff"
-        activeTextColor="#d6001c"
       />
     </div>
     <div class="right-wrap">

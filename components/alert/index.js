@@ -1,6 +1,6 @@
 define(function (require) {
-  require('less!./components/alert/style.less');
   var Vue = require('vue');
+  require('fh-icon');
   const TYPE_CLASSES_MAP = {
     success: 'icon-success',
     warning: 'icon-warning',
@@ -23,14 +23,20 @@ define(function (require) {
       },
       closable: {
         type: Boolean,
+        default: false
+      },
+      center: {
+        type: Boolean,
         default: true
       },
       closeText: {
         type: String,
         default: ''
       },
-      showIcon: Boolean,
-      center: Boolean,
+      showIcon: {
+        type: Boolean,
+        default: true
+      },
       effect: {
         type: String,
         default: 'light',

@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/dialog/style.less');
   require('fh-button');
   require('fh-wrap');
   var Vue = require('vue');

@@ -2,7 +2,6 @@
  * select 组件
  */
 define(function (require) {
-  require('less!./components/select/style.less');
   require('fh-input');
   require('clickoutside');
 
@@ -47,7 +46,7 @@ define(function (require) {
     },
     computed: {
       iconClass() {
-        return this.opened ? 'arrow-down is-reverse' : 'arrow-down';
+        return this.opened ? 'is-reverse' : '';
       },
       currentLabel() {
         return this.label || this.$parent.label || '';
@@ -65,6 +64,9 @@ define(function (require) {
       value() {
         this.setSelected();
       },
+      options() {
+        this.setSelected();
+      }
     },
     methods: {
       setSelected() {

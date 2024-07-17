@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/footer/style.less');
   var Vue = require('vue');
   Vue.component('FhFooter', {
     template: require('text!./components/footer/template.html'),

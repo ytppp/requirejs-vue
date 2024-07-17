@@ -1,0 +1,95 @@
+<fh-layout url="/display" title="123asd">
+  <div class="home">
+    <h2 class="home__title">{{$t('trans0428')}}</h2>
+    <div class="home__content status-content">
+      <div class="content network-content">
+        <img class="content__img" src="/assets/images/home/network.png" alt="" />
+        <span class="content__title">{{$t('trans0068')}}</span>
+      </div>
+      <div class="line first-line line--abnormal">
+        <div class="disconn-net">
+          <img class="disconn-net__img" src="/assets/images/home/error.png" alt=""/>
+          <span class="disconn-net__text">{{$t('trans0583')}}</span>
+        </div>
+      </div>
+      <div class="content router-content">
+        <img class="content__img" src="/assets/images/home/router.png" alt="" />
+        <span class="content__title">{{$t('trans0069')}}</span>
+      </div>
+      <div class="line second-line line--normal"></div>
+      <div class="content conn-status-content">
+        <div class="conn-status conn-status--connected">
+          <span class="conn-status__wifi-icon"></span>
+          <span class="conn-status__text">{{$t('trans0049')}}</span>
+        </div>
+        <div class="conn-status conn-status--connected">
+          <span class="conn-status__text">{{$t('trans0156')}}</span>
+        </div>
+        <div class="conn-status conn-status--unconnected">
+          <span class="conn-status__wifi-icon"></span>
+          <span class="conn-status__text">{{$t('trans0050')}}</span>
+        </div>
+      </div>
+      <div class="line third-line line--normal"></div>
+      <div class="content device-content">
+        <img class="content__img" src="/assets/images/home/device.png" alt="" />
+        <span class="content__title">{{$t('trans0069')}}</span>
+      </div>
+      <div class="net-speed">
+        <div class="net-speed__item">
+          <img class="net-speed__img" src="/assets/images/home/arrow-up.png" alt="">
+          <span class="net-speed__text">1024</span>
+          <span class="net-speed__unit">bps</span>
+        </div>
+        <div class="net-speed__item">
+          <img class="net-speed__img net-speed__img--reversal" src="/assets/images/home/arrow-up.png" alt="">
+          <span class="net-speed__text">1024</span>
+          <span class="net-speed__unit">bps</span>
+        </div>
+      </div>
+    </div>
+    <h2 class="home__title">{{$t('trans0458')}}</h2>
+    <div class="home__content info-content">
+      <div class="info-content__item">
+        <img class="info-content__img" src="/assets/images/home/duration-work.png" alt="">
+        <div class="info-content__title">{{$t("trans0072")}}</div>
+        <div class="info-content__wrap">
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">天</span>
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">小时</span>
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">分钟</span>
+        </div>
+      </div>
+      <div class="info-content__item">
+        <img class="info-content__img" src="/assets/images/home/duration-run.png" alt="">
+        <div class="info-content__title">{{$t("trans0072")}}</div>
+        <div class="info-content__wrap">
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">天</span>
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">小时</span>
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">分钟</span>
+        </div>
+      </div>
+      <div class="info-content__item">
+        <img class="info-content__img" src="/assets/images/home/position.png" alt="">
+        <div class="info-content__title">{{$t("trans0072")}}</div>
+        <div class="info-content__wrap">
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">.</span>
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">.</span>
+          <span class="info-content__style info-content__first-style">0</span>
+          <span class="info-content__style info-content__second-style">.</span>
+          <span class="info-content__style info-content__first-style">0</span>
+        </div>
+      </div>
+    </div>
+    <div class="reboot">
+      <img class="reboot__img" src="/assets/images/home/reboot.png" alt="">
+    </div>
+  </div>
+</fh-layout>

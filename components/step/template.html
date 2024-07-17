@@ -1,0 +1,29 @@
+<template>
+	<div class="steps">
+		<div class="steps__main">
+			<div
+				class="step"
+				:class="{
+					'is-fail': !step.success && index <= option.current,
+					'is-success': step.success && index <= option.current
+				}"
+				v-for="(step,index) in option.steps"
+				:key="index"
+			>
+				<div class="step__main">
+					<div class="step__number">
+						<span
+							v-show="(index === option.current && step.success) || (index !== option.current)"
+						>
+							{{index+1}}
+						</span>
+					</div>
+					<div class="step__text">{{step.text}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="steps__line">
+			<div class="steps__line--steped" :style="{width:width}"></div>
+		</div>
+	</div>
+</template>

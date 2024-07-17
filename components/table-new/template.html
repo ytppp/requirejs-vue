@@ -1,0 +1,14 @@
+<table>
+  <thead>
+    <tr>
+      <slot></slot>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="item in data" :key="item.id">
+      <td v-for="column in tableColumns" :key="column.prop">
+        {{ item[column.prop] }}
+      </td>
+    </tr>
+  </tbody>
+</table>

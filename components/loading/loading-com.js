@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/loading/style.less');
   require('fh-wrap');
   var Vue = require('vue');
   const LoadingCom = Vue.extend({
@@ -8,11 +7,9 @@ define(function (require) {
       return {
         visible: false,
         tip: '',
-        isAppendBody: false
+        title: '',
+        isAppendBody: false,
       };
-    },
-    destroyed() {
-      this.timer = null;
     }
   });
 

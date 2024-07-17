@@ -3,21 +3,31 @@
     <fh-header
       :isShow="isShow"
       :menus="menus"
+      ref="layoutHeader"
+      :style="{height: `${layoutHeaderHeight}px`}"
     />
-    <main class="layout__main">
+    <main class="layout__main" :style="{marginTop: `${layoutMainMarginTop}px`}">
       <template v-if="hasChildPage">
-        <div class="layout__aside">
-          <fh-menu
-            :menus="childMenus"
-            :active="url"
-            mode="vertical"
-            activeKeyName="url"
-            backgroundColor="#333"
-            textColor="#fff"
-            activeTextColor="#d6001c"
-            @click="handleMenuItemClick"
-          />
-        </div>
+        <aside class="layout__aside" ref="layoutAside" :style="{top: `${layoutAsideTop}px`}">
+          <div class="aside" :style="{backgroundColor: asideBgColor}">
+            <fh-menu
+              :menus="childMenus"
+              :active="url"
+              :background-color="asideBgColor"
+              child-menu-font-size="16px"
+              mode="vertical"
+              active-key-name="url"
+              text-color="#333"
+              hover-text-color="#333"
+              hover-background-color="#FFF"
+              active-text-color="#FFF"
+              active-background-color="#D6001C"
+              active-child-menu-text-color="#333"
+              active-child-menu-background-color="#FFF"
+              @click="handleMenuItemClick"
+            />
+          </div>
+        </aside>
         <slot></slot>
       </template>
       <template v-else>

@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/radio-group/style.less');
   var Vue = require('vue');
   Vue.component('FhRadioGroup', {
     template: require('text!./components/radio-group/template.html'),

@@ -1,16 +1,14 @@
 .home {
-  width: 750px;
+  width: 800px;
   border: 1px solid #d1d8e0;
   border-radius: 8px;
   padding: 20px;
+  box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
 }
 .home .wifi-form {
-  width: 350px;
+  width: 450px;
   margin: 30px auto;
-}
-.home .wifi-form .switch {
-  display: flex;
 }
 .home .wifi-form .alert {
   margin-top: 12px;
@@ -20,10 +18,8 @@
   color: #333;
 }
 .home .wifi-form .wifi-form__tips {
-  display: inline-block;
   font-size: 12px;
   color: #6e6e6e;
-  margin-top: 12px;
 }
 .home .upload {
   padding: 30px 20px;

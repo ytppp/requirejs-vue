@@ -1,0 +1,134 @@
+<fh-layout url="/guide" title="123asd">
+  <div class="guide">
+    <div class="guide__steps">
+      <div class="guide__steps-wrap">
+        <fh-step :option="stepOption"></fh-step>
+      </div>
+    </div>
+    <div class="guide__main">
+      <!-- 设备连线 -->
+      <template v-if="isDevicePage">
+        <!-- 设备连线成功 -->
+        <template v-if="isDeviceConnSuccess">
+          <h2 class="guide__title">{{$t('trans0588')}}</h2>
+          <div class="guide__btn-group">
+            <fh-button @click="jumpNetPage">{{$t('trans0581')}}</fh-button>
+          </div>
+        </template>
+        <!-- 设备连线失败 -->
+        <div class="guide__devicePage--fail" v-if="isDeviceConnFail">
+          <h2 class="guide__title">{{$t('trans0583')}}</h2>
+          <p>{{$t('trans0584')}}</p>
+          <p>{{$t('trans0585')}}</p>
+          <p>{{$t('trans0586')}}</p>
+          <div class="guide__btn-group">
+            <fh-button @click="jumpNetPage" plain>{{$t('trans0582')}}</fh-button>
+            <fh-button @click="testDeviceConnStatus">{{$t('trans0587')}}</fh-button>
+          </div>
+        </div>
+      </template>
+      <!-- 网络配置 -->
+      <div class="guide__netPage" v-if="isNetPage">
+        <div class="guide__netPage-header">
+          <h3>{{$t('trans0080')}}</h3>
+          <fh-radio-group v-model="onlineWay">
+            <fh-radio name="Mode" v-for="mode in onlineWays" :key="mode.value" :label="mode.value">
+              {{ mode.text }}
+            </fh-radio>
+          </fh-radio-group>
+        </div>
+        <fh-form
+          class="guide__form"
+          name="pppoeForm"
+          method="post"
+          :model="pppoeForm"
+          :rules="pppoeFormRules"
+          v-if="isPppoe">
+          <fh-form-item :label="$t('trans0086')">
+            <fh-input v-model="pppoeForm.username"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0087')">
+            <fh-input v-model="pppoeForm.password"></fh-input>
+          </fh-form-item>
+        </fh-form>
+        <fh-form
+          class="guide__form"
+          name="staticForm"
+          method="post"
+          :model="staticForm"
+          :rules="staticFormRules"
+          v-if="isStatic">
+          <fh-form-item :label="$t('trans0179')">
+            <fh-input v-model="staticForm.ip"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0459')">
+            <fh-input v-model="staticForm.mask"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0548')">
+            <fh-input v-model="staticForm.gateway"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0547')">
+            <fh-input v-model="staticForm.dnsPrimary"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0544')">
+            <fh-input v-model="staticForm.dnsSecondary"></fh-input>
+          </fh-form-item>
+        </fh-form>
+        <div class="guide__btn-group">
+          <fh-button @click="jumpDevicePage" plain>{{$t('trans0589')}}</fh-button>
+          <fh-button @click="jumpRoutingPage">{{$t('trans0581')}}</fh-button>
+        </div>
+      </div>
+      <!-- 路由设置 -->
+      <template v-if="isRoutingPage">
+        <fh-form
+          class="guide__form"
+          name="wifiForm"
+          method="post"
+          :model="wifiForm"
+          :rules="wifiFormRules">
+          <fh-form-item :label="$t('trans0029')">
+            <fh-input v-model="wifiForm.username"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0030')">
+            <fh-input v-model="wifiForm.wifiPwd"></fh-input>
+          </fh-form-item>
+          <fh-form-item :label="$t('trans0590')" v-if="!wifiForm.isSame">
+            <fh-input v-model="wifiForm.routingPwd"></fh-input>
+          </fh-form-item>
+          <fh-form-item>
+            <fh-checkbox v-model="wifiForm.isSame">
+              {{ $t('trans0591') }}
+            </fh-checkbox>
+          </fh-form-item>
+        </fh-form>
+        <div class="guide__btn-group">
+          <fh-button @click="jumpNetPage" plain>{{$t('trans0589')}}</fh-button>
+          <fh-button @click="jumpResultPage">{{$t('trans0581')}}</fh-button>
+        </div>
+      </template>
+      <!-- 安装完成 -->
+      <template v-if="isResultPage">
+        <h2 class="guide__title">{{$t('trans0592')}}</h2>
+        <div class="display-form guide__form">
+          <div class="display-form__item">
+            <div class="display-form__label">{{$t('trans0029')}}</div>
+            <div class="display-form__value">{{displayForm.username}}</div>
+          </div>
+          <div class="display-form__item">
+            <div class="display-form__label">{{$t('trans0030')}}</div>
+            <div class="display-form__value">{{displayForm.wifiPwd}}</div>
+          </div>
+          <div class="display-form__item">
+            <div class="display-form__label">{{$t('trans0590')}}</div>
+            <div class="display-form__value">{{displayForm.routingPwd}}</div>
+          </div>
+        </div>
+        <div class="guide__btn-group">
+          <fh-button @click="jumpRoutingPage" plain>{{$t('trans0589')}}</fh-button>
+          <fh-button @click="forwardLogin">{{$t('trans0581')}}</fh-button>
+        </div>
+      </template>
+    </div>
+  </div>
+</fh-layout>

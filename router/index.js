@@ -18,7 +18,7 @@ define(function (require) {
   var routes = [
     {
       path: '*',
-      redirect: '/home'
+      redirect: '/display'
     },
     {
       path: '/',
@@ -35,6 +35,11 @@ define(function (require) {
       component: loader('pages/home/index')
     },
     {
+      path: '/display',
+      name: 'display',
+      component: loader('pages/display/index')
+    },
+    {
       path: '/other',
       name: 'other',
       component: loader('pages/other/index')
@@ -43,6 +48,16 @@ define(function (require) {
       path: '/control',
       name: 'control',
       component: loader('pages/control/index')
+    },
+    {
+      path: '/guide',
+      name: 'guide',
+      component: loader('pages/guide/index')
+    },
+    {
+      path: '/echarts',
+      name: 'echarts',
+      component: loader('pages/echarts/index')
     }
   ];
 

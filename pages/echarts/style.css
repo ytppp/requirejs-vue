@@ -1,0 +1,33 @@
+.popup-info .popup-info__row {
+  display: flex;
+}
+.popup-info .popup-info__row + .popup-info__row {
+  margin-top: 10px;
+}
+.popup-info .popup-info__label {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: bold;
+  width: 150px;
+  white-space: normal;
+}
+.popup-info .popup-info__title {
+  width: 100%;
+  color: #c0c4cc;
+  font-size: 12px;
+  display: flex;
+  position: relative;
+  margin-top: 10px;
+}
+.popup-info .popup-info__title::after {
+  content: '';
+  margin-left: 10px;
+  flex: 1;
+  display: block;
+  height: 1px;
+  background: #ebeef5;
+  position: relative;
+  margin-top: -1px;
+  top: 50%;
+}

@@ -1,0 +1,42 @@
+<div class="time-picker" @click="open" v-clickoutside="close">
+  <input type="hidden" :name="name" v-model="inputValue">
+  <fh-input
+    readonly
+    :disabled="selectDisabled"
+    :placeholder="selectPlaceholder"
+    :label="currentLabel"
+    v-model="inputValue"
+  >
+    <template slot="prefix" v-if="$slots.prefix">
+      <slot name="prefix"></slot>
+    </template>
+    <template slot="suffix">
+      <fh-icon :class="['time-picker__caret', 'input__icon', this.opened ? 'is-reverse' : '']" name="icon-down"></fh-icon>
+    </template>
+  </fh-input>
+  <transition name="select">
+    <div class="time-picker__popup"
+      ref="combo"
+      v-show="opened">
+      <div class="time-picker__popup-wrap">
+        <ul class="time-picker__popup-list" ref="h">
+          <li class="time-picker__popup-item"
+            v-for="(v,i) in hs"
+            :key="i"
+            @click.stop="(e)=>select('h',v,e)"
+            :class="{'selected':time.h===v}">{{v}}</li>
+        </ul>
+        <ul class="time-picker__popup-list" ref="m">
+          <li class="time-picker__popup-item" v-for="(v,i) in ms"
+            :key="i"
+            @click.stop="(e)=>select('m',v,e)"
+            :class="{'selected':time.m===v}">{{v}}</li>
+        </ul>
+      </div>
+      <div class="time-picker__button-wrap">
+        <fh-button type="text" @click.stop="close">{{$t('trans0020')}}</fh-button>
+        <fh-button type="text" @click.stop="ok">{{$t('trans0019')}}</fh-button>
+      </div>
+    </div>
+  </transition>
+</div>

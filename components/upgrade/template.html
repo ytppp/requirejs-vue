@@ -1,5 +1,5 @@
 <template>
-  <fh-wrap :visible.sync="visible" wrap-bg-color="rgba(0, 0, 0, 0.8)">
+  <fh-wrap :visible.sync="visible">
     <div class="upgrade">
       <img v-if="url" class="upgrade__img" :src="url" alt="" />
       <div v-if="title" class="upgrade__title">{{title}}</div>
@@ -7,7 +7,9 @@
       <!-- 升级进度条 -->
       <div class="progress" v-if="progressVisible">
         <div class="progress__main">
-          <div class="progress__bar" :style="styles"></div>
+          <div class="progress__bar" :style="styles">
+            <span class="progress__text">{{percentText}}</span>
+          </div>
         </div>
       </div>
     </div>

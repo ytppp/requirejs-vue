@@ -24,7 +24,8 @@
       <template v-else>
         <fh-button class="fileinput-button"
                 :disabled="uploadDisabled"
-                @click="click">
+                @click="click"
+                size="small">
           <label>{{labelText}}</label>
         </fh-button>
       </template>
@@ -37,13 +38,13 @@
              :disabled="uploadDisabled"
              hidden="hidden" />
     </div>
-    <div class="upload__files">
+    <div class="upload__files" v-if="files.length">
       <div class='file'
            v-for="file in files"
            :key="file.lastModified">
         <div class="file__info">
           <div class="icon-wrap">
-            <img :src="`/assets/images/${fileIcon}.svg`" />
+            <img :src="`/assets/images/${fileIcon}.png`" />
           </div>
           <div class="des-cnt">
             <div class="description">

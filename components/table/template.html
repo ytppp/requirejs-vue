@@ -9,112 +9,115 @@
     </div>
   </div>
   <div class="table__main" ref="tableWrap" @scroll="handleScroll">
-    <div class="table-main" ref="scrollTable" :class="{'is-border': border}">
-      <div class="table-main__row table-main-header" v-if="showTableHeader">
-        <div
-          class="table-main__cell table-main__checkbox"
-          :class="{
-            'is-border-right': border,
-            'table-main__cell--fixed table-main__cell--fixed-left table-main__cell--fixed-left-last': isFixedLeft
-          }"
-          ref="checkboxCol"
-          v-if="isShowRowCheckbox"
+    <table
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      ref="scrollTable"
+      class="table-main"
+      :class="{'is-border': border}"
+    >
+      <thead class="table-main__header">
+        <tr
+          class="table-main__header-row"
+          v-if="showTableHeader"
         >
-          <div class="com-cell"></div>
-        </div>
-        <div
-          class="table-main__cell table-main__index"
-          :class="{'is-border-right': border}"
-          v-if="isShowIndex"
-        >
-          <div class="com-cell">
-            {{$t('trans0454')}}
-          </div>
-        </div>
-        <div
-          class="table-main__cell table-main-header__col"
-          :class="{'is-border-right': border}"
-          v-for="col in columns"
-          :key="col.key"
-          :title="col.title"
-          :style="getItemStyle(col)"
-        >
-          <div class="cell">{{col.title}}</div>
-        </div>
-        <div
-          class="table-main__cell table-main__operation"
-          :class="{
-            'is-border-right': border,
-            'table-main__cell--fixed table-main__cell--fixed-right table-main__cell--fixed-right-last': isFixedRight
-          }"
-          ref="operationCol"
-          v-if="isShowOperation"
-        >
-          <div class="com-cell">{{$t('trans0141')}}</div>
-        </div>
-      </div>
-      <div class="table-main__content table-main-content">
+          <th
+            class="table-main__cell table-main__checkbox"
+            :class="{
+              'table-main__cell--fixed table-main__cell--fixed-left table-main__cell--fixed-left-last': isFixedLeft
+            }"
+            ref="checkboxCol"
+            v-if="isShowRowCheckbox"
+          >
+            <div class="com-cell" :style="cellStyle"></div>
+          </th>
+          <th class="table-main__cell table-main__index" v-if="isShowIndex">
+            <div class="com-cell" :style="cellStyle">{{$t('trans0454')}}</div>
+          </th>
+          <th
+            class="table-main__cell"
+            v-for="col in columns"
+            :key="col.key"
+            :title="col.title"
+            :style="getItemStyle(col)"
+          >
+            <div class="cell" :style="cellStyle">{{col.title}}</div>
+          </th>
+          <th
+            class="table-main__cell"
+            :class="{
+              'table-main__cell--fixed table-main__cell--fixed-right table-main__cell--fixed-right-last': isFixedRight
+            }"
+            ref="headerOperationCol"
+            v-if="isShowOperation"
+          >
+            <div class="com-cell" :style="cellStyle">{{$t('trans0141')}}</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-main__content">
         <template v-if="data.length">
-          <div
+          <tr
             v-for="(item, index) in data"
             :key="index"
-            class="table-main__row table-main-content__row"
+            class="table-main__content-row"
             :class="{
               'is-stripe': stripe && ((index + 1) % 2 === 0),
-              'is-hover': hover,
-              'is-no-border-bottom': border && (index + 1 === data.length)
-            }">
-            <div
+              'is-hover': hover
+            }"
+          >
+            <td
               class="table-main__cell table-main__checkbox"
               :class="{
-                'is-border-right': border,
                 'table-main__cell--fixed table-main__cell--fixed-left table-main__cell--fixed-left-last': isFixedLeft
               }"
               v-if="isShowRowCheckbox"
             >
-              <div class="com-cell"><fh-checkbox @change="(val) => select(val, item)" /></div>
-            </div>
-            <div
+              <div class="com-cell" :style="cellStyle">
+                <fh-checkbox @change="(val) => select(val, item)" />
+              </div>
+            </td>
+            <td
               class="table-main__cell table-main__index"
-              :class="{'is-border-right': border}"
               v-if="isShowIndex"
             >
-              <div class="com-cell">{{index + 1}}</div>
-            </div>
-            <div
-              class="table-main__cell table-main-content__col"
-              :class="{'is-border-right': border}"
+              <div class="com-cell" :style="cellStyle">{{index + 1}}</div>
+            </td>
+            <td
+              class="table-main__cell"
               v-for="col in columns"
               :key="col.key"
-              :title="item[col.key]"
               :style="getItemStyle(col)"
             >
-              <div class="cell">{{item[col.key]}}</div>
-            </div>
-            <div
-              class="table-main__cell table-main__operation"
+              <div :style="cellStyle" v-if="col.render">
+                <fh-table-column-render :column="col" :row="item" :index="col.key" :render="col.render"></fh-table-column-render>
+              </div>
+              <div class="cell" :style="cellStyle" :title="item[col.key]" v-else>{{item[col.key]}}</div>
+            </td>
+            <td
+              class="table-main__cell"
               :class="{
-                'is-border-right': border,
                 'table-main__cell--fixed table-main__cell--fixed-right table-main__cell--fixed-right-last': isFixedRight
               }"
+              ref="rowOperationCol"
               v-if="isShowOperation"
             >
-              <div class="com-cell"><slot name="operation" :row="item"></slot></div>
-            </div>
-          </div>
+              <div class="com-cell" :style="cellStyle">
+                <slot name="operation" :row="item"></slot>
+              </div>
+            </td>
+          </tr>
         </template>
-        <div
-          class="table-main__row table-main-content__row empty"
-          :class="{
-            'is-no-border-bottom': border
-          }"
+        <tr
+          class="table-main__content-row empty-row"
           v-else>
-          <div class="empty__text">
+          <td class="empty-row__cell" :colspan="columns.length">
             {{$t('trans0142')}}
-          </div>
-        </div>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="table__footer" v-if="footer || $slots.footer">
     <template v-if="footer"> {{footer}} </template>

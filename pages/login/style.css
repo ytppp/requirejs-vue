@@ -14,3 +14,7 @@
   display: inline-block;
   width: 200px;
 }
+.signin .signin-form .input,
+.signin .signin-form .btn {
+  max-width: 100% !important;
+}

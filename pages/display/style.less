@@ -1,0 +1,231 @@
+.home {
+  height: 2000px;
+  .home__title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 60px;
+    text-align: center;
+  }
+  .home__content {
+    width: 1129px;
+    background: #FFF;
+    box-shadow: 0px 2px 22px 1px rgba(0,0,0,0.03);
+    border-radius: 14px;
+    position: relative;
+    &.status-content {
+      height: 290px;
+    }
+    &.info-content {
+      height: 270px;
+    }
+  }
+  .content,
+  .line,
+  .net-speed {
+    position: absolute;
+  }
+  .content {
+    .content__img {
+      display: block;
+    }
+    .content__title {
+      display: block;
+      text-align: center;
+      margin-top: 19px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #333333;
+    }
+    &.network-content {
+      left: 107px;
+      top: 100px;
+      width: 108px;
+      cursor: pointer;
+      .content__img {
+        width: 100%;
+        height: 105px;
+      }
+    }
+    &.router-content {
+      left: 392px;
+      top: 40px;
+      width: 107px;
+      cursor: pointer;
+      .content__img {
+        width: 100%;
+        height: 113px;
+      }
+    }
+    &.conn-status-content {
+      left: 654px;
+      top: 100px;
+      .conn-status {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+        height: 31px;
+        border-radius: 6px;
+        border-width: 1px;
+        border-style: solid;
+        .conn-status__wifi-icon {
+          margin-right: 9px;
+          width: 17px;
+          height: 14px;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        .conn-status__text {
+          font-size: 14px;
+          font-weight: 500;
+          color: #999999;
+        }
+        + .conn-status {
+          margin-top: 15px;
+        }
+        &.conn-status--connected {
+          border-color:  #00D061;
+          .conn-status__wifi-icon {
+            background-image: url('/assets/images/home/network-active.png');
+          }
+        }
+        &.conn-status--unconnected {
+          border-color:  #999;
+          .conn-status__wifi-icon {
+            background-image: url('/assets/images/home/network-inactive.png');
+          }
+        }
+      }
+    }
+    &.device-content {
+      left: 912px;
+      top: 100px;
+      width: 108px;
+      cursor: pointer;
+      .content__img {
+        width: 100%;
+        height: 90px;
+      }
+    }
+  }
+  .line {
+    height: 2px;
+    &.line--normal {
+      background-color: #00D061;
+    }
+    &.line--abnormal {
+      background-color: #cfcaca;
+    }
+    &.first-line {
+      left: 220px;
+      top: 140px;
+      width: 150px;
+      transform: rotate(-25deg);
+      .disconn-net {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -30%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .disconn-net__img {
+          width: 27px;
+          height: 27px;
+        }
+        .disconn-net__text {
+          margin-top: 5px;
+          font-size: 14px;
+          font-weight: 400;
+          color: #CFCACA;
+        }
+      }
+    }
+    &.second-line {
+      left: 503px;
+      top: 140px;
+      width: 150px;
+      transform: rotate(25deg);
+    }
+    &.third-line {
+      left: 755px;
+      top: 140px;
+      width: 150px;
+      transform: rotate(-25deg);
+    }
+  }
+  .net-speed {
+    left: 230px;
+    top: 90px;
+    .net-speed__item {
+      display: flex;
+      align-items: center;
+    }
+    .net-speed__img {
+      height: 11px;
+      width: 9px;
+      &.net-speed__img--reversal {
+        transform: rotateZ(180deg);
+      }
+    }
+    .net-speed__text,
+    .net-speed__unit {
+      font-size: 14px;
+      font-weight: 400;
+      color: #333333;
+    }
+    .net-speed__text {
+      margin: 0 5px;
+    }
+  }
+  .info-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .info-content__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .info-content__img {
+      height: 93px;
+      width: 93px;
+    }
+    .info-content__title {
+      margin-top: 29px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .info-content__wrap {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+    }
+    .info-content__style {
+      + .info-content__style {
+        margin-left: 4px;
+      }
+    }
+    .info-content__first-style {
+      color: #00D061;
+      font-size: 22px;
+    }
+    .info-content__second-style {
+      color: #333;
+      font-size: 18px;
+    }
+  }
+  .reboot {
+    width: 1129px;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    .reboot__img {
+      cursor: pointer;
+      height: 100px;
+      width: 100px;
+    }
+  }
+}

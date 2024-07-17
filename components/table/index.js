@@ -1,6 +1,6 @@
 define(function (require) {
-  require('less!./components/table/style.less');
   require('fh-checkbox');
+  require('fh-table-column-render');
   var Vue = require('vue');
   Vue.component('FhTable', {
     template: require('text!./components/table/template.html'),
@@ -21,15 +21,15 @@ define(function (require) {
       },
       stripe: {
         type: Boolean,
-        default: true
+        default: false
       },
       border: {
         type: Boolean,
-        default: true
+        default: false
       },
       hover: {
         type: Boolean,
-        default: true
+        default: false
       },
       showTableHeader: {
         type: Boolean,
@@ -42,6 +42,17 @@ define(function (require) {
       showRowCheckbox: {
         type: Boolean,
         default: true
+      },
+      fixed: {
+        type: Boolean,
+        default: true
+      },
+      align: {
+        type: String,
+        default: 'center',
+        validator: function (value) {
+          return ['left', 'center', 'right'].indexOf(value) !== -1;
+        }
       }
     },
     data() {
@@ -54,10 +65,10 @@ define(function (require) {
     },
     computed: {
       isFixedLeft() {
-        return this.isShowScroll && this.showRowCheckbox && this.isScrollRight;
+        return this.fixed && this.isShowScroll && this.showRowCheckbox && this.isScrollRight;
       },
       isFixedRight() {
-        return this.isShowScroll && this.$scopedSlots.operation && this.isScrollLeft;
+        return this.fixed && this.isShowScroll && this.$scopedSlots.operation && this.isScrollLeft;
       },
       isShowOperation() {
         return this.$scopedSlots.operation && this.data.length;
@@ -67,13 +78,19 @@ define(function (require) {
       },
       isShowRowCheckbox() {
         return this.showRowCheckbox && this.data.length;
+      },
+      cellStyle() {
+        return {
+          textAlign: this.align,
+          lineHeight: '100%'
+        };
       }
     },
     methods: {
       getItemStyle(col) {
         return {
           width: col.width && `${col.width}px`,
-          maxWidth: col.width && `${col.width}px`,
+          maxWidth: col.width && `${col.width}px`
         }
       },
       handleScroll() {
@@ -82,7 +99,7 @@ define(function (require) {
         }
         const offset = 20;
         const checkboxColClientWidth = this.$refs.checkboxCol.clientWidth;
-        const operationColClientWidth = this.$refs.operationCol.clientWidth;
+        const operationColClientWidth = this.$refs.headerOperationCol.clientWidth;
         const clientWidth = this.$refs.tableWrap.clientWidth;
         const scrollLeft = this.$refs.tableWrap.scrollLeft;
         const scrollWidth = this.$refs.tableWrap.scrollWidth;

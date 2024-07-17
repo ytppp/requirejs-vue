@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/upgrade/style.less');
   require('fh-wrap');
   var Vue = require('vue');
   let { mergeOptions } = require('tool');
@@ -25,6 +24,11 @@ define(function (require) {
         progressVisible: false
       };
     },
+    computed: {
+      percentText() {
+        return `${parseInt(this.percent)}%`;
+      }
+    },
     methods: {
       createTimer() {
         this.countdown = this.timeout;
@@ -36,7 +40,7 @@ define(function (require) {
           }
           this.countdown -= 1;
           this.percent += average;
-          this.styles.width = `${this.percent}%`;
+          this.styles.width = this.percentText;
         }, 1000);
       },
       cleanup() {

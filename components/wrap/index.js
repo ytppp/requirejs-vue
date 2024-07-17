@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/wrap/style.less');
   var Vue = require('vue');
   Vue.component('FhWrap', {
     template: require('text!./components/wrap/template.html'),
@@ -14,7 +13,7 @@ define(function (require) {
       },
       wrapBgColor: {
         type: String,
-        default: 'rgba(0, 0, 0, 0.3)'
+        default: 'rgba(0, 0, 0, 0.4)'
       },
       isAppendBody: {
         type: Boolean,
@@ -23,7 +22,8 @@ define(function (require) {
     },
     data() {
       return {
-        open: false
+        open: false,
+        overflow: ''
       };
     },
     computed: {

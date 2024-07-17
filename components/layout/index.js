@@ -1,10 +1,10 @@
 define(function (require) {
-  require('less!./components/layout/style.less');
   require('fh-header');
   require('fh-footer');
   var Vue = require('vue');
   const Velocity = require('velocity-animate');
   var { getMenu } = require('menu');
+  const $ = require('jquery');
 
   // 若多维对象数组中存在某个值，返回其顶级对象
   const getTopObjFromObjArr = (
@@ -51,10 +51,21 @@ define(function (require) {
         default: location.pathname.replaceAll(/(^\/cgi-bin)|(.asp$)/g, ''),
       },
       title: String,
+      isStopRefresh: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data () {
+      return {
+        layoutMainMarginTop: 30,
+        layoutHeaderHeight: 70,
+        asideBgColor: '#DDDDDD'
+      }
     },
     computed: {
       isShow() {
-        return ['/login'].includes(this.url);
+        return ['/login', '/guide'].includes(this.url);
       },
       hasChildPage() {
         return this.childMenus.length > 0;
@@ -70,6 +81,9 @@ define(function (require) {
           return [];
         }
       },
+      layoutAsideTop() {
+        return this.layoutMainMarginTop + this.layoutHeaderHeight
+      }
     },
     methods: {
       handleMenuItemClick(menuObj) {
@@ -85,6 +99,10 @@ define(function (require) {
         const contentMinHeight = 600; // 定义内容区域最小高度
         const height = Math.max(document.body.clientHeight, contentMinHeight);
         this.$refs.layout.style.minHeight = `${height}px`;
+        if (this.$refs.layoutAside) {
+          const height = document.body.clientHeight - this.$refs.layoutHeader.$el.offsetHeight - this.layoutMainMarginTop;
+          this.$refs.layoutAside.style.maxHeight = `${height}px`;
+        }
       },
       beforeEnter(el) {
         el.style.height = 0;
@@ -108,8 +126,28 @@ define(function (require) {
         });
         menu.selected = !menu.selected;
       },
+      refresh() {
+        if (this.isShow || this.isStopRefresh) {
+          return;
+        }
+        $.ajax({
+          url: '/cgi-bin/refresh.asp',
+          type: 'get',
+          error: (xhr) => {
+            if (xhr.status = 400) {
+              window.location.href = '/#/login'; // http://127.0.0.1:8080/#/login
+            }
+          },
+          success: () => {
+            setTimeout(() => {
+              this.refresh()
+            }, 5000);
+          }
+        })
+      },
     },
     mounted() {
+      // this.refresh();
       this.setHeight();
       window.addEventListener('resize', () => {
         this.setHeight();

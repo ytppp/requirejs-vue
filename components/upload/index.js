@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/upload/style.less');
   require('fh-upload-dragger');
   require('fh-button');
   var Vue = require('vue');
@@ -57,6 +56,7 @@ define(function (require) {
     data() {
       return {
         files: [],
+        draggerFiles: [],
         percentage: 0,
         status: UploadStatus.ready,
         err: ''
@@ -91,6 +91,7 @@ define(function (require) {
     methods: {
       uploadDragFiles(files) {
         if (files && !files.length) return;
+        this.draggerFiles = files;
         let postFiles = [].slice.call(files);
         if (!this.multiple) {
           postFiles = postFiles.slice(0, 1);

@@ -51,17 +51,19 @@
           <slot name="suffix"></slot>
           <i class="input__icon" v-if="suffixIcon" :class="suffixIcon"> </i>
         </template>
-        <i
+        <fh-icon
           v-if="showClear"
-          class="input__icon icon-circle-close input__clear"
+          class="input__icon input__clear"
+          name="icon-circle-close"
           @mousedown.prevent
           @click="clear"
-        ></i>
-        <i
+        ></fh-icon>
+        <fh-icon
           v-if="showPwdVisible"
-          class="input__icon icon-view input__clear"
+          class="input__icon input__clear"
+          :name="passwordVisible ? 'icon-eye' : 'icon-eye-close'"
           @click="handlePasswordVisible"
-        ></i>
+        ></fh-icon>
         <span v-if="isWordLimitVisible" class="input__count">
           <span class="input__count-inner">
             {{ textLength }}/{{ upperLimit }}

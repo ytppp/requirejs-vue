@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/checkbox-group/style.less');
   var Vue = require('vue');
   Vue.component('FhCheckboxGroup', {
     template: require('text!./components/checkbox-group/template.html'),

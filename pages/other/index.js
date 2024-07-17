@@ -1,5 +1,5 @@
 define(function (require) {
-  require('less!./style.less');
+  require('css!./style.css');
   let { isValidPassword, getStringByte, getFileExtendName } = require('tool');
   require('fh-layout');
   require('fh-form');

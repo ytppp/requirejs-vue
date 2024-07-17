@@ -1,0 +1,24 @@
+<div
+  class="popover"
+  ref="popover"
+>
+  <div ref="triggerWrapper" class="popover__trigger">
+    <slot></slot>
+  </div>
+  <div
+    ref="popoverWrapper"
+    class="popover__wrap"
+    :class="`position__wrap-${position}`"
+    v-if="visible"
+  >
+    <div ref="popoverTriangle" class="popover__triangle"></div>
+    <template v-if="title || $slots.title">
+      <div class="popover__title" v-if="title">{{title}}</div>
+      <slot name="title" v-else></slot>
+    </template>
+    <template v-if="content || $slots.content">
+      <div class="popover__content" v-if="content">{{content}}</div>
+      <slot name="content" v-else></slot>
+    </template>
+  </div>
+</div>

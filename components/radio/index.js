@@ -1,5 +1,4 @@
 define(function (require) {
-  require('less!./components/radio/style.less');
   var Vue = require('vue');
   Vue.component('FhRadio', {
     template: require('text!./components/radio/template.html'),

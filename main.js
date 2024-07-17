@@ -8,6 +8,7 @@ require.config({
     vuex: 'libs/vuex/vuex',
     jquery: 'libs/jquery',
     'velocity-animate': 'libs/velocity-animate.min',
+    'echarts': 'libs/echarts.min',
 
     text: 'libs/require-plugins/text',
     json: 'libs/require-plugins/json',
@@ -20,6 +21,7 @@ require.config({
     'fh-select': 'components/select/index',
     'fh-form': 'components/form/index',
     'fh-form-item': 'components/form-item/index',
+    'fh-form-item-label-wrap': 'components/form-item/label-wrap',
     'fh-checkbox': 'components/checkbox/index',
     'fh-checkbox-group': 'components/checkbox-group/index',
     'fh-switch': 'components/switch/index',
@@ -32,30 +34,39 @@ require.config({
     'fh-layout': 'components/layout/index',
     'fh-dialog': 'components/dialog/index',
     'fh-menu': 'components/menu/index',
-    'fh-table': 'components/table/index',
     'fh-modal': 'components/modal/index',
     'fh-toast': 'components/toast/index',
     'fh-upgrade': 'components/upgrade/index',
     'fh-upload': 'components/upload/index',
     'fh-loading-com': 'components/loading/loading-com',
     'fh-loading': 'components/loading/index',
-    'fh-wrap': 'components/wrap/index', // 通用弹窗遮罩
+    'fh-wrap': 'components/wrap/index',
     'fh-upload-dragger': 'components/upload-dragger/index',
+    'fh-step': 'components/step/index',
+    'fh-icon': 'components/icon/index',
+    'fh-table': 'components/table/index',
+    'fh-table-column-render': 'components/table/table-column-render',
+    'fh-table-new': 'components/table-new/index',
+    'fh-table-new-col': 'components/table-new-col/index',
+    'fh-time-picker': 'components/time-picker/index',
+    'fh-popover': 'components/popover/index',
     clickoutside: 'components/directives/clickoutside',
     loading: 'components/directives/loading',
 
     constant: 'util/constant',
     'customer-info': 'util/customer-info',
     tool: 'util/tool',
-    menu: 'util/menu'
+    menu: 'util/menu',
+    iconfont: 'components/icon/iconfont',
+    topo: 'util/topo'
   },
   shim: {
     'vue-i18n': ['vue'],
-    vuex: ['vue']
-  }
+    vuex: ['vue'],
+  },
 });
 
-require(['css!style/normalize.css', 'less!style/common.less', 'less!style/icon.less']);
+require(['css!style/normalize.css', 'css!style/common.css', 'less!style/components.less']);
 
 define(function (require) {
   var Vue = require('vue');
@@ -65,7 +76,7 @@ define(function (require) {
   var customerInfo = require('customer-info');
   var tool = require('tool');
 
-  require([`less!customer-conf/${customerInfo.name}/style/custom.less`]);
+  require([`css!customer-conf/${customerInfo.name}/style/custom.css`]);
   tool.setFavicon(customerInfo[customerInfo.name].favicon);
   tool.setDocTitle(customerInfo[customerInfo.name].title);
 

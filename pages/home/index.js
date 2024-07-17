@@ -1,5 +1,5 @@
 define(function (require) {
-  require('less!./style.less');
+  require('css!./style.css');
   let { isValidPassword, getStringByte, getFileExtendName } = require('tool');
   require('fh-layout');
   require('fh-form');
@@ -8,12 +8,17 @@ define(function (require) {
   require('fh-select');
   require('fh-switch');
   require('fh-button');
+  require('fh-radio-group');
   require('fh-radio');
   require('fh-checkbox');
   require('fh-alert');
   require('fh-table');
   require('fh-modal');
   require('fh-upload');
+  require('fh-time-picker');
+  require('fh-table-new');
+  require('fh-table-new-col');
+  require('fh-popover');
   require('loading');
   let dialog = require('fh-dialog');
   let toast = require('fh-toast');
@@ -42,57 +47,73 @@ define(function (require) {
       return {
         uploading: false,
         visible: false,
+        labelPosition: 'left',
+        tableData: [
+          {
+            url: 'www.baidu.com',
+            title: '百度一下',
+          },
+          {
+            url: 'www.baidu.com',
+            title: '百度'
+          },
+          {
+            url: 'www.baidu.com',
+            title: '百度'
+          }
+        ],
         columns: [
           {
             key: 'url',
             title: 'url',
-            width: 200
+            width: 200,
+            render: (h, params) => {
+              const props = {
+                props: {
+                  title: "标题",
+                  position: 'bottom',
+                  trigger: 'click'
+                },
+              };
+              return h('fh-popover', [
+                params.row.url,
+                h('div', {
+                  slot: 'content',
+                }, '内容内容内容内容1231'
+              )])
+            }
           },
           {
             key: 'title',
             title: 'title',
-          },
-          {
-            key: 'title',
-            title: 'title',
-          },
-          {
-            key: 'title',
-            title: 'title',
-          },
-          {
-            key: 'title',
-            title: 'title',
-          },
-          {
-            key: 'title',
-            title: 'title',
-          },
-          {
-            key: 'title',
-            title: 'title',
+            width: 200,
+            render: (h, params) => {
+              const props = {
+                props: {
+                  value: this.visible,
+                },
+                on: {
+                  change: () => {console.log('123');this.visible = !this.visible}
+                }
+              };
+              return h('fh-switch', {
+                ...props
+              })
+            }
           }
         ],
         data: [
           {
-            url: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-            title: 'yyyyyyyyyyyyyy',
-            name: 'asdasddasdqw'
+            url: 'www.baidu.com',
+            title: '百度一下',
           },
           {
-            url: 'xxxxxxxxxxxxxxxxxxx',
-            title: 'yyyyyyyyyyyyyy',
-            name: 'asdasddasdqw'
+            url: 'www.baidu.com',
+            title: '百度'
           },
           {
-            url: 'xxxxxxxxxxxxxxx',
-            title: 'yyyyyyyyyyyyy',
-            name: 'asdasddasdqw'
-          },
-          {
-            url: 'xxxxxxxxxxxxxx',
-            title: 'yyyyyyyyyyyyyy',
-            name: 'asdasddasdqw'
+            url: 'www.baidu.com',
+            title: '百度'
           }
         ],
         Encrypts,
@@ -100,6 +121,7 @@ define(function (require) {
         Bands,
         wifiform: {
           isB5gFirst: true,
+          time_begin: '00:00',
           b24g: {
             enable: true,
             ssid: '',
@@ -116,7 +138,7 @@ define(function (require) {
           },
           isLoginPwd: false, // 将 Wi-Fi 密码作为路由器登录密码
           isStandbyNet: false, // Wi-Fi 5 备用网络
-          powermode: Powermodes.high
+          powermode: Powermodes.middle
         },
         powermodes: [
           {
@@ -229,7 +251,7 @@ define(function (require) {
     methods: {
       loading() {
         loading.open({
-          tip: 'loading'
+          tip: 'The settings are being saved,please wait...'
         });
         setTimeout(() => {
           loading.close();
@@ -244,7 +266,7 @@ define(function (require) {
           timeout: 10,
           progressVisible: true,
           title: '提示',
-          tip: '升级过程可能需要花费几分钟的时间，升级过程中请不要关闭电源。完成后，设备会自动重启。',
+          tip: 'The upgrade may take a few minutes. Please do not power off during the upgrade. Once the upgrade is finished, the device will restart automatically',
         });
         setTimeout(() => {
           upgrade.close();
@@ -314,13 +336,22 @@ define(function (require) {
             }
           });
         }
-      }
+      },
     },
     mounted () {
       this.uploading = true;
       setTimeout(() => {
         this.uploading = false;
       }, 5000);
+      this.powermodes = this.powermodes.map(item => {
+        if (item.value === Powermodes.middle) {
+          return {
+            ...item,
+            text: `${this.$t('trans0174')}(${123}${this.$t('trans0613')})`
+          };
+        }
+        return item;
+      });
     }
   };
 });

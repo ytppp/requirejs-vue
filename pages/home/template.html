@@ -1,4 +1,4 @@
-<fh-layout url="/home">
+<fh-layout url="/home" title="123asd">
   <div class="home">
     <div class="upload">
       <fh-upload ref="uploader"
@@ -6,7 +6,7 @@
                   v-loading="uploading"
                   loading-tip="加载中" />
     </div>
-    <fh-button type="text" @click="loading" disabled>loading</fh-button>
+    <fh-button type="text" @click="loading">loading</fh-button>
     <fh-button type="text" size="middle" @click="() => visible = true">打开弹框</fh-button>
     <fh-button type="text" @click="upgrade">升级</fh-button>
     <fh-switch
@@ -29,9 +29,26 @@
         <fh-button @click="() => visible = false">{{$t('trans0002')}}</fh-button>
       </template>
     </fh-modal>
+    <fh-table-new :data="tableData">
+      <fh-table-new-col prop="url" label="Url"></fh-table-new-col>
+      <fh-table-new-col prop="title" label="Title"></fh-table-new-col>
+      <fh-table-new-col label="操作">
+        <template v-slot="scope">
+          <fh-button type="text" @click="() => operation(scope)">操作</fh-button>
+        </template>
+      </fh-table-new-col>
+    </fh-table-new>
     <fh-table :columns="columns" :data="data">
-      <template #title>
+      <template #url>
         123456
+      </template>
+      <template #title>
+        <fh-popover position="bottom left"
+          style="top:-7px"
+          title="标题"
+          content="内容内容内容内容内容">
+          popover 123456
+        </fh-popover>
       </template>
       <template #operationgroup>
         <fh-button size="small">新增</fh-button>
@@ -47,14 +64,25 @@
         footer
       </template>
     </fh-table>
-    <fh-form class="wifi-form" ref="wifiForm" :model="wifiform" :rules="rules">
+    <fh-radio-group v-model="labelPosition">
+      <fh-radio label="top">top</fh-radio>
+      <fh-radio label="left">left</fh-radio>
+      <fh-radio label="right">right</fh-radio>
+    </fh-radio-group>
+    <fh-form class="wifi-form" ref="wifiForm" :model="wifiform" :rules="rules" :label-position="labelPosition" label-width="auto">
+
+      <fh-form-item label="时间选择">
+        <fh-time-picker v-model="wifiform.time_begin" />
+      </fh-form-item>
       <fh-form-item :label="$t('trans0023').format($t('trans0050'))">
         <fh-switch
           v-model="wifiform.isB5gFirst"
           @change="switchB5gFirst"
         >
         </fh-switch>
-        <div class="wifi-form__tips">{{$t('trans0024').format($t('trans0049'), $t('trans0050'), $t('trans0050'))}}</div>
+        <template #extra>
+          <div class="wifi-form__tips">{{$t('trans0024').format($t('trans0049'), $t('trans0050'), $t('trans0050'))}}</div>
+        </template>
       </fh-form-item>
       <fh-form-item :label="b24gWifiText">
         <fh-switch
@@ -62,18 +90,24 @@
           @change="(val) => switchEnable(Bands.b24g, val)"
         >
         </fh-switch>
-        <div class="wifi-form__tips">
-          <fh-checkbox v-if="!wifiform.b24g.enable" v-model="wifiform.b24g.isAutoReboot">
-            {{$t("trans0028").format($t('trans0049'))}}
-          </fh-checkbox>
-        </div>
+        <template #extra>
+          <div class="wifi-form__tips">
+            <fh-checkbox v-if="!wifiform.b24g.enable" v-model="wifiform.b24g.isAutoReboot">
+              {{$t("trans0028").format($t('trans0049'))}}
+            </fh-checkbox>
+          </div>
+        </template>
       </fh-form-item>
-      <fh-form-item :label="$t('trans0029')" prop='b24g.ssid'>
+      <!-- :label="$t('trans0029')" -->
+      <fh-form-item  prop='b24g.ssid' label="2.4G SSID">
         <fh-input
           v-model="wifiform.b24g.ssid"
           @blur="blur"
         >
         </fh-input>
+        <template #extra>
+          <div class="form__tips">asdasdad</div>
+        </template>
       </fh-form-item>
       <fh-form-item :label="$t('trans0031')">
         <fh-select
@@ -81,13 +115,14 @@
           :options="encrypts"
         >
         </fh-select>
-        <fh-alert
-          v-if="b24gEncryptTip"
-          :title="b24gEncryptTip"
-          type="warning"
-          show-icon
-          :closable="false" />
-        </fh-alert>
+        <template #extra>
+          <fh-alert
+            v-if="b24gEncryptTip"
+            :title="b24gEncryptTip"
+            type="warning"
+            :closable="true" />
+          </fh-alert>
+        </template>
       </fh-form-item>
       <fh-form-item :label="$t('trans0030')" v-if="wifiform.b24g.encrypt !== Encrypts.none">
         <fh-input
@@ -96,9 +131,11 @@
           show-password
         >
         </fh-input>
-        <div class="wifi-form__tips">
-          <fh-checkbox v-model="wifiform.isLoginPwd">{{$t("trans0039")}}</fh-checkbox>
-        </div>
+        <template #extra>
+          <div class="wifi-form__tips">
+            <fh-checkbox v-model="wifiform.isLoginPwd">{{$t("trans0039")}}</fh-checkbox>
+          </div>
+        </template>
       </fh-form-item>
       <template v-if="!wifiform.isB5gFirst">
         <fh-form-item :label="$t('trans0027').format($t('trans0050'))">
@@ -107,9 +144,11 @@
             @change="(val) => switchEnable(Bands.b5g, val)"
             >
           </fh-switch>
-          <div class="wifi-form__tips">
-            <fh-checkbox v-if="!wifiform.b5g.enable" v-model="wifiform.b5g.isAutoReboot">{{$t("trans0028").format($t('trans0050'))}}</fh-checkbox>
-          </div>
+          <template #extra>
+            <div class="wifi-form__tips">
+              <fh-checkbox v-if="!wifiform.b5g.enable" v-model="wifiform.b5g.isAutoReboot">{{$t("trans0028").format($t('trans0050'))}}</fh-checkbox>
+            </div>
+          </template>
         </fh-form-item>
         <fh-form-item :label="b5gWifiText">
           <fh-input
@@ -117,19 +156,22 @@
           >
           </fh-input>
         </fh-form-item>
+
         <fh-form-item :label="$t('trans0031')">
           <fh-select
             v-model="wifiform.b5g.encrypt"
             :options="encrypts"
           >
           </fh-select>
-          <fh-alert
-            v-if="b5gEncryptTip"
-            :title="b5gEncryptTip"
-            type="warning"
-            show-icon
-            :closable="false" />
-          </fh-alert>
+          <template #extra>
+            <fh-alert
+              v-if="b5gEncryptTip"
+              :title="b5gEncryptTip"
+              type="warning"
+              show-icon
+              :closable="false" />
+            </fh-alert>
+          </template>
         </fh-form-item>
         <fh-form-item :label="$t('trans0030')" v-if="wifiform.b5g.encrypt !== Encrypts.none">
           <fh-input
@@ -146,25 +188,31 @@
           :options="encrypts"
         >
         </fh-switch>
-        <div class="wifi-form__tips">
-          {{$t("trans0041")}}
-        </div>
+        <template #extra>
+          <div class="wifi-form__tips">
+            {{$t("trans0041")}}
+          </div>
+        </template>
       </fh-form-item>
       <fh-form-item :label="$t('trans0051')">
         <div class="wifi-form__name">
-           {{b24gStandbyNetText}}
+          {{b24gStandbyNetText}}
         </div>
-        <div class="wifi-form__tips" v-if="wifiform.isB5gFirst">
-          {{$t("trans0043")}}
-        </div>
+        <template #extra>
+          <div class="wifi-form__tips" v-if="wifiform.isB5gFirst">
+            {{$t("trans0043")}}
+          </div>
+        </template>
       </fh-form-item>
       <fh-form-item :label="$t('trans0051')" v-if="!wifiform.isB5gFirst">
         <div class="wifi-form__name">
           {{b5gStandbyNetText}}
         </div>
-        <div class="wifi-form__tips">
-          {{$t("trans0043")}}
-        </div>
+        <template #extra>
+          <div class="wifi-form__tips">
+            {{$t("trans0043")}}
+          </div>
+        </template>
       </fh-form-item>
       <fh-form-item :label="$t('trans0044')">
         <fh-select
