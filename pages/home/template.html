@@ -1,5 +1,14 @@
 <fh-layout url="/home" title="123asd">
   <div class="home">
+    <!-- :title="$t('trans0468')" -->
+    <fh-alert
+
+      type="success">
+      <ul style="margin-left: 15px;">
+        <li>{{ $t('trans0664') }}</li>
+        <li>{{ $t('trans0474') }}</li>
+      </ul>
+    </fh-alert>
     <div class="upload">
       <fh-upload ref="uploader"
                   dragable
@@ -109,7 +118,7 @@
           <div class="form__tips">asdasdad</div>
         </template>
       </fh-form-item>
-      <fh-form-item :label="$t('trans0031')">
+      <fh-form-item :label="$t('trans0031')" prop="wifiform.b24g.encrypt">
         <fh-select
           v-model="wifiform.b24g.encrypt"
           :options="encrypts"

@@ -131,7 +131,7 @@ define(function (require) {
         this.animateScroll();
       },
       select(type, v, e) {
-        this.selectScroll(e, type);
+        // this.selectScroll(e, type);
         this.time[type] = v;
         this.inputValue = `${this.time.h}:${this.time.m}`;
       }

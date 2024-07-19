@@ -38,7 +38,6 @@ define(function (require) {
       autoLabelWidth() {
         if (!this.potentialLabelWidthArr.length) return 0;
         const max = Math.max(...this.potentialLabelWidthArr);
-        console.log('max', max);
         return max ? `${max}px` : '';
       }
     },

@@ -126,7 +126,7 @@ define(function (require) {
             enable: true,
             ssid: '',
             password: '',
-            encrypt: Encrypts.none,
+            encrypt: '',
             isAutoReboot: false
           },
           b5g: {
@@ -173,6 +173,12 @@ define(function (require) {
           }
         ],
         rules: {
+          'wifiform.b24g.encrypt': [
+            {
+              rule: value => value,
+              message: this.$t('trans0004')
+            }
+          ],
           'b24g.ssid': [
             {
               rule: value => getStringByte(value) <= 20,

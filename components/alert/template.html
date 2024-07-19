@@ -16,6 +16,7 @@
           class="alert__title"
           :class="[ isBoldTitle ]"
           v-if="title || $slots.title"
+          :style="`${$slots.default || description ? 'margin-bottom: 5px;' : ''}`"
         >
           <slot name="title">{{ title }}</slot>
         </span>

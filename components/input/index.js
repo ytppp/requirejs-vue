@@ -126,7 +126,7 @@ define(function (require) {
         let output = temp.innerText || temp.textContent;
         temp = null;
         return output;
-      },      
+      },
       getInput() {
         return this.$refs.input || this.$refs.textarea;
       },

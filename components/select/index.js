@@ -101,6 +101,7 @@ define(function (require) {
       },
       change() {
         this.$emit('change', this.selected.value, this.value);
+        this.$parent.$emit('change', this.selected.value, this.value);
       },
       open() {
         if (!this.disabled) {
@@ -112,6 +113,16 @@ define(function (require) {
       },
       close() {
         this.opened = false;
+      },
+      inputBlurHandler() {
+        setTimeout(() => {
+          this.$emit('blur');
+          this.$parent.$emit('blur');
+        }, 100);
+      },
+      inputFocusHandler() {
+        this.$emit('focus');
+        this.$parent.$emit('focus');
       }
     },
     created () {

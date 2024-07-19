@@ -1,4 +1,4 @@
-<div class="select" @click="open()" v-clickoutside="close">
+<div class="select" @click="open" v-clickoutside="close">
   <input type="hidden" :name="name" v-model="selected.value">
   <fh-input
     readonly
@@ -6,6 +6,8 @@
     :placeholder="selectPlaceholder"
     :label="currentLabel"
     v-model="selected.text"
+    @blur="inputBlurHandler"
+    @focus="inputFocusHandler"
   >
     <template slot="prefix" v-if="$slots.prefix">
       <slot name="prefix"></slot>

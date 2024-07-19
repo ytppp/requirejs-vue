@@ -71,10 +71,10 @@ define(function (require) {
         return this.fixed && this.isShowScroll && this.$scopedSlots.operation && this.isScrollLeft;
       },
       isShowOperation() {
-        return this.$scopedSlots.operation && this.data.length;
+        return this.$scopedSlots.operation;
       },
       isShowIndex() {
-        return this.showIndex && this.data.length;
+        return this.showIndex;
       },
       isShowRowCheckbox() {
         return this.showRowCheckbox && this.data.length;
@@ -84,14 +84,28 @@ define(function (require) {
           textAlign: this.align,
           lineHeight: '100%'
         };
+      },
+      columnsTotal() {
+        let total = 0;
+        if (this.isShowOperation) {
+          total += 1;
+        }
+        if (this.isShowIndex) {
+          total += 1;
+        }
+        if (this.isShowRowCheckbox) {
+          total += 1;
+        }
+        total += this.columns.length;
+        return total;
       }
     },
     methods: {
       getItemStyle(col) {
-        return {
+        return this.data.length ? {
           width: col.width && `${col.width}px`,
           maxWidth: col.width && `${col.width}px`
-        }
+        } : {};
       },
       handleScroll() {
         if (!this.isShowScroll) {
